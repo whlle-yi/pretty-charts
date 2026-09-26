@@ -25,25 +25,25 @@
   \centering
   \begin{tikzpicture}
     \node[pc start]                     (s)  at (0,0)      {开始：用户提交订单};
-    \node[pc process]                   (v)  at (0,-1.2)   {参数校验};
-    \node[pc decision]                  (q)  at (0,-2.4)   {库存充足？};
-    \node[pc key]                       (p)  at (0,-3.6)   {扣减库存};
-    \node[pc key]                       (m)  at (0,-4.8)   {创建支付单};
-    \node[pc decision]                  (r)  at (0,-6.0)   {支付成功？};
-    \node[pc key]                       (ok) at (0,-7.2)   {订单完成};
-    \node[pc process]                   (e)  at (-3.4,-1.2){返回 400 错误};
-    \node[pc process]                   (n)  at (-3.4,-8.3){下单失败通知};
-    \node[pc process]                   (c)  at (4.2,-6.0) {取消并回补库存};
+    \node[pc process]                   (v)  at (0,-1.6)   {参数校验};
+    \node[pc decision]                  (q)  at (0,-3.4)   {库存充足？};
+    \node[pc key]                       (p)  at (0,-5.2)   {扣减库存};
+    \node[pc key]                       (m)  at (0,-7.0)   {创建支付单};
+    \node[pc decision]                  (r)  at (0,-8.8)   {支付成功？};
+    \node[pc key]                       (ok) at (0,-10.6)  {订单完成};
+    \node[pc process]                   (e)  at (-4.2,-1.6){返回 400 错误};
+    \node[pc process]                   (n)  at (-4.2,-12.2){下单失败通知};
+    \node[pc process]                   (c)  at (5.2,-8.8) {取消并回补库存};
 
     \draw[pc flow] (s) -- (v);
-    \draw[pc flow] (v) -- node[pc label, right=2pt]{通过} (q);
+    \draw[pc flow] (v) -- node[pc label, right=3pt]{通过} (q);
     \draw[pc flow] (v.west) -- node[pc label, above=1pt]{失败} (e.east);
-    \draw[pc flow] (q.west) -- node[pc label, above=1pt, pos=0.45]{否} (q.west -| e.center);
-    \fill[\pcArrow] (e.center |- q.center) circle (1.1pt);   % T 形汇流点
-    \draw[pc flow] (q.south) -- node[pc label, right=2pt]{是} (p);
+    \draw[pc flow] (q.west) -- node[pc label, above=1pt, pos=0.4]{否} (q.west -| e.center);
+    \fill[\pcArrow] (e.center |- q.center) circle (1.2pt);   % T 形汇流点
+    \draw[pc flow] (q.south) -- node[pc label, right=3pt]{是} (p);
     \draw[pc flow] (p) -- (m);
     \draw[pc flow] (m) -- (r);
-    \draw[pc flow] (r.south) -- node[pc label, right=2pt]{是} (ok);
+    \draw[pc flow] (r.south) -- node[pc label, right=3pt]{是} (ok);
     \draw[pc flow] (r.east) -- node[pc label, above=1pt]{否} (c.west);
     \draw[pc flow] (e) -- (n);
     \draw[pc flow back] (c.south) |- (n.east);
