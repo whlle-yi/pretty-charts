@@ -159,6 +159,7 @@ pretty-charts/
 | 文档 | 内容 |
 |---|---|
 | [SKILL.md](skills/pretty-charts/SKILL.md) | 技能入口：定性 → 定档 → 路由的完整决策流 |
+| [场景入口](skills/pretty-charts/references/scenarios.md) | 论文/报告/演示三档的精确阅读顺序与场景专属规则 |
 | [风格规范总纲](skills/pretty-charts/references/style-guide.md) | 配色规则、字体方案、导出规格、9 条防误导红线、三档自查清单 |
 | [数据图选型](skills/pretty-charts/references/data/chart-selection.md) | "读者要回答什么问题"决策树 + 图型速查表 |
 | [非数据图选型](skills/pretty-charts/references/diagram/diagram-selection.md) | 流程/架构/层级/示意/信息图路由 + 通用布局规范 |

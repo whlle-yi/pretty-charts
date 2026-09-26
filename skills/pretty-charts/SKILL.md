@@ -25,6 +25,8 @@ description: 高质量图表绘制技能。当用户需要绘制、美化或选�
 | T2 | 报告级 | business | 咨询报告、文档配图、商务汇报 | `references/style-guide.md` §7.2 |
 | T3 | 展示级 | showcase | PPT、海报、社交媒体 | `references/style-guide.md` §7.3 |
 
+**定档后先读 `references/scenarios.md` 对应节**——那里有该场景的精确阅读顺序（接下来看哪几个文件）与场景专属规则（期刊尺寸、论文流程图无底色、远距离可读等），再按其清单加载方法论文件。
+
 主题资产在 `assets/`：色板 `assets/palettes/*.json`、matplotlib `assets/matplotlib/*.mplstyle`、ECharts `assets/echarts/*.json`、mermaid `assets/mermaid/`、TikZ `assets/tikz/`、字体方案 `assets/fonts.md`。
 
 ## 第 3 步：加载对应参考文件后作图
@@ -57,6 +59,7 @@ description: 高质量图表绘制技能。当用户需要绘制、美化或选�
 ```
 SKILL.md                  ← 本文件，入口与路由
 references/
+  ├── scenarios.md        ← 场景入口（定档后的阅读路径 + 场景专属规则）
   ├── style-guide.md      ← 风格规范总纲（配色/字体/导出/防误导/三档清单）
   ├── data/               ← 数据图方法论（按分析目的 + 工具栈）
   └── diagram/            ← 非数据图方法论（按图型 + 工具栈）
