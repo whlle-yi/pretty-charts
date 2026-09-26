@@ -1,6 +1,6 @@
 # 工具栈：Graphviz（tool-graphviz）
 
-> mermaid 布局爆炸时的退路：模块多、边乱、需要自动最小化交叉的**有向图**。引擎 dot（分层，架构图）、neato/fdp（力导向，网络）、circo（环状）。
+> TikZ 手摆无法驾驭时的退路：模块多、边乱、需要自动最小化交叉的**有向图**。引擎 dot（分层，架构图）、neato/fdp（力导向，网络）、circo（环状）。本机未安装 dot，本文件样式未经实测，使用前先验证。
 
 ## 1. 基本用法
 
@@ -26,14 +26,13 @@ digraph G {
 - 分层/分组：`rank=same` 固定同层；`cluster_*` 子图表达物理/组织边界。
 - 中文标签：确保系统装有中文字体（Windows 雅黑可用，Linux 装 fonts-noto-cjk）。
 
-## 3. 与 mermaid 的取舍
+## 3. 与 TikZ 的取舍
 
 | 场景 | 选 |
 |---|---|
-| ≤20 节点、常见图型 | mermaid（语法更快） |
-| 节点 20+ 或 mermaid 布局交叉严重 | Graphviz（dot 引擎布局质量更高） |
+| ≤20 节点、常规结构图 | TikZ（预置样式 + 手工布局可控） |
+| 节点 20+ 或连线交叉严重 | Graphviz（dot 引擎布局质量更高） |
 | 需要精确 rank 控制、端口锚点（箭头从节点指定边出入） | Graphviz（`:port` 语法） |
-| 需要时序图/甘特图/思维导图 | mermaid（Graphviz 无这些图型） |
 
 ## 4. 常见坑
 

@@ -1,6 +1,6 @@
 # 层级与逻辑（hierarchy）
 
-> 表达归类、从属、分解：思维导图、组织架构、概念图。主力工具 mermaid（mindmap/graph），逻辑结构复杂时用 Graphviz。
+> 表达归类、从属、分解：思维导图、组织架构、概念图。主力工具 TikZ mindmap（单色墨泡、论文可用），逻辑结构复杂时用 Graphviz。
 
 ## 图型清单
 
@@ -18,7 +18,7 @@
 3. 节点文字 ≤8 字，关键词而非句子；修饰信息用图标/颜色/括号小字。
 4. 组织架构的**实线/虚线区分直接汇报与虚线汇报**，图注说明；跨部门协作不画进架构图（那是流程图的事）。
 5. 颜色按一级分支分色（每支一个色系），全图色数 = 一级分支数且 ≤7；同一分支内用同色深浅。
-6. 布局对称：mermaid mindmap 自动均衡；手画时按象限分配分支，避免一边倒。
+6. 布局对称：TikZ mindmap 的 cyclic 生长自动均衡；手画时按象限分配分支，避免一边倒。
 
 ## 常见错误
 
@@ -29,4 +29,4 @@
 
 ## 示例
 
-`examples/diagram/mindmap/product_mindmap.mmd`
+`examples/diagram/mindmap/product_mindmap.tex`（TikZ mindmap 论文版：单色墨泡）

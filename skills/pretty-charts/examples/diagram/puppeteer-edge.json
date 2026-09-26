@@ -1,5 +1,0 @@
-{
-  "_comment": "本机未安装 chrome-headless-shell 时，mermaid-cli 用系统 Edge 渲染。用法：mmdc ... -p puppeteer-edge.json",
-  "executablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
-  "args": ["--no-sandbox", "--disable-gpu"]
-}

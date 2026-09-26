@@ -33,12 +33,11 @@
 
 | 工具 | 擅长 | 何时用 |
 |---|---|---|
-| **TikZ/pgfplots** | 出版级示意图；**流程图（论文/PPT 双模式预置样式）** | T1 论文与 T3 演示的交付级流程图、装置/机制示意 |
-| **mermaid** | 时序图、甘特图、思维导图、类图；流程草稿 | 文本生成、版本可控的快速出图（流程图仅限草稿） |
-| **Graphviz** | 自动布局的复杂有向图（节点多、边乱） | mermaid 布局爆炸时（dot 引擎自动排布） |
+| **TikZ/pgfplots** | 结构类图交付级全覆盖：流程图、时序图、甘特图、思维导图（预置双模式样式）；装置/机制示意 | 全部非数据图的交付级输出（T1/T2/T3） |
+| **Graphviz** | 自动布局的复杂有向图（节点多、边乱） | TikZ 手摆无法驾驭时（dot 引擎自动排布） |
 | **SVG 手绘** | 完全自定义的示意图、插画、信息图 | 以上都不够用时（最后手段，成本最高） |
 
-主题配置：mermaid 用 `assets/mermaid/mermaid-config.json`；TikZ 用 `assets/tikz/preamble.tex`；SVG/TikZ 颜色从 `assets/palettes/` 取值。**非数据图同样禁止自造颜色。**
+主题配置：TikZ 用 `assets/tikz/`（preamble + 各图型预置样式）；颜色从 `assets/palettes/` 取值。**非数据图同样禁止自造颜色。**
 
 ## 3. 非数据图通用规范（任何图型都适用）
 
@@ -53,5 +52,5 @@
 ## 4. 分档差异
 
 - T1 出版级：TikZ 优先（矢量、字体与正文一致）；黑白可辨（线型冗余编码）。
-- T2 报告级：mermaid 默认主题，嵌 Word/网页。
-- T3 展示级：mermaid/showcase 色板，节点更大、字号 ≥14px，一屏一图。
+- T2 报告级：TikZ business 风，嵌 Word/网页。
+- T3 展示级：showcase 色板（`\pcPPTMode`），节点更大、字号 ≥14px，一屏一图。

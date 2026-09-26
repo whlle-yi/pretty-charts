@@ -1,6 +1,6 @@
 # 流程与时序（flowchart）
 
-> 覆盖：流程图、时序图、状态图、甘特图。**流程图交付级一律用 TikZ**（预置样式 `assets/tikz/flowchart-styles.tex`，论文/演示双模式），mermaid 只用于快速草稿与非正式沟通；时序图/甘特图/思维导仍以 mermaid 为主力，复杂有向图退到 Graphviz。
+> 覆盖：流程图、时序图、状态图、甘特图。**交付级一律 TikZ**：流程图用预置样式 `assets/tikz/flowchart-styles.tex`，时序图用 `sequence-styles.tex`，甘特图用 pgfgantt——论文/演示双模式；复杂有向图退到 Graphviz。不使用 mermaid。
 
 ## 0. 流程图工具策略：TikZ 双模式
 
@@ -24,7 +24,7 @@
 5. 起止节点用圆角胶囊（tikz `pc start`），处理用矩形，输入输出用平行四边形，数据库用圆柱。
 6. 回流（循环）箭头绕主线外侧、加虚线，不横穿其他节点。
 7. 节点 ≤20 个：超了就分层——先画一级主流程，子流程另画一张并引用（`subgraph` 或独立图）。
-8. 泳道（跨角色职责）：mermaid 用 `subgraph` 按角色分块；角色 >3 时考虑时序图代替。
+8. 泳道（跨角色职责）：用 `pc sub` 容器按角色分块；角色 >3 时考虑时序图代替。
 9. 连线标签直接写条件文字（`-->|是|`），不要图例集合。
 
 常见错误：❌ 箭头无标签的判断分支；❌ 流程线交叉成蜘蛛网（重排布局或拆图）；❌ 节点里写整段话。
@@ -51,9 +51,9 @@
 规范：
 1. 任务按阶段分组（section），单屏任务 ≤15 个，超了按阶段拆图。
 2. 关键路径/里程碑：milestone 语法单独标出；交付节点必须可见。
-3. 任务日期.todayOffset 不用相对猜测，明确写起止或工期。
-4. 依赖（after）显式声明，不要用日期对齐暗示。
+3. 任务日期写死起止或工期，不用相对猜测。
+4. 依赖关系显式连线（pgfgantt 的 `\ganttlink`），不要用日期对齐暗示。
 
 ## 示例
 
-`examples/diagram/flowchart/paper_flow.tex`（论文版：无底色 + 宋体/TNR）、`ppt_flow.tex`（演示版：彩色 + 黑体/Arial，与论文版同一结构）、`decision_flow.mmd`（mermaid 草稿版）
+`examples/diagram/flowchart/paper_flow.tex`（论文版：无底色 + 宋体/TNR）、`ppt_flow.tex`（演示版：彩色 + 黑体/Arial，与论文版同一结构）

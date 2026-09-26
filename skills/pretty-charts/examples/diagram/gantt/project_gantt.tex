@@ -1,0 +1,40 @@
+% 论文版甘特图：双周迭代排期（paper 模式，无底色、宋体+TNR）
+% 编译：xelatex -interaction=nonstopmode project_gantt.tex
+\documentclass[border=6pt]{standalone}
+\input{../../../assets/tikz/preamble.tex}
+\input{../../../assets/tikz/flowchart-styles.tex}
+\setmainfont{Times New Roman}
+\setCJKmainfont{SimSun}
+\usepackage{pgfgantt}
+\begin{document}
+\begin{ganttchart}[
+  x unit=7mm, y unit title=0.72cm, y unit chart=0.66cm,
+  hgrid, vgrid={*1{black!12}},
+  title/.style={draw=black!50, fill=black!4},
+  title label font=\footnotesize,
+  bar/.style={draw=black!75, fill=white, line width=0.5pt},
+  bar height=0.55,
+  bar label font=\footnotesize,
+  group/.style={draw=black!75, fill=black!10, line width=0.5pt},
+  group height=0.4,
+  group label font=\footnotesize,
+  milestone/.style={draw=black!85, fill=black!30},
+  milestone height=0.55,
+  milestone label font=\footnotesize,
+  link/.style={draw=black!60, line width=0.4pt},
+]{1}{15}
+\gantttitle{双周迭代排期（示例，第 $n$ 天）}{15}\\
+\gantttitlelist{1,...,15}{1}\\
+\ganttgroup{开发}{1}{10}\\
+\ganttbar[name=b1]{需求评审}{1}{2}\\
+\ganttbar[name=b2]{接口开发}{3}{7}\\
+\ganttbar[name=b3]{联调}{8}{10}\\
+\ganttgroup{测试}{9}{13}\\
+\ganttbar[name=t1]{用例设计}{9}{12}\\
+\ganttbar[name=t2]{回归测试}{11}{13}\\
+\ganttmilestone{上线}{14}
+\ganttlink{b1}{b2}
+\ganttlink{b2}{b3}
+\ganttlink{b3}{t2}
+\end{ganttchart}
+\end{document}

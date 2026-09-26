@@ -1,0 +1,29 @@
+% 论文版思维导图：产品规划（paper 模式，单色墨泡、宋体+TNR）
+% 编译：xelatex -interaction=nonstopmode product_mindmap.tex
+\documentclass[border=8pt]{standalone}
+\input{../../../assets/tikz/preamble.tex}
+\setmainfont{Times New Roman}
+\setCJKmainfont{SimSun}
+\usetikzlibrary{mindmap}
+\begin{document}
+\begin{tikzpicture}[mindmap, grow cyclic,
+  every node/.style=concept, concept color=black!8,
+  root concept/.append style={concept color=black!18, font=\small\bfseries,
+                              minimum size=2.6cm, text width=2.2cm},
+  level 1/.append style={level distance=3.6cm, sibling angle=120,
+                         font=\footnotesize, minimum size=1.7cm, text width=1.5cm},
+  level 2/.append style={level distance=2.7cm, sibling angle=55,
+                         font=\footnotesize, minimum size=1.3cm, text width=1.1cm}]
+\node[root concept]{产品规划}
+  child {node{用户增长}
+    child {node{拉新}}
+    child {node{留存}}
+    child {node{召回}}}
+  child {node{商业化}
+    child {node{订阅}}
+    child {node{广告}}}
+  child {node{体验}
+    child {node{性能优化}}
+    child {node{视觉改版}}};
+\end{tikzpicture}
+\end{document}

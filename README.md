@@ -33,9 +33,9 @@
 |:---:|:---:|
 | ![](skills/pretty-charts/examples/data/heatmap/corr_heatmap.png) | ![](skills/pretty-charts/examples/data/statistical/errorbar_ci.png) |
 
-| 流程图（mermaid 草稿） | 时序图 | 甘特图 | 思维导图 | 架构图 |
-|:---:|:---:|:---:|:---:|:---:|
-| ![](skills/pretty-charts/examples/diagram/flowchart/decision_flow.png) | ![](skills/pretty-charts/examples/diagram/sequence/api_sequence.png) | ![](skills/pretty-charts/examples/diagram/gantt/project_gantt.png) | ![](skills/pretty-charts/examples/diagram/mindmap/product_mindmap.png) | ![](skills/pretty-charts/examples/diagram/architecture/three_tier.png) |
+| 时序图 | 甘特图 | 思维导图 | 三层架构图 |
+|:---:|:---:|:---:|:---:|
+| ![](skills/pretty-charts/examples/diagram/sequence/api_sequence.png) | ![](skills/pretty-charts/examples/diagram/gantt/project_gantt.png) | ![](skills/pretty-charts/examples/diagram/mindmap/product_mindmap.png) | ![](skills/pretty-charts/examples/diagram/architecture/three_tier.png) |
 
 | TikZ 流程图·论文版 | TikZ 流程图·演示版 |
 |:---:|:---:|
@@ -60,7 +60,6 @@ cp -r pretty-charts/skills/pretty-charts ~/.zcode/skills/
 |---|---|
 | matplotlib | `plt.style.use("assets/matplotlib/academic.mplstyle")` |
 | ECharts | `echarts.registerTheme("pc", theme)` —— 主题 JSON 见 [assets/echarts/](skills/pretty-charts/assets/echarts/) |
-| mermaid | `mmdc -i d.mmd -o d.png -c assets/mermaid/mermaid-config.json -b white -s 2` |
 | TikZ | `\input{assets/tikz/preamble.tex}` + `\input{assets/tikz/flowchart-styles.tex}` |
 
 ## 质量分档
@@ -77,11 +76,11 @@ cp -r pretty-charts/skills/pretty-charts ~/.zcode/skills/
 
 | 时机 | 文件 |
 |---|---|
-| ① 被代码加载，不读 | `assets/matplotlib/*.mplstyle` · `assets/echarts/*.json` · `assets/mermaid/*.json` · `assets/tikz/*.tex` |
+| ① 被代码加载，不读 | `assets/matplotlib/*.mplstyle` · `assets/echarts/*.json` · `assets/tikz/*.tex` |
 | ② AI 每次任务必读 | `SKILL.md`（定性 + 定档） |
 | ③ 定档后读一次 | [`references/scenarios.md`](skills/pretty-charts/references/scenarios.md)（对应档位一节） |
 | ④ 画什么读什么 | `references/data/`（9 类分析目的 + 选型）· `references/diagram/`（5 类图型 + 选型） |
-| ⑤ 按工具栈读 | `data/tool-{matplotlib,echarts}.md` · `diagram/tool-{mermaid,tikz,graphviz,svg}.md` |
+| ⑤ 按工具栈读 | `data/tool-{matplotlib,echarts}.md` · `diagram/tool-{tikz,graphviz,svg}.md` |
 | ⑥ 交付前查 | `references/style-guide.md` §7 对应清单 · `assets/fonts.md` |
 | ⑦ 参照模仿 | `examples/`（代码 + 成图） |
 
@@ -98,7 +97,7 @@ pretty-charts/
         │   ├── style-guide.md  # 风格总纲（配色/字体/导出/防误导/清单）
         │   ├── data/           # 数据图：选型 + 9 类目的 + 2 工具栈
         │   └── diagram/        # 非数据图：5 类图型 + 4 工具栈
-        ├── assets/             # palettes / matplotlib / echarts / mermaid / tikz / fonts
+        ├── assets/             # palettes / matplotlib / echarts / tikz / fonts
         ├── examples/           # 示例画廊：代码 + 成图
         └── scripts/            # 辅助脚本
 ```
@@ -118,7 +117,7 @@ pretty-charts/
 
 - [x] 风格基建（三套色盲友好主题 × 4 工具栈）
 - [x] 数据图方法论 + 首批画廊（10 图型）
-- [x] 非数据图方法论 + 首批画廊（mermaid 5 例 + TikZ 3 例）
+- [x] 非数据图方法论 + 首批画廊（TikZ 7 例：流程双版/时序/甘特/思维导/架构/管线示意）
 - [ ] 数据图第二批画廊：树图、桑基、山脊图、ECDF、哑铃图
 - [ ] 地理可视化示例（choropleth / 比例符号地图）
 - [ ] 信息图整页版式示例
@@ -127,7 +126,7 @@ pretty-charts/
 
 ## 致谢
 
-配色基于 [Okabe-Ito](https://jfly.uni-koeln.de/color/)、[Tableau 10](https://www.tableau.com/) 与 [Paul Tol](https://personal.sron.nl/~pault/) 色板；非数据图渲染依赖 [mermaid](https://mermaid.js.org/) 与 [TikZ/pgfplots](https://ctan.org/pkg/pgfplots)。
+配色基于 [Okabe-Ito](https://jfly.uni-koeln.de/color/)、[Tableau 10](https://www.tableau.com/) 与 [Paul Tol](https://personal.sron.nl/~pault/) 色板；非数据图渲染依赖 [TikZ/pgfplots](https://ctan.org/pkg/pgfplots) 与 [pgfgantt](https://ctan.org/pkg/pgfgantt)。
 
 ## 许可
 

@@ -1,6 +1,6 @@
 # 系统架构图（architecture）
 
-> 表达系统组成：分层、模块、部署拓扑、数据流。工具：mermaid（层级/逻辑简单时）、Graphviz（模块多、mermaid 布局爆炸时）、TikZ（出版级）。
+> 表达系统组成：分层、模块、部署拓扑、数据流。工具：**TikZ 为主**（复用 `flowchart-styles.tex` 双模式与 `pc sub`/`pc db` 样式）；Graphviz 仅在节点极多需要自动布局时备用。
 
 ## 图型清单
 
@@ -25,9 +25,9 @@
 
 - ❌ 万物皆矩形 + 万箭齐发（无形状语义、无依赖方向）
 - ❌ 一张图塞下三层抽象（用户 → 微服务 → 数据库字段）
-- ❌ 布局完全手摆导致连线交叉（交给 mermaid LR/TB 或 Graphviz dot）
+- ❌ 布局完全手摆导致连线交叉（交给 Graphviz dot 自动布局）
 - ❌ 缓存、消息队列画成普通框（它们是数据平面的关键，用专门形状）
 
 ## 示例
 
-`examples/diagram/architecture/three_tier.mmd`（分层架构 + 边界 + 形状语义）
+`examples/diagram/architecture/three_tier.tex`（TikZ 论文版：四层容器 + 圆柱存储 + 关键路径粗边框）

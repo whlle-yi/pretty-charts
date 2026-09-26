@@ -1,0 +1,37 @@
+% 论文版三层架构图：分层容器 + 形状语义 + 依赖方向单一（paper 模式）
+% 编译：xelatex -interaction=nonstopmode three_tier.tex
+\documentclass[border=6pt]{standalone}
+\input{../../../assets/tikz/preamble.tex}
+\input{../../../assets/tikz/flowchart-styles.tex}
+\setmainfont{Times New Roman}
+\setCJKmainfont{SimSun}
+\begin{document}
+\begin{tikzpicture}
+  % ---- 节点：四层，主轴 x=0，车道对称 ----
+  \node[pc process] (web) at (-1.7,0)    {Web 前端};
+  \node[pc process] (app) at (1.7,0)     {App};
+  \node[pc process] (gw)  at (0,-2.3)    {API 网关};
+  \node[pc key]     (ord) at (0,-4.7)    {订单服务};
+  \node[pc process] (pay) at (2.8,-4.7)  {支付服务};
+  \node[pc process] (inv) at (-2.8,-4.7) {库存服务};
+  \node[pc db]      (db)  at (0,-7.1)    {主库};
+  \node[pc db]      (cache)at (2.8,-7.1) {缓存};
+  \node[pc process] (mq)  at (-2.8,-7.1) {消息队列};
+
+  % ---- 阶段容器（虚线，无填充）----
+  \node[pc sub, fit=(web)(app),      inner sep=9pt, label={[pc sub label]above:客户端层}] {};
+  \node[pc sub, fit=(gw),            inner sep=9pt, label={[pc sub label]above:接入层}] {};
+  \node[pc sub, fit=(inv)(ord)(pay), inner sep=9pt, label={[pc sub label]above:服务层}] {};
+  \node[pc sub, fit=(mq)(db)(cache), inner sep=9pt, label={[pc sub label]above:数据层}] {};
+
+  % ---- 依赖箭头：方向统一（自上而下），全部直线或单次拐弯 ----
+  \draw[pc flow] (web.south) |- (gw.west);
+  \draw[pc flow] (app.south) |- (gw.east);
+  \draw[pc flow] (gw.south) -- (ord.north);
+  \draw[pc flow] (ord.west) -- node[pc label, above=1pt]{扣减} (inv.east);
+  \draw[pc flow] (ord.east) -- node[pc label, above=1pt]{创建} (pay.west);
+  \draw[pc flow] (ord.south) -- node[pc label, right=3pt]{读写} (db.north);
+  \draw[pc flow] (db.east) -- node[pc label, above=1pt]{同步} (cache.west);
+  \draw[pc flow back] (mq.west) -- ++(-0.55,0) |- node[pc label, above=1pt, pos=0.75]{异步更新} (inv.west);
+\end{tikzpicture}
+\end{document}

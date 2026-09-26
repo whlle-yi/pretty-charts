@@ -1,6 +1,6 @@
 ---
 name: pretty-charts
-description: 高质量图表绘制技能。当用户需要绘制、美化或选型任何图形时使用——数据图（折线、柱状、散点、箱线、热图、分布、相关、网络、地理等）与非数据图（流程图、时序图、架构图、思维导图、科研示意图、信息图等）。内置三套色盲友好主题（学术/商务/展示）与三档质量标准（出版级/报告级/展示级），覆盖 matplotlib/seaborn/plotly、ECharts/D3、mermaid/TikZ/Graphviz、SVG 手绘。凡涉及"画图、作图、可视化、示意图、图表配色、图表美化"一律使用本技能。
+description: 高质量图表绘制技能。当用户需要绘制、美化或选型任何图形时使用——数据图（折线、柱状、散点、箱线、热图、分布、相关、网络、地理等）与非数据图（流程图、时序图、架构图、思维导图、科研示意图、信息图等）。内置三套色盲友好主题（学术/商务/展示）与三档质量标准（出版级/报告级/展示级），覆盖 matplotlib/seaborn/plotly、ECharts/D3、TikZ/Graphviz、SVG 手绘。凡涉及"画图、作图、可视化、示意图、图表配色、图表美化"一律使用本技能。
 ---
 
 # pretty-charts —— 高质量绘图技能
@@ -27,7 +27,7 @@ description: 高质量图表绘制技能。当用户需要绘制、美化或选�
 
 **定档后先读 `references/scenarios.md` 对应节**——那里有该场景的精确阅读顺序（接下来看哪几个文件）与场景专属规则（期刊尺寸、论文流程图无底色、远距离可读等），再按其清单加载方法论文件。
 
-主题资产在 `assets/`：色板 `assets/palettes/*.json`、matplotlib `assets/matplotlib/*.mplstyle`、ECharts `assets/echarts/*.json`、mermaid `assets/mermaid/`、TikZ `assets/tikz/`、字体方案 `assets/fonts.md`。
+主题资产在 `assets/`：色板 `assets/palettes/*.json`、matplotlib `assets/matplotlib/*.mplstyle`、ECharts `assets/echarts/*.json`、TikZ `assets/tikz/`、字体方案 `assets/fonts.md`。
 
 ## 第 3 步：加载对应参考文件后作图
 
@@ -42,8 +42,8 @@ description: 高质量图表绘制技能。当用户需要绘制、美化或选�
 
 按图型加载：流程与时序（流程图、时序图、甘特图）、系统架构图、层级与逻辑（思维导图、组织架构）、概念示意/科研示意图、信息图。
 
-- 工具栈：`tool-mermaid.md`、`tool-tikz.md`、`tool-graphviz.md`、`tool-svg.md`
-- **流程图交付级一律 TikZ**：`assets/tikz/flowchart-styles.tex` 双模式——`\pcPaperMode` 论文版（无底色，中文宋体+Times New Roman）/ `\pcPPTMode` 演示版（showcase 彩色，中文黑体+Arial），结构不变只切模式；mermaid 只作流程草稿，时序/甘特/思维导仍用 mermaid。
+- 工具栈：`tool-tikz.md`（主力）、`tool-graphviz.md`（复杂自动布局备用）、`tool-svg.md`
+- **非数据图交付级一律 TikZ，不使用 mermaid**：流程图 `assets/tikz/flowchart-styles.tex`、时序图 `assets/tikz/sequence-styles.tex`，均双模式——`\pcPaperMode` 论文版（无底色，中文宋体+Times New Roman）/ `\pcPPTMode` 演示版（showcase 彩色，中文黑体+Arial）；甘特图用 pgfgantt、思维导图用 TikZ mindmap，同为论文风格。
 
 ## 执行顺序契约（防跳步，强制）
 
@@ -80,7 +80,6 @@ assets/
   ├── palettes/           ← 三套色板 JSON（唯一取色来源）
   ├── matplotlib/         ← 三个 .mplstyle
   ├── echarts/            ← 三个 ECharts 主题
-  ├── mermaid/            ← mermaid 全局配置
   ├── tikz/               ← TikZ/pgfplots 导言区模板
   └── fonts.md            ← 字体方案与回退链
 examples/

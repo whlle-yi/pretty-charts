@@ -22,7 +22,6 @@
 - 不确定度与显著性：SD/SE/95%CI 必须注明类型，星号规范见 `data/statistical.md`
 - 图注自含：n、统计口径、误差类型、检验方法全部写进 caption，不看正文也能懂
 - 导出：矢量 PDF 优先（`pdf.fonttype: 42` 已在主题内置），位图兜底 ≥600dpi
-- mermaid 只作流程草稿，**不进论文**
 
 ## T2 报告（商务/文档配图）
 
@@ -31,7 +30,7 @@
 **阅读顺序**：
 1. `style-guide.md` §2、§6（防误导红线）、§7.2（T2 自查清单）
 2. 数据图 → `references/data/` 对应目的文件 + `tool-matplotlib.md` / `tool-echarts.md`
-3. 流程/架构 → `references/diagram/` 对应文件 + `tool-mermaid.md`（交付可用）
+3. 流程/架构 → `references/diagram/` 对应文件 + `tool-tikz.md`
 4. 示例：`examples/` 各目录（换主题为 business 即可）
 
 **场景专属规则**：
@@ -48,7 +47,7 @@
 **阅读顺序**：
 1. `style-guide.md` §2、§7.3（T3 自查清单）
 2. 数据图 → `references/data/` 对应目的文件 + `tool-echarts.md`（网页/交互）或 `tool-matplotlib.md`（静态位图）
-3. 流程/架构 → `references/diagram/flowchart.md`（TikZ `\pcPPTMode`）或 `tool-mermaid.md`；信息图整页 → `diagram/infographic.md`
+3. 流程/架构 → `references/diagram/flowchart.md`（TikZ `\pcPPTMode`）；信息图整页 → `diagram/infographic.md`
 4. 示例：`examples/diagram/flowchart/ppt_flow.tex`（演示版流程图）
 
 **场景专属规则**：

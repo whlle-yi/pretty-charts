@@ -1,0 +1,44 @@
+% 论文版时序图：订单创建流程（paper 模式，无底色、宋体+TNR）
+% 编译：xelatex -interaction=nonstopmode api_sequence.tex
+\documentclass[border=6pt]{standalone}
+\input{../../../assets/tikz/preamble.tex}
+\input{../../../assets/tikz/flowchart-styles.tex}
+\input{../../../assets/tikz/sequence-styles.tex}
+\setmainfont{Times New Roman}
+\setCJKmainfont{SimSun}
+\begin{document}
+\begin{tikzpicture}
+  % ---- 参与者与生命线 ----
+  \node[seq participant] (u) at (0,0)     {用户};
+  \node[seq participant] (g) at (3.2,0)   {网关};
+  \node[seq participant] (s) at (6.4,0)   {订单服务};
+  \node[seq participant] (d) at (9.6,0)   {数据库};
+  \foreach \p in {u,g,s,d} \draw[seq lifeline] (\p.south) -- ++(0,-8.6);
+
+  % ---- 消息（实线=请求，虚线=返回；序号圆点标注）----
+  \draw[seq msg] ($(u.south)+(0,-1.0)$) -- node[seq label, above=1pt]{提交订单请求} ($(g.south)+(0,-1.0)$);
+  \node[seq num] at ($(u.south)+(0,-1.0)+(0.25,0.34)$) {1};
+  \draw[seq msg] ($(g.south)+(0,-1.8)$) -- node[seq label, above=1pt]{创建订单（鉴权通过）} ($(s.south)+(0,-1.8)$);
+  \node[seq num] at ($(g.south)+(0,-1.8)+(0.25,0.34)$) {2};
+  \draw[seq msg] ($(s.south)+(0,-2.6)$) -- node[seq label, above=1pt]{事务：扣库存+写订单} ($(d.south)+(0,-2.6)$);
+  \node[seq num] at ($(s.south)+(0,-2.6)+(0.25,0.34)$) {3};
+  \draw[seq ret] ($(d.south)+(0,-3.4)$) -- node[seq label, above=1pt]{提交成功} ($(s.south)+(0,-3.4)$);
+  \node[seq num] at ($(d.south)+(0,-3.4)+(-0.25,0.34)$) {4};
+  \draw[seq ret] ($(s.south)+(0,-4.2)$) -- node[seq label, above=1pt]{订单创建成功} ($(g.south)+(0,-4.2)$);
+  \node[seq num] at ($(s.south)+(0,-4.2)+(-0.25,0.34)$) {5};
+  \draw[seq ret] ($(g.south)+(0,-5.0)$) -- node[seq label, above=1pt]{返回订单号} ($(u.south)+(0,-5.0)$);
+  \node[seq num] at ($(g.south)+(0,-5.0)+(-0.25,0.34)$) {6};
+
+  % ---- alt 片段：库存不足分支 ----
+  \coordinate (a1) at ($(g.south)+(0,-5.7)$);
+  \coordinate (a2) at ($(s.south)+(0,-5.7)$);
+  \coordinate (a3) at ($(g.south)+(0,-8.2)$);
+  \coordinate (a4) at ($(s.south)+(0,-8.2)$);
+  \node[seq frame, fit=(a1)(a2)(a3)(a4), inner sep=6pt] (alt) {};
+  \node[seq frame label] at (alt.north west) {alt：库存不足};
+  \draw[seq ret] ($(s.south)+(0,-6.5)$) -- node[seq label, above=1pt]{409 冲突} ($(g.south)+(0,-6.5)$);
+  \node[seq num] at ($(s.south)+(0,-6.5)+(-0.25,0.34)$) {7};
+  \draw[seq ret] ($(g.south)+(0,-7.5)$) -- node[seq label, above=1pt]{提示库存不足} ($(u.south)+(0,-7.5)$);
+  \node[seq num] at ($(g.south)+(0,-7.5)+(-0.25,0.34)$) {8};
+\end{tikzpicture}
+\end{document}
