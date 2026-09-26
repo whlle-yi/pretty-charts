@@ -137,6 +137,23 @@ mmdc -i diagram.mmd -o diagram.png -c assets/mermaid/mermaid-config.json -b whit
 | business | Tableau 10 | T2 蓝色锚定 |
 | showcase | Paul Tol Vibrant | T3 高对比 |
 
+## 🗂 文件地图：什么时候用哪个
+
+skill 的文件不是让人通读的，而是 AI 按"洋葱式"路径按需加载的。按使用时机分八类：
+
+| 时机 | 文件 | 说明 |
+|---|---|---|
+| **① 从不被读，被代码加载** | `assets/matplotlib/*.mplstyle`、`assets/echarts/*.json`、`assets/mermaid/*.json`、`assets/tikz/*.tex` | `plt.style.use()` / `registerTheme()` / `mmdc -c` / `\input` 直接消费 |
+| **② AI 每次任务必读** | `skills/pretty-charts/SKILL.md` | 入口：定性 + 定档，全程唯一必读文件 |
+| **③ 定档后读一次** | `references/scenarios.md` | 只读对应档位一节：阅读清单 + 场景专属规则 |
+| **④ 画什么读什么** | `references/data/`（9 个分析目的 + 选型）、`references/diagram/`（5 类图型 + 选型） | 每次只读 1~2 个 |
+| **⑤ 按工具栈读** | `data/tool-{matplotlib,echarts}.md`、`diagram/tool-{mermaid,tikz,graphviz,svg}.md` | 技术细节与已知坑 |
+| **⑥ 交付前查** | `references/style-guide.md` §7 对应清单（§6 防误导红线随时）、`assets/fonts.md` | 逐项自查 |
+| **⑦ 参照模仿** | `examples/`（代码 + 成图） | 作图前找相近示例改 |
+| **⑧ 纯给人看** | `README.md`、`LICENSE` | AI 不读 |
+
+一次典型任务的实际读取路径：**② → ③ → ④⑤各 1~2 个 → ⑥**，其余文件全程不碰。完整决策流见 [SKILL.md 的执行顺序契约](skills/pretty-charts/SKILL.md)。
+
 ## 📁 仓库结构
 
 ```
