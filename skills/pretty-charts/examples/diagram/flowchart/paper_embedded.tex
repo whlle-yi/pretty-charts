@@ -1,0 +1,58 @@
+% 论文内嵌效果演示：论文版流程图（无底色、宋体+Times New Roman）嵌入真实论文片段
+% 编译：xelatex -interaction=nonstopmode paper_embedded.tex（需编译一遍即可，无交叉引用）
+\documentclass[12pt]{ctexart}
+\ctexset{fontset=none}
+\usepackage[a4paper, margin=2.6cm]{geometry}
+\input{../../../assets/tikz/preamble.tex}
+\input{../../../assets/tikz/flowchart-styles.tex}
+\setmainfont{Times New Roman}
+\setCJKmainfont{SimSun}
+\usepackage{caption}
+\captionsetup{font=small, labelsep=quad}
+\setcounter{section}{2}                          % 从"3"开始，模拟论文第 3 章
+\renewcommand{\thefigure}{\thesection.\arabic{figure}}
+
+\begin{document}
+\section{系统设计与实现}
+
+订单模块采用``校验---支付---回补''三段式处理框架。用户提交订单后，系统首先对请求参数
+进行完整性校验，校验失败的请求直接返回错误响应；校验通过后进入库存判断，库存充足则
+依次执行扣减库存与创建支付单两个关键步骤，任一步骤失败均汇入统一的失败通知通道。
+支付结果分为成功与超时两种情形：支付成功则订单完成；超时未付的订单被取消并回补库存，
+随后同样进入失败通知流程。整体处理流程如图~\ref{fig:order}~所示。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[node distance=6mm and 9mm]
+    \node[pc start]                                  (s)  {开始：用户提交订单};
+    \node[pc process, below=of s]                    (v)  {参数校验};
+    \node[pc decision, below=12mm of v]              (q)  {库存充足？};
+    \node[pc key, below=of q]                        (p)  {扣减库存};
+    \node[pc key, below=of p]                        (m)  {创建支付单};
+    \node[pc decision, below=of m]                   (r)  {支付成功？};
+    \node[pc key, below=of r]                        (ok) {订单完成};
+    \node[pc process, below left=6mm and 28mm of v]  (e)  {返回 400 错误};
+    \node[pc process, below left=12mm and 28mm of ok](n)  {下单失败通知};
+    \node[pc process, right=20mm of r]               (c)  {取消订单并回补库存};
+
+    \draw[pc flow] (s) -- (v);
+    \draw[pc flow] (v) -- node[pc label, right=2pt]{通过} (q);
+    \draw[pc flow] (v.west) -- node[pc label, above=1pt]{失败} ++(-0.85,0) |- (e.east);
+    \draw[pc flow] (q.south) -- node[pc label, right=2pt]{是} (p);
+    \draw[pc flow] (q.west) -- ++(-0.55,0) coordinate (nq) |- (n.135);
+    \node[pc label, right=3pt] at ($(nq)+(0.02,-0.55)$) {否};
+    \draw[pc flow] (p) -- (m);
+    \draw[pc flow] (m) -- (r);
+    \draw[pc flow] (r.south) -- node[pc label, right=2pt]{是} (ok);
+    \draw[pc flow] (r.east) -- node[pc label, above=1pt]{否} (c.west);
+    \draw[pc flow back] (c.south) |- (n.east);
+    \draw[pc flow] (e) -- (n);
+  \end{tikzpicture}
+  \caption{订单处理流程}
+  \label{fig:order}
+\end{figure}
+
+需要说明的是，图~\ref{fig:order}~中加粗边框的节点为关键路径上的原子操作：扣减库存与
+创建支付单必须在同一事务边界内完成，以保证超时取消时库存状态的一致性。该流程图与正文
+使用相同的字体（中文宋体、西文 Times New Roman），可直接参与论文排版，无需额外处理。
+\end{document}
