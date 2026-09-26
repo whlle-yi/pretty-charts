@@ -1,0 +1,36 @@
+% PPT 版流程图：\pcPPTMode —— showcase 彩色、中文黑体 + 西文 Arial
+% 结构与 paper_flow.tex 完全一致，仅模式与字体两行之差
+% 编译：xelatex -interaction=nonstopmode ppt_flow.tex
+\documentclass[border=6pt]{standalone}
+\input{../../../assets/tikz/preamble.tex}
+\input{../../../assets/tikz/flowchart-styles.tex}
+\setmainfont{Arial}
+\setCJKmainfont{Microsoft YaHei}
+\pcPPTMode
+\begin{document}
+\begin{tikzpicture}[node distance=7mm and 9mm]
+  \node[pc start]                                  (s)  {开始：用户提交订单};
+  \node[pc process, below=of s]                    (v)  {参数校验};
+  \node[pc decision, below=14mm of v]              (q)  {库存充足？};
+  \node[pc key, below=of q]                        (p)  {扣减库存};
+  \node[pc key, below=of p]                        (m)  {创建支付单};
+  \node[pc decision, below=of m]                   (r)  {支付成功？};
+  \node[pc key, below=of r]                        (ok) {订单完成};
+  \node[pc process, below left=8mm and 30mm of v]  (e)  {返回 400 错误};
+  \node[pc process, below left=12mm and 30mm of ok](n)  {下单失败通知};
+  \node[pc process, right=22mm of r]               (c)  {取消订单并回补库存};
+
+  \draw[pc flow] (s) -- (v);
+  \draw[pc flow] (v) -- node[pc label, right=2pt]{通过} (q);
+  \draw[pc flow] (v.west) -- node[pc label, above=1pt]{失败} ++(-0.85,0) |- (e.east);
+  \draw[pc flow] (q.south) -- node[pc label, right=2pt]{是} (p);
+  \draw[pc flow] (q.west) -- ++(-0.55,0) coordinate (nq) |- (n.135);
+  \node[pc label, right=3pt] at ($(nq)+(0.02,-0.55)$) {否};
+  \draw[pc flow] (p) -- (m);
+  \draw[pc flow] (m) -- (r);
+  \draw[pc flow] (r.south) -- node[pc label, right=2pt]{是} (ok);
+  \draw[pc flow] (r.east) -- node[pc label, above=1pt]{否} (c.west);
+  \draw[pc flow back] (c.south) |- (n.east);
+  \draw[pc flow] (e) -- (n);
+\end{tikzpicture}
+\end{document}

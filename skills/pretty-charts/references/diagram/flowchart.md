@@ -1,6 +1,16 @@
 # 流程与时序（flowchart）
 
-> 覆盖：流程图、时序图、状态图、甘特图。主力工具 mermaid（`tool-mermaid.md`），复杂布局退到 Graphviz。
+> 覆盖：流程图、时序图、状态图、甘特图。**流程图交付级一律用 TikZ**（预置样式 `assets/tikz/flowchart-styles.tex`，论文/演示双模式），mermaid 只用于快速草稿与非正式沟通；时序图/甘特图/思维导仍以 mermaid 为主力，复杂有向图退到 Graphviz。
+
+## 0. 流程图工具策略：TikZ 双模式
+
+| 模式 | 开关 | 配色 | 字体 | 适用 |
+|---|---|---|---|---|
+| 论文版 | `\pcPaperMode`（默认） | **无底色**：白底黑框，关键节点粗边框 | 中文宋体 + 西文 Times New Roman | 期刊/学位论文（黑白印刷友好） |
+| 演示版 | `\pcPPTMode` | showcase 彩色：主色实心强调关键路径 | 中文黑体 + 西文 Arial | PPT、海报、网页 |
+
+两版**节点形状、结构、连线完全一致，只差模式与字体两行**——改投递场景时不用重画。规范出处：论文插图不依赖颜色传达信息（黑白打印安全），演示场景则用颜色做视觉分层。
+
 
 ## 1. 流程图（flowchart）
 
@@ -44,4 +54,4 @@
 
 ## 示例
 
-`examples/diagram/flowchart/decision_flow.mmd`（流程图+分支标注）、`examples/diagram/sequence/api_sequence.mmd`、`examples/diagram/gantt/project_gantt.mmd`
+`examples/diagram/flowchart/paper_flow.tex`（论文版：无底色 + 宋体/TNR）、`ppt_flow.tex`（演示版：彩色 + 黑体/Arial，与论文版同一结构）、`decision_flow.mmd`（mermaid 草稿版）

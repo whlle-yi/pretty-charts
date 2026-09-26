@@ -1,0 +1,79 @@
+% ============================================================
+% pretty-charts TikZ 流程图预置样式
+% 论文版与 PPT 版共用同一套节点形状，仅配色/线宽不同：
+%   \pcPaperMode  ← 论文（默认）：黑白灰，无填充色
+%   \pcPPTMode    ← 演示：showcase 色板彩色，粗线大字
+% 用法：先 \input{assets/tikz/preamble.tex}，再 \input 本文件，正文选模式后作图。
+% 依赖库已在此加载：shapes.geometric, arrows.meta, positioning
+% ============================================================
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning}
+
+% ---- 论文版（黑白无底色；字体由文档设：中文宋体 + 西文 Times New Roman）----
+\newcommand{\pcPaperMode}{%
+  \def\pcNodeLine{black!75}\def\pcNodeFill{white}\def\pcNodeText{black}%
+  \def\pcKeyFill{white}\def\pcKeyLine{black}\def\pcKeyText{black}%
+  \def\pcKeyWidth{1pt}% 关键节点靠粗边框区分，不用灰底
+  \def\pcSubLine{black!40}\def\pcSubText{black!65}%
+  \def\pcArrow{black!80}\def\pcLabel{black!70}%
+  \def\pcNodeFont{\small}\def\pcFlowWidth{0.6pt}\def\pcStealth{2.2mm}}
+
+% ---- PPT 版（showcase 色板：蓝主色、橙强调；字体建议中文黑体 + 西文 Arial）----
+\newcommand{\pcPPTMode}{%
+  \definecolor{pcPptBlue}{HTML}{0077BB}%
+  \definecolor{pcPptOrange}{HTML}{EE7733}%
+  \def\pcNodeLine{pcPptBlue!80}\def\pcNodeFill{pcPptBlue!10}\def\pcNodeText{black}%
+  \def\pcKeyFill{pcPptBlue}\def\pcKeyLine{pcPptBlue}\def\pcKeyText{white}%
+  \def\pcKeyWidth{\pcFlowWidth}%
+  \def\pcSubLine{pcPptBlue!40}\def\pcSubText{black!65}%
+  \def\pcArrow{black!70}\def\pcLabel{pcPptOrange!90!black}%
+  \def\pcNodeFont{\normalsize}\def\pcFlowWidth{1.1pt}\def\pcStealth{3mm}}
+
+\pcPaperMode % 默认论文版；PPT 场景在文档里改调 \pcPPTMode
+
+% ---- 节点形状（形状语义与 references/diagram/flowchart.md 一致）----
+\tikzset{
+  % 起止节点：圆角胶囊
+  pc start/.style={draw=\pcNodeLine, fill=\pcNodeFill, rounded corners=10pt,
+                   minimum height=0.72cm, inner sep=7pt,
+                   font=\pcNodeFont, text=\pcNodeText, align=center},
+  % 处理：直角矩形
+  pc process/.style={draw=\pcNodeLine, fill=\pcNodeFill, rounded corners=1.5pt,
+                     minimum width=2.2cm, minimum height=0.75cm, inner sep=5pt,
+                     font=\pcNodeFont, text=\pcNodeText, align=center},
+  % 关键节点（关键路径）：论文版加粗边框（无底色），PPT 版主色实心白字
+  pc key/.style={pc process, draw=\pcKeyLine, fill=\pcKeyFill, text=\pcKeyText,
+                 line width=\pcKeyWidth, font=\pcNodeFont},
+  % 判断：菱形
+  pc decision/.style={shape=diamond, aspect=1.7, inner sep=1.5pt,
+                      draw=\pcNodeLine, fill=\pcNodeFill,
+                      font=\pcNodeFont, text=\pcNodeText, align=center},
+  % 输入/输出：平行四边形
+  pc io/.style={shape=trapezium, trapezium left angle=75, trapezium right angle=105,
+                inner sep=4pt, minimum height=0.72cm,
+                draw=\pcNodeLine, fill=\pcNodeFill,
+                font=\pcNodeFont, text=\pcNodeText, align=center},
+  % 数据库：圆柱
+  pc db/.style={shape=cylinder, shape border rotate=90, cylinder uses custom fill,
+                aspect=0.35, inner sep=2pt, minimum width=1.9cm, minimum height=1.0cm,
+                draw=\pcNodeLine, fill=\pcNodeFill,
+                font=\pcNodeFont, text=\pcNodeText, align=center},
+  % 阶段/边界容器：虚线框
+  pc sub/.style={draw=\pcSubLine, dashed, rounded corners=3pt, inner sep=8pt},
+  pc sub label/.style={font=\footnotesize, text=\pcSubText},
+}
+
+% ---- 箭头与标注 ----
+\tikzset{
+  pc flow/.style={-{Stealth[length=\pcStealth]}, line width=\pcFlowWidth, draw=\pcArrow},
+  pc flow back/.style={pc flow, dashed},                 % 回流/反馈：虚线
+  pc label/.style={font=\footnotesize, text=\pcLabel, fill=white, inner sep=1.5pt},
+}
+
+% ---- 用法示例 ----
+% \begin{tikzpicture}[node distance=8mm and 10mm]
+%   \node[pc start]                (s) {开始};
+%   \node[pc process, below=of s]  (a) {参数校验};
+%   \node[pc decision, below=of a] (b) {库存充足？};
+%   \draw[pc flow] (s) -- (a);
+%   \draw[pc flow] (a) -- node[pc label, right=2pt]{通过} (b);
+% \end{tikzpicture}

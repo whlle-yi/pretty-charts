@@ -49,11 +49,15 @@ pretty-charts 是一个给 AI Agent（ZCode / Claude Code 等 skills 机制）�
 
 ### 非数据图（mermaid 主题）
 
-| 订单流程图 | API 时序图 | 迭代甘特图 | 思维导图 | 三层架构图 |
+| 订单流程图（mermaid 草稿版） | API 时序图 | 迭代甘特图 | 思维导图 | 三层架构图 |
 |:---:|:---:|:---:|:---:|:---:|
 | ![](skills/pretty-charts/examples/diagram/flowchart/decision_flow.png) | ![](skills/pretty-charts/examples/diagram/sequence/api_sequence.png) | ![](skills/pretty-charts/examples/diagram/gantt/project_gantt.png) | ![](skills/pretty-charts/examples/diagram/mindmap/product_mindmap.png) | ![](skills/pretty-charts/examples/diagram/architecture/three_tier.png) |
 
-另有 TikZ/XeLaTeX 编译的[科研管线示意图（PDF 矢量）](skills/pretty-charts/examples/diagram/schematic/pipeline_schematic.pdf)。
+| TikZ 流程图·论文版（无底色，宋体+TNR） | TikZ 流程图·演示版（彩色，黑体+Arial） |
+|:---:|:---:|
+| ![](skills/pretty-charts/examples/diagram/flowchart/paper_flow.png) | ![](skills/pretty-charts/examples/diagram/flowchart/ppt_flow.png) |
+
+同一结构两套模式，只差样式开关与字体两行——另有 [科研管线示意图（PDF 矢量）](skills/pretty-charts/examples/diagram/schematic/pipeline_schematic.pdf)。
 
 ## 🚀 快速开始
 

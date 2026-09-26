@@ -23,7 +23,33 @@
 
 编译：`xelatex -interaction=nonstopmode file.tex`。
 
-## 3. 示意图常用技法（高质量的关键）
+## 3. 流程图预置样式（assets/tikz/flowchart-styles.tex）
+
+流程图**不要手写节点样式**，直接加载预置文件后选模式：
+
+```latex
+\input{assets/tikz/preamble.tex}
+\input{assets/tikz/flowchart-styles.tex}
+\setmainfont{Times New Roman}\setCJKmainfont{SimSun} % 论文版字体；演示版用 Arial+黑体
+% \pcPPTMode  % 演示版开关（默认 \pcPaperMode）
+\begin{document}
+\begin{tikzpicture}[node distance=7mm and 9mm]
+  \node[pc start]                 (s) {开始};
+  \node[pc process, below=of s]   (a) {处理};
+  \node[pc decision, below=of a]  (b) {条件？};
+  \node[pc key, below=of b]       (k) {关键步骤};
+  \node[pc db, right=of k]        (d) {数据库};
+  \node[pc io, right=of a]        (i) {输入输出};
+  \draw[pc flow]      (s) -- (a);
+  \draw[pc flow back] (c.south) |- (n.east);   % 回流虚线
+\end{tikzpicture}
+```
+
+可用样式：`pc start`（圆角起止）/ `pc process`（处理）/ `pc key`（关键路径：论文版粗边框、演示版主色实心）/ `pc decision`（菱形判断）/ `pc io`（平行四边形）/ `pc db`（圆柱）/ `pc sub`+`pc sub label`（阶段虚线框）/ `pc flow`、`pc flow back`（回流虚线）/ `pc label`（分支标签白底）。
+
+两模式约定：**论文版无底色**（黑白印刷安全，中文宋体+西文 Times New Roman），**演示版 showcase 彩色**（中文黑体+西文 Arial）；同一结构只切模式与字体两行。完整示例见 `examples/diagram/flowchart/paper_flow.tex` 与 `ppt_flow.tex`。
+
+## 4. 示意图常用技法（高质量的关键）
 
 ```latex
 % 节点样式集中定义，全场复用
@@ -46,7 +72,7 @@
 - 箭头样式全场统一（`Stealth` 一致尺寸）；线宽：主线 `thick`（0.8–1pt），辅助线 `thin`。
 - 文字节点 `align=center`，防长文本撑爆框。
 
-## 4. 常见坑
+## 5. 常见坑
 
 1. **Windows 的 Noto Sans SC 是可变字体，xdvipdfmx 无法嵌入**（报 `fatal: Invalid font`）→ TikZ 出 PDF 用 Microsoft YaHei 或静态版思源黑体；matplotlib/ECharts 不受影响。
 2. standalone 中文：文档类选项加 `varwidth` 或直接用 `standalone` + xeCJK（模板已含）。

@@ -41,6 +41,7 @@ description: 高质量图表绘制技能。当用户需要绘制、美化或选�
 按图型加载：流程与时序（流程图、时序图、甘特图）、系统架构图、层级与逻辑（思维导图、组织架构）、概念示意/科研示意图、信息图。
 
 - 工具栈：`tool-mermaid.md`、`tool-tikz.md`、`tool-graphviz.md`、`tool-svg.md`
+- **流程图交付级一律 TikZ**：`assets/tikz/flowchart-styles.tex` 双模式——`\pcPaperMode` 论文版（无底色，中文宋体+Times New Roman）/ `\pcPPTMode` 演示版（showcase 彩色，中文黑体+Arial），结构不变只切模式；mermaid 只作流程草稿，时序/甘特/思维导仍用 mermaid。
 
 ## 通用规则（任何图、任何档都适用）
 
