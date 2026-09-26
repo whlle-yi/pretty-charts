@@ -45,6 +45,19 @@ description: 高质量图表绘制技能。当用户需要绘制、美化或选�
 - 工具栈：`tool-mermaid.md`、`tool-tikz.md`、`tool-graphviz.md`、`tool-svg.md`
 - **流程图交付级一律 TikZ**：`assets/tikz/flowchart-styles.tex` 双模式——`\pcPaperMode` 论文版（无底色，中文宋体+Times New Roman）/ `\pcPPTMode` 演示版（showcase 彩色，中文黑体+Arial），结构不变只切模式；mermaid 只作流程草稿，时序/甘特/思维导仍用 mermaid。
 
+## 执行顺序契约（防跳步，强制）
+
+以下顺序不可调换，**上一步未完成不得进入下一步**：
+
+1. **定性定档**（读本文件完成）；
+2. **读 `references/scenarios.md` 对应档位一节**，拿到阅读清单与场景规则；
+3. **按清单读完列出的方法论文件**——在此之前**禁止写出任何绘图代码**，哪怕你已经"知道"怎么画；
+4. **作图**：代码中必须显式引用主题资产路径（如 `plt.style.use(".../academic.mplstyle")`），禁止硬编码样式常量；
+5. **交付**：交付说明必须包含三项，缺一视为不合规——
+   - 本次实际读取的文件列表；
+   - 所用主题与档位（如 academic / T1）；
+   - 对应自查清单（style-guide §7.x）的逐项结论。
+
 ## 通用规则（任何图、任何档都适用）
 
 1. **防误导优先于美观**：柱状图 y 轴必须从 0 开始；不滥用双轴；截断轴必须显式标注；不确定度（误差棒/置信区间）不能省略。详见 `references/style-guide.md` §6。
