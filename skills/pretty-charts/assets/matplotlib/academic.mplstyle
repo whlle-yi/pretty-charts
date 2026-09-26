@@ -1,0 +1,70 @@
+# academic.mplstyle —— T1 出版级默认主题（配合 assets/palettes/academic.json 使用）
+# 注意：mplstyle 文件中 "#" 会被解析为行内注释，颜色一律用 RGB 元组（0-1 浮点）书写，
+# 与色板 JSON 中十六进制的对应关系已在各行注释中标明（注释在行首，安全）。
+# 尺寸按期刊单栏 90mm = 3.54in 设计；双栏图请覆盖 figsize 为 (7.48, h)
+
+# ---- 画布 ----
+figure.figsize: 3.54, 2.55
+figure.dpi: 150
+figure.facecolor: white
+savefig.dpi: 600
+savefig.bbox: tight
+savefig.pad_inches: 0.02
+savefig.facecolor: white
+
+# ---- 字体：中文思源黑体(Noto Sans SC) + 西文/数字 Arial ----
+font.family: sans-serif
+font.sans-serif: Source Han Sans SC, Noto Sans SC, Microsoft YaHei, Arial, Helvetica, DejaVu Sans
+mathtext.fontset: stix
+axes.unicode_minus: False
+
+# ---- 文字层级 ----
+axes.titlesize: 11
+axes.titleweight: bold
+axes.labelsize: 10
+xtick.labelsize: 9
+ytick.labelsize: 9
+legend.fontsize: 9
+
+# ---- 坐标轴 ----
+# 色板: #333333 / #4D4D4D / #CCCCCC
+axes.linewidth: 0.8
+axes.edgecolor: 0.2, 0.2, 0.2
+axes.labelcolor: 0.2, 0.2, 0.2
+# 色板 categorical: 0072B2 D55E00 009E73 CC79A7 E69F00 56B4E9 999999
+axes.prop_cycle: cycler('color', [(0, 0.447, 0.698), (0.835, 0.369, 0), (0, 0.620, 0.451), (0.8, 0.475, 0.655), (0.902, 0.624, 0), (0.337, 0.706, 0.914), (0.6, 0.6, 0.6)])
+axes.axisbelow: True
+xtick.color: 0.302, 0.302, 0.302
+ytick.color: 0.302, 0.302, 0.302
+xtick.direction: out
+ytick.direction: out
+
+# ---- 网格：仅 y 向浅色实线，辅助读数不抢主体 ----
+axes.grid: True
+axes.grid.axis: y
+grid.color: 0.8, 0.8, 0.8
+grid.linewidth: 0.5
+grid.linestyle: -
+grid.alpha: 0.6
+
+# ---- 去顶右刺，学术惯例 ----
+axes.spines.top: False
+axes.spines.right: False
+
+# ---- 数据元素 ----
+lines.linewidth: 1.5
+lines.markersize: 5
+lines.markeredgewidth: 0
+patch.linewidth: 0
+errorbar.capsize: 2
+hatch.linewidth: 0.5
+
+# ---- 图例：无边框 ----
+legend.frameon: False
+legend.handlelength: 1.5
+legend.borderaxespad: 0.4
+
+# ---- 导出：矢量优先，文字保持可编辑 ----
+pdf.fonttype: 42
+ps.fonttype: 42
+svg.fonttype: none

@@ -1,0 +1,43 @@
+{
+  "name": "academic",
+  "tier": "T1 出版级",
+  "color": ["#0072B2", "#D55E00", "#009E73", "#CC79A7", "#E69F00", "#56B4E9", "#999999"],
+  "backgroundColor": "transparent",
+  "textStyle": { "fontFamily": "'Noto Sans SC', 'Source Han Sans SC', 'Microsoft YaHei', Arial, sans-serif" },
+  "title": {
+    "textStyle": { "fontSize": 14, "fontWeight": 600, "color": "#1A1A1A" },
+    "subtextStyle": { "fontSize": 12, "color": "#666666" },
+    "left": "left", "top": 0, "itemGap": 4
+  },
+  "legend": {
+    "textStyle": { "fontSize": 12, "color": "#333333" },
+    "itemGap": 14, "itemWidth": 14, "itemHeight": 8, "icon": "roundRect"
+  },
+  "tooltip": {
+    "backgroundColor": "#FFFFFF", "borderColor": "#CCCCCC", "borderWidth": 1,
+    "padding": [6, 10], "textStyle": { "fontSize": 12, "color": "#333333" },
+    "extraCssText": "box-shadow: 0 2px 8px rgba(0,0,0,0.12);"
+  },
+  "categoryAxis": {
+    "axisLine": { "lineStyle": { "color": "#4D4D4D" } },
+    "axisTick": { "show": false },
+    "axisLabel": { "color": "#4D4D4D", "fontSize": 11 },
+    "splitLine": { "show": false }
+  },
+  "valueAxis": {
+    "axisLine": { "show": false },
+    "axisTick": { "show": false },
+    "axisLabel": { "color": "#4D4D4D", "fontSize": 11 },
+    "splitLine": { "show": true, "lineStyle": { "color": "#CCCCCC", "width": 0.5 } }
+  },
+  "timeAxis": {
+    "axisLine": { "lineStyle": { "color": "#4D4D4D" } },
+    "axisLabel": { "color": "#4D4D4D", "fontSize": 11 },
+    "splitLine": { "show": false }
+  },
+  "logAxis": {
+    "axisLine": { "show": false },
+    "axisLabel": { "color": "#4D4D4D", "fontSize": 11 },
+    "splitLine": { "show": true, "lineStyle": { "color": "#CCCCCC", "width": 0.5 } }
+  }
+}

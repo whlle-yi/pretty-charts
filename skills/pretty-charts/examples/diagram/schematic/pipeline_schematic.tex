@@ -1,0 +1,29 @@
+% TikZ 科研管线示意图：模块 + 语义箭头 + 阶段分组（schematic.md 三要素）
+% 编译：xelatex -interaction=nonstopmode pipeline_schematic.tex
+\documentclass[border=6pt]{standalone}
+\input{../../../assets/tikz/preamble.tex}
+\usetikzlibrary{positioning, arrows.meta, backgrounds, fit}
+\setCJKmainfont{Microsoft YaHei} % 示意图中文：Noto Sans SC 为可变字体无法嵌入 PDF，用雅黑
+\begin{document}
+\begin{tikzpicture}[
+  module/.style={draw=pcBlue, fill=pcBlue!15, rounded corners=2pt,
+                 minimum width=2.0cm, minimum height=0.9cm, align=center, font=\small},
+  store/.style={module, fill=pcGray!20, draw=pcGray},
+  flow/.style={-{Stealth[length=2.5mm]}, thick, pcAxis},
+]
+\node[module] (src)  {原始数据};
+\node[module, right=1.0cm of src]  (etl)   {清洗\\\footnotesize 去重/插补};
+\node[module, right=1.0cm of etl]  (feat)  {特征工程\\\footnotesize 标准化};
+\node[module, right=1.0cm of feat] (model) {模型训练\\\footnotesize 五折交叉验证};
+\node[store,  right=1.0cm of model] (reg)  {模型注册};
+\draw[flow] (src)  -- node[above, font=\footnotesize]{采集}   (etl);
+\draw[flow] (etl)  -- node[above, font=\footnotesize]{清洗后} (feat);
+\draw[flow] (feat) -- node[above, font=\footnotesize]{特征}   (model);
+\draw[flow] (model) -- node[above, font=\footnotesize]{最优}  (reg);
+\begin{scope}[on background layer]
+  \node[draw=pcGrid, fill=pcBlue!5, rounded corners=4pt,
+        fit=(src)(etl)(feat), inner sep=8pt,
+        label={[font=\footnotesize, text=pcTick]above:数据准备}] {};
+\end{scope}
+\end{tikzpicture}
+\end{document}

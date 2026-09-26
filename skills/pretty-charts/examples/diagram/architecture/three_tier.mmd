@@ -1,0 +1,29 @@
+flowchart TB
+    subgraph Client["客户端层"]
+        W["Web 前端"]
+        A["App"]
+    end
+    subgraph Gateway["接入层"]
+        GW["API 网关"]
+    end
+    subgraph Service["服务层"]
+        ORD["订单服务"]
+        PAY["支付服务"]
+        INV["库存服务"]
+    end
+    subgraph Data["数据层"]
+        DB[("主库 PostgreSQL")]
+        RD[("缓存 Redis")]
+        MQ["消息队列"]
+    end
+    W --> GW
+    A --> GW
+    GW --> ORD
+    ORD --> PAY
+    ORD --> INV
+    ORD --> RD
+    ORD --> MQ
+    MQ --> INV
+    PAY --> EXT(["外部支付渠道"])
+    classDef ext fill:#999999,color:#1A1A1A,stroke:#666666
+    class EXT ext

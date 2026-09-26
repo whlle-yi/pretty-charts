@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.ipynb_checkpoints/
+
+# 系统与编辑器
+Thumbs.db
+.DS_Store
+.idea/
+.vscode/
+
+# 渲染中间产物（示例成图属于交付物，不忽略 output 下的最终 PNG/SVG/PDF）
+*.tmp
+temp/

@@ -1,0 +1,19 @@
+{
+  "name": "showcase",
+  "tier": "T3 展示级",
+  "description": "展示活力风格，基于 Paul Tol Vibrant，饱和度与对比度更高，适合 PPT、海报与社交媒体。",
+  "reference": "Paul Tol Vibrant",
+  "categorical": ["#0077BB", "#EE7733", "#009988", "#EE3377", "#33BBEE", "#CC3311", "#BBBBBB"],
+  "categorical_note": "Tol Vibrant 共 7 色；深色背景放映时保持原色，浅色投影仪偏暗时可将整体透明度降为 0.9",
+  "primary": "#0077BB",
+  "accent": "#EE7733",
+  "sequential": ["#FDE725", "#B4DE2C", "#6DCD59", "#35B779", "#1F9E89", "#26828E", "#31688E", "#3E4989", "#482878", "#440154"],
+  "sequential_note": "viridis，由浅到深；感知均匀且色盲安全，适合热图与连续色带",
+  "diverging": ["#3B4CC0", "#6788EE", "#9ABBFF", "#C9D7F0", "#DDDDDD", "#F2CBB7", "#F0A387", "#E56B5D", "#B40426"],
+  "diverging_note": "coolwarm，用于表示相对中心点的偏离",
+  "neutral": "#BBBBBB",
+  "neutral_note": "背景参照系列、次要曲线",
+  "text": { "title": "#1A1A1A", "label": "#333333", "tick": "#4D4D4D" },
+  "grid": "#D9D9D9",
+  "background": "#FFFFFF"
+}

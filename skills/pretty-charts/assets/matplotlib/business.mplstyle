@@ -1,0 +1,70 @@
+# business.mplstyle —— T2 报告级默认主题（配合 assets/palettes/business.json 使用）
+# 注意：mplstyle 文件中 "#" 会被解析为行内注释，颜色一律用 RGB 元组（0-1 浮点）书写，
+# 与色板 JSON 中十六进制的对应关系已在各行注释中标明（注释在行首，安全）。
+# 16:9 报告画布，字号比出版级大一档，适合文档与投屏
+
+# ---- 画布 ----
+figure.figsize: 6.4, 3.6
+figure.dpi: 110
+figure.facecolor: white
+savefig.dpi: 200
+savefig.bbox: tight
+savefig.pad_inches: 0.05
+savefig.facecolor: white
+
+# ---- 字体：中文思源黑体(Noto Sans SC) + 西文/数字 Arial ----
+font.family: sans-serif
+font.sans-serif: Source Han Sans SC, Noto Sans SC, Microsoft YaHei, Arial, Helvetica, DejaVu Sans
+mathtext.fontset: stix
+axes.unicode_minus: False
+
+# ---- 文字层级 ----
+axes.titlesize: 13
+axes.titleweight: bold
+axes.labelsize: 11
+xtick.labelsize: 10
+ytick.labelsize: 10
+legend.fontsize: 10
+
+# ---- 坐标轴 ----
+# 色板: #D0D0D0 / #4D4D4D / #D9D9D9
+axes.linewidth: 0.8
+axes.edgecolor: 0.816, 0.816, 0.816
+axes.labelcolor: 0.2, 0.2, 0.2
+# 色板 categorical: 4E79A7 F28E2B E15759 76B7B2 59A14F EDC948 B07AA1 FF9DA7 9C755F BAB0AC
+axes.prop_cycle: cycler('color', [(0.306, 0.475, 0.655), (0.949, 0.557, 0.169), (0.882, 0.341, 0.349), (0.463, 0.718, 0.698), (0.349, 0.631, 0.310), (0.929, 0.788, 0.282), (0.690, 0.478, 0.631), (1, 0.616, 0.655), (0.612, 0.459, 0.373), (0.729, 0.690, 0.675)])
+axes.axisbelow: True
+xtick.color: 0.302, 0.302, 0.302
+ytick.color: 0.302, 0.302, 0.302
+xtick.direction: out
+ytick.direction: out
+
+# ---- 网格：仅 y 向浅色实线 ----
+axes.grid: True
+axes.grid.axis: y
+grid.color: 0.851, 0.851, 0.851
+grid.linewidth: 0.6
+grid.linestyle: -
+grid.alpha: 0.7
+
+# ---- 去顶右刺 ----
+axes.spines.top: False
+axes.spines.right: False
+
+# ---- 数据元素 ----
+lines.linewidth: 2
+lines.markersize: 5.5
+lines.markeredgewidth: 0
+patch.linewidth: 0
+errorbar.capsize: 2
+hatch.linewidth: 0.5
+
+# ---- 图例 ----
+legend.frameon: False
+legend.handlelength: 1.6
+legend.borderaxespad: 0.4
+
+# ---- 导出：矢量优先，文字保持可编辑 ----
+pdf.fonttype: 42
+ps.fonttype: 42
+svg.fonttype: none

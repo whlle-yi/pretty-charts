@@ -1,0 +1,64 @@
+% ============================================================
+% pretty-charts TikZ/pgfplots 导言区模板 —— academic 档（T1 出版级）
+% 编译方式：XeLaTeX。business/showcase 档改字号与 cycle list（见文件末尾注释）
+% ============================================================
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{arrows.meta, positioning, calc}
+
+% ---- 图表字体：中文黑体 + 西文 Arial（XeLaTeX；正文仍可用全局宋体+TNR，互不影响）----
+% 注意：Windows 的 Noto Sans SC 多为可变字体(VF)，xdvipdfmx 无法嵌入（fatal: Invalid font），
+% 故 TikZ 导出 PDF 用 Microsoft YaHei；装有静态版思源黑体(Source Han Sans SC)的机器可换回。
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\newCJKfontfamily\chartcjk{Microsoft YaHei}
+\newcommand{\chartfont}[1]{{\chartcjk\fontspec{Arial}#1}}
+
+% ---- 色板：academic（Okabe-Ito 重排，与 assets/palettes/academic.json 一致）----
+\definecolor{pcBlue}{HTML}{0072B2}
+\definecolor{pcOrange}{HTML}{D55E00}
+\definecolor{pcGreen}{HTML}{009E73}
+\definecolor{pcMagenta}{HTML}{CC79A7}
+\definecolor{pcYellow}{HTML}{E69F00}
+\definecolor{pcCyan}{HTML}{56B4E9}
+\definecolor{pcGray}{HTML}{999999}
+\definecolor{pcGrid}{HTML}{CCCCCC}
+\definecolor{pcAxis}{HTML}{333333}
+\definecolor{pcTick}{HTML}{4D4D4D}
+
+% ---- 全局轴风格：去顶右刺、浅色 y 网格、字号层级 ----
+\pgfplotsset{
+  every axis/.append style={
+    axis line style={pcAxis, line width=0.4pt},
+    label style={font=\small, text=pcAxis},
+    tick label style={font=\footnotesize, text=pcTick},
+    title style={font=\small\bfseries, text=pcTitleBlack},
+    legend style={font=\footnotesize, draw=none, fill=none, nodes={scale=0.9, transform shape}},
+    grid=major,
+    major grid style={pcGrid, line width=0.4pt},
+    axis x line*=bottom,
+    axis y line*=left,
+    tick style={pcTick, line width=0.4pt},
+  },
+  every axis plot/.append style={line width=0.9pt},
+  /pgfplots/error bars/error bar style={line width=0.5pt},
+}
+
+% ---- 色板循环列表 ----
+\pgfplotscreateplotcyclelist{pc academic}{
+  pcBlue\\ pcOrange\\ pcGreen\\ pcMagenta\\ pcYellow\\ pcCyan\\ pcGray\\
+}
+
+% ---- 用法示例 ----
+% \begin{tikzpicture}
+%   \begin{axis}[cycle list name=pc academic, xlabel={年份}, ylabel={销量}, title={标题}]
+%     \addplot coordinates {(1,2) (2,4) (3,3)};
+%   \end{axis}
+% \end{tikzpicture}
+
+% ============================================================
+% business 档（T2）差异：字号放大一档（label \normalsize / tick \small），
+% cycle list 换 4E79A7/F28E2B/E15759/76B7B2/59A14F/EDC948/B07AA1/FF9DA7/9C755F/BAB0AC
+% showcase 档（T3）：字号再放大（label \large / tick \normalsize），line width=1.4pt，
+% cycle list 换 0077BB/EE7733/009988/EE3377/33BBEE/CC3311/BBBBBB
+% ============================================================

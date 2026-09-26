@@ -1,0 +1,43 @@
+{
+  "name": "showcase",
+  "tier": "T3 展示级",
+  "color": ["#0077BB", "#EE7733", "#009988", "#EE3377", "#33BBEE", "#CC3311", "#BBBBBB"],
+  "backgroundColor": "transparent",
+  "textStyle": { "fontFamily": "'Noto Sans SC', 'Source Han Sans SC', 'Microsoft YaHei', Arial, sans-serif" },
+  "title": {
+    "textStyle": { "fontSize": 20, "fontWeight": 700, "color": "#1A1A1A" },
+    "subtextStyle": { "fontSize": 15, "color": "#666666" },
+    "left": "left", "top": 0, "itemGap": 6
+  },
+  "legend": {
+    "textStyle": { "fontSize": 15, "color": "#333333" },
+    "itemGap": 20, "itemWidth": 18, "itemHeight": 10, "icon": "roundRect"
+  },
+  "tooltip": {
+    "backgroundColor": "#FFFFFF", "borderColor": "#D9D9D9", "borderWidth": 1,
+    "padding": [8, 12], "textStyle": { "fontSize": 14, "color": "#333333" },
+    "extraCssText": "box-shadow: 0 2px 8px rgba(0,0,0,0.12);"
+  },
+  "categoryAxis": {
+    "axisLine": { "lineStyle": { "color": "#C0C0C0" } },
+    "axisTick": { "show": false },
+    "axisLabel": { "color": "#4D4D4D", "fontSize": 14 },
+    "splitLine": { "show": false }
+  },
+  "valueAxis": {
+    "axisLine": { "show": false },
+    "axisTick": { "show": false },
+    "axisLabel": { "color": "#4D4D4D", "fontSize": 14 },
+    "splitLine": { "show": true, "lineStyle": { "color": "#D9D9D9", "width": 0.6 } }
+  },
+  "timeAxis": {
+    "axisLine": { "lineStyle": { "color": "#C0C0C0" } },
+    "axisLabel": { "color": "#4D4D4D", "fontSize": 14 },
+    "splitLine": { "show": false }
+  },
+  "logAxis": {
+    "axisLine": { "show": false },
+    "axisLabel": { "color": "#4D4D4D", "fontSize": 14 },
+    "splitLine": { "show": true, "lineStyle": { "color": "#D9D9D9", "width": 0.6 } }
+  }
+}
