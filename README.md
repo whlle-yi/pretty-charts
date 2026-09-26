@@ -107,6 +107,7 @@ pretty-charts/
 | 文档 | 内容 |
 |---|---|
 | [SKILL.md](skills/pretty-charts/SKILL.md) | 入口：定性 → 定档 → 执行顺序契约 |
+| [content-analysis.md](skills/pretty-charts/references/content-analysis.md) | 只有一段内容不知画什么图？从这里开始 |
 | [scenarios.md](skills/pretty-charts/references/scenarios.md) | 三档场景：阅读顺序与专属规则 |
 | [style-guide.md](skills/pretty-charts/references/style-guide.md) | 配色 / 字体 / 导出 / 防误导红线 / 三档清单 |
 | [chart-selection.md](skills/pretty-charts/references/data/chart-selection.md) | 数据图选型决策树 |
