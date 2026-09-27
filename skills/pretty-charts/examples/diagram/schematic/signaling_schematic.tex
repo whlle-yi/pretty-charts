@@ -1,0 +1,54 @@
+% 信号通路机制示意图（schematic.md 指导）：实体-箭头-标注三要素 + 激活/抑制语义 + 双层容器
+% 编译：xelatex -interaction=nonstopmode signaling_schematic.tex
+% 转 PNG：rungs -sDEVICE=png16m -r200 -dBATCH -dNOPAUSE -sOutputFile=signaling_schematic.png signaling_schematic.pdf
+\documentclass[border=6pt]{standalone}
+\input{../../../references/style/tikz/preamble.tex}
+\input{../../../references/style/tikz/flowchart-styles.tex}
+\usetikzlibrary{shapes.geometric, backgrounds, fit}
+\setmainfont{Times New Roman}
+\setCJKmainfont{SimSun}
+
+% 箭头语义：实线箭头=激活；T 形端=抑制（schematic.md 规范，图注声明）
+\tikzset{
+  act/.style={pc flow},
+  inh/.style={{Bar[width=3.5mm]}-, line width=0.7pt, draw=\pcArrow},
+  mol/.style={circle, draw=pcBlue, fill=pcBlue!10, minimum size=1.15cm,
+              inner sep=1pt, font=\footnotesize, align=center, text=\pcNodeText},
+}
+
+\begin{document}
+\begin{tikzpicture}
+  % ---- 实体 ----
+  \node[mol]           (lig)  at (0.6,8.35)  {配体};
+  \node[pc process]    (rec)  at (3.2,8.35)  {受体};
+  \node[mol]           (cx)   at (3.2,6.6)   {信号\\复合物};
+  \node[mol]           (tf)   at (6.0,4.8)   {转录\\因子};
+  \node[pc process]    (gene) at (9.8,4.8)   {靶基因};
+  \node[pc process]    (pro)  at (12.7,4.8)  {细胞增殖};
+  \node[mol]           (inhp) at (3.2,1.5)   {抑制蛋白};
+
+  % ---- 容器：细胞 / 细胞核（先画底层容器再画实体亦可，这里实体在前、容器透明不遮挡）----
+  \begin{scope}[on background layer]
+    \node[pc sub, rounded corners=10pt, inner sep=10pt,
+          fit=(rec)(cx)(tf)(gene)(pro)(inhp)] (cell) {};
+    \node[pc sub, rounded corners=14pt, inner sep=8pt,
+          fit=(tf)(gene), inner sep=9pt,
+          label={[pc sub label]below right:细胞核}] (nuc) {};
+  \end{scope}
+  \node[pc sub label, anchor=north west] at (cell.north west) {细胞};
+
+  % ---- 激活通路（实线箭头，全部直线或单次拐弯）----
+  \draw[act] (lig.east) -- node[pc label, above=1pt]{结合} (rec.west);
+  \draw[act] (rec.south) -- node[pc label, right=2pt]{激活} (cx.north);
+  \draw[act] (cx.south) -- ++(0,-0.45) -| node[pc label, above=1pt, pos=0.3]{转位入核} (tf.north);
+  \draw[act] (tf.east) -- node[pc label, above=1pt]{启动表达} (gene.west);
+  \draw[act] (gene.east) -- node[pc label, above=1pt]{介导} (pro.west);
+  \draw[act] (gene.south) |- node[pc label, below=1pt, pos=0.7]{编码} (inhp.west);
+
+  % ---- 负反馈抑制（T 形端指向受体）----
+  \draw[inh] (inhp.north) |- node[pc label, above=1pt, pos=0.5]{负反馈抑制} (cx.south);
+  % ---- 箭头语义图例 ----
+  \draw[act] (11.6,8.9) -- (12.4,8.9) node[right, font=\footnotesize, text=black]{激活};
+  \draw[inh] (11.6,8.1) -- (12.4,8.1) node[right, font=\footnotesize, text=black]{抑制};
+\end{tikzpicture}
+\end{document}
