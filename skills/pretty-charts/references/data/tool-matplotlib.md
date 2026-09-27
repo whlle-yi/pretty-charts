@@ -78,3 +78,4 @@ fig.legend(handles, labels, loc="outside upper center", ncols=len(labels))
 2. mplstyle 里循环色键名必须 `axes.prop_cycle`（下划线）；点号形式报 Bad key。
 3. 中文字体在 Linux 服务器缺失 → 先装 fonts-noto-cjk，否则豆腐块。
 4. seaborn 新版本用 `hue` 传系列后 legend 位置需手工收（`sns.move_legend`）。
+5. **Noto Sans SC 是可变字体，matplotlib 导出的 PDF 子集经 Ghostscript 渲染会丢字形**（PDF 在 Adobe/浏览器中正常，但出版系统的 gs 管线会翻车）——需经 gs 转图或投给 gs 基管线的期刊时，把静态字体 Microsoft YaHei 提到回退链首位：`sans = rcParams["font.sans-serif"]; sans.insert(0, "Microsoft YaHei")`。实战案例见 `examples/data/paper/make_paper_figures.py` 的 `gs_safe_fonts()`。

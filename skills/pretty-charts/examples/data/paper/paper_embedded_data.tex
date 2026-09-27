@@ -1,0 +1,49 @@
+% 论文数据图内嵌效果演示（paper-data.md 指导）：期刊规格 + SciencePlots + Crameri 色图
+% 编译：xelatex -interaction=nonstopmode paper_embedded_data.tex（两遍，交叉引用）
+\documentclass[12pt]{ctexart}
+\ctexset{fontset=none}
+\usepackage[a4paper, margin=2.6cm]{geometry}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage[subrefformat=parens]{subcaption}
+\captionsetup{font=small, labelsep=quad}
+\setcounter{section}{2}
+\renewcommand{\thefigure}{\thesection.\arabic{figure}}
+
+\setmainfont{Times New Roman}
+\setCJKmainfont{SimSun}
+
+\begin{document}
+\section{系统设计与实现}
+
+处理组与对照组的相对表达量在观测期内呈指数分化，处理组第 7 天的表达量约为对照组的
+2.1 倍；剂量实验中高剂量组疗效评分显著高于安慰剂组（$p<0.001$），各观测指标间的
+相关结构如图~\ref{fig:line}~与图~\ref{fig:panels}~所示。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics{fig1.pdf}
+  \caption{处理组与对照组相对表达量的时间 course。实线为均值，阴影为 95\% 置信带
+  （$n=8$ 次/时间点）。}
+  \label{fig:line}
+\end{figure}
+
+图~\ref{fig:line}~按期刊单栏宽度（90\,mm）制作：无图内标题（信息由图注承载）、
+线端直接标注系列名、颜色来自 Okabe-Ito 色板并以中性灰标注对照组，缩放后字号
+不低于 7\,pt。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\linewidth]{fig2.pdf}
+  \caption{多面板组合示例。(a)~各剂量组疗效评分（均值 $\pm$ 95\%CI，双侧 $t$ 检验，
+  $n=32$/组，$***p<0.001$）；(b)~观测指标相关矩阵（Crameri \emph{vik} 发散色图，
+  中心对齐零点）。}
+  \label{fig:panels}
+\end{figure}
+
+图~\ref{fig:panels}~按期刊双栏宽度（190\,mm）制作并拆分为两个面板：面板标签采用
+小写粗体字母置于左上角外侧；(a)~中柱状图 y 轴自零点起、误差棒类型在图注中说明；
+(b)~采用感知均匀的发散色图并以白色分隔各格。全部图形均为矢量 PDF，字体以内嵌
+TrueType 子集形式嵌入，可直接通过出版系统的字体检查。
+
+\end{document}
