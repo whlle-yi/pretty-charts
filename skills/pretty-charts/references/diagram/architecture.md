@@ -1,6 +1,7 @@
 # 系统架构图（architecture）
 
 > 表达系统组成：分层、模块、部署拓扑、数据流。工具：**TikZ 为主**（复用 `flowchart-styles.tex` 双模式与 `pc sub`/`pc db` 样式）；Graphviz 仅在节点极多需要自动布局时备用。
+> 通用红线（防误导九条）与配色/字体/导出规范见 `../style-guide.md`；本文件只列本图型特有规范。
 
 ## 图型清单
 

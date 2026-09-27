@@ -22,19 +22,11 @@ description: 高质量图表绘制技能。当用户需要绘制、美化或选�
 
 **诚实原则**：内容里没有数据不建议数据图，没有结构不建议流程图；只有结论没有数字时先要原始数据；两种图型难分伯仲时选信息损耗更小的一种。
 
-## 第 2 步：定档——质量标准分三档
+## 第 2 步：定档——读场景入口
 
-档位决定默认主题与自查清单的严格程度。用户未说明时按下表默认，已说明则遵从用户：
+档位由交付场景决定：学术语境 → T1 出版级（academic），工作文档 → T2 报告级（business），演示/宣传 → T3 展示级（showcase）；用户已说明档位则遵从。
 
-| 档位 | 名称 | 默认主题 | 典型场景 | 自查清单 |
-|------|------|----------|----------|----------|
-| T1 | 出版级 | academic | 期刊论文、学位论文、正式报告 | `references/style-guide.md` §7.1 |
-| T2 | 报告级 | business | 咨询报告、文档配图、商务汇报 | `references/style-guide.md` §7.2 |
-| T3 | 展示级 | showcase | PPT、海报、社交媒体 | `references/style-guide.md` §7.3 |
-
-**定档后先读 `references/scenarios.md` 对应节**——那里有该场景的精确阅读顺序（接下来看哪几个文件）与场景专属规则（期刊尺寸、论文流程图无底色、远距离可读等），再按其清单加载方法论文件。
-
-主题资产在 `references/style/`：色板 `references/style/palettes/*.json`、matplotlib `references/style/matplotlib/*.mplstyle`、ECharts `references/style/echarts/*.json`、TikZ `references/style/tikz/`、字体方案 `references/style/fonts.md`。
+**三档定义、各档阅读路径与场景专属规则，统一见 `references/scenarios.md`（唯一定义处）**——定档后读对应节，按其清单加载方法论文件。主题资产在 `references/style/`：色板、matplotlib、ECharts、TikZ 模板。
 
 ## 第 3 步：加载对应参考文件后作图
 
@@ -65,11 +57,11 @@ description: 高质量图表绘制技能。当用户需要绘制、美化或选�
    - 所用主题与档位（如 academic / T1）；
    - 对应自查清单（style-guide §7.x）的逐项结论。
 
-## 通用规则（任何图、任何档都适用）
+## 通用规则（**底线摘要**——此处有意复述以防跳步，完整规范见 `references/style-guide.md`）
 
 1. **防误导优先于美观**：柱状图 y 轴必须从 0 开始；不滥用双轴；截断轴必须显式标注；不确定度（误差棒/置信区间）不能省略。详见 `references/style-guide.md` §6。
 2. **颜色只从色板取**：三套色板全部色盲友好，禁止临时凑色；类别数超过色板容量时做小倍数图或合并，不加色。
-3. **字体**：中文思源黑体（Noto Sans SC），西文/数字 Arial；最小字号按档位，见 `references/style/fonts.md`。
+3. **字体**：中文思源黑体（Noto Sans SC），西文/数字 Arial（TikZ 论文版宋体+Times New Roman）；最小字号按档位，见 `references/style-guide.md` §4。
 4. **导出**：矢量优先（PDF/SVG）；位图 DPI 按档位；尺寸按交付场景（期刊单栏 90mm/双栏 190mm、PPT 16:9、网页自适应）。
 5. **画完必自查**：对照第 2 步选定的检查清单逐项过，发现问题先修再看下一项。
 6. **示例画廊**：`examples/` 下每类图附可运行代码与成图，作图前可先找相近示例改。
@@ -88,7 +80,6 @@ references/style/
   ├── matplotlib/         ← 三个 .mplstyle
   ├── echarts/            ← 三个 ECharts 主题
   ├── tikz/               ← TikZ/pgfplots 导言区模板
-  └── fonts.md            ← 字体方案与回退链
 examples/
   ├── data/               ← 数据图示例（代码 + 成图）
   ├── diagram/            ← 非数据图示例（代码 + 成图）

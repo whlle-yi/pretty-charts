@@ -81,7 +81,7 @@ cp -r pretty-charts/skills/pretty-charts ~/.zcode/skills/
 | ③ 定档后读一次 | [`references/scenarios.md`](skills/pretty-charts/references/scenarios.md)（对应档位一节） |
 | ④ 画什么读什么 | `references/data/`（9 类分析目的 + 选型）· `references/diagram/`（5 类图型 + 选型） |
 | ⑤ 按工具栈读 | `data/tool-{matplotlib,echarts}.md` · `diagram/tool-{tikz,graphviz,svg}.md` |
-| ⑥ 交付前查 | `references/style-guide.md` §7 对应清单 · `references/style/fonts.md` |
+| ⑥ 交付前查 | `references/style-guide.md` §7 对应清单 · §4 字体 · §6 红线 |
 | ⑦ 参照模仿 | `examples/`（代码 + 成图） |
 
 ## 仓库结构
@@ -97,7 +97,7 @@ pretty-charts/
         │   ├── style-guide.md  # 风格总纲（配色/字体/导出/防误导/清单）
         │   ├── data/           # 数据图：选型 + 9 类目的 + 2 工具栈
         │   └── diagram/        # 非数据图：5 类图型 + 4 工具栈
-        │   └── style/          # 风格资产：palettes / matplotlib / echarts / tikz / fonts
+        │   └── style/          # 风格资产：palettes / matplotlib / echarts / tikz
         ├── examples/           # 示例画廊：代码 + 成图
 ```
 
@@ -107,7 +107,7 @@ pretty-charts/
 |---|---|
 | [SKILL.md](skills/pretty-charts/SKILL.md) | 入口：内容审读 → 定档 → 执行顺序契约 |
 | [scenarios.md](skills/pretty-charts/references/scenarios.md) | 三档场景：阅读顺序与专属规则 |
-| [style-guide.md](skills/pretty-charts/references/style-guide.md) | 配色 / 字体 / 导出 / 防误导红线 / 三档清单 |
+| [style-guide.md](skills/pretty-charts/references/style-guide.md) | 配色 / 字体 / 导出 / 防误导红线 / 三档清单（字体的唯一出处） |
 | [chart-selection.md](skills/pretty-charts/references/data/chart-selection.md) | 数据图选型决策树 |
 | [diagram-selection.md](skills/pretty-charts/references/diagram/diagram-selection.md) | 非数据图选型决策树 |
 | [fonts.md](skills/pretty-charts/references/style/fonts.md) | 字体方案与回退链 |

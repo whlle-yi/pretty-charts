@@ -1,61 +1,46 @@
 # 场景入口（scenarios）
 
-> 按交付场景聚合的**阅读路径**与**场景专属规则**。SKILL.md 第 2 步定档后，先读本文件对应节，再按其清单加载方法论文件——避免漏读自查清单、漏看场景特例。
->
-> **本文件的"阅读顺序"是编码前置条件，不是建议**：对应节列出的文件全部读取完成之前，不得写出任何绘图代码（SKILL.md 执行顺序契约第 3 步）。
+> 三档档位的**唯一定义处**：定档依据、各档阅读路径与场景专属规则都在这里。SKILL.md 第 2 步定档后进入对应节。
+> 阅读顺序是编码前置条件（SKILL.md 执行顺序契约）；通用规范（配色/字体/导出/防误导）统一见 `style-guide.md`，本文件只列场景特例。
 
-## T1 论文（学术出版）
+## 三档定义
 
-**典型任务**：期刊论文、学位论文的数据图与流程图/示意图。
+| | T1 出版级 | T2 报告级 | T3 展示级 |
+|---|---|---|---|
+| 场景 | 期刊论文、学位论文、正式报告 | 咨询/商务报告、文档配图、邮件插图 | PPT、海报、社交媒体 |
+| 默认主题（色板来源） | academic（Okabe-Ito） | business（Tableau 10） | showcase（Tol Vibrant） |
+| 画布 | 期刊栏宽决定（90/190mm） | 16:9 或版心宽度 | 16:9（PPT 页面等大） |
+| 字号逻辑 | 印刷可读即可（最小 7pt） | 屏幕舒适阅读（最小 9pt） | 远距离可读（最小 11pt） |
+| 线条 | 细（0.8–1.5pt） | 中（1–2pt） | 粗（2–2.5pt） |
+| 位图 DPI | ≥600（线图 ≥1200 更佳） | 200 | 200 |
+| 装饰余量 | 几乎为零 | 克制 | 可用强调色块/大标注 |
 
-**阅读顺序**：
-1. `style-guide.md` §2（三档定义）、§5.1（期刊尺寸）、§7.1（T1 自查清单）
-2. `references/style/fonts.md`（字号下限与中西文规则）
-3. 数据图 → `references/data/` 对应分析目的文件 + `tool-matplotlib.md`
-4. 流程图 → `references/diagram/flowchart.md` + `tool-tikz.md`；示意图 → `schematic.md`
-5. 示例：`examples/data/`（academic 主题）、`examples/diagram/flowchart/paper_embedded*.tex`（论文内嵌写法）
+用户未指定档位时：学术语境 → T1，工作文档 → T2，演示/宣传 → T3。同一交付物内**所有图必须同一档位**。档位是场景标准而非质量排名，质量以 `style-guide.md` §7 对应清单衡量。
 
-**场景专属规则**：
-- 尺寸按期刊栏宽：单栏 90mm（3.54in）、双栏 190mm（7.48in），matplotlib `figsize` 直接换算填入
-- 主题锁定 `academic.mplstyle`；流程图用 `\pcPaperMode`（**无底色**），字体在文档层声明**中文宋体 + 西文 Times New Roman**
-- 黑白可辨：数据图系列叠加线型/标记做冗余编码；流程图靠边框粗细区分关键路径，**不靠颜色**
-- 不确定度与显著性：SD/SE/95%CI 必须注明类型，星号规范见 `data/statistical.md`
-- 图注自含：n、统计口径、误差类型、检验方法全部写进 caption，不看正文也能懂
-- 导出：矢量 PDF 优先（`pdf.fonttype: 42` 已在主题内置），位图兜底 ≥600dpi
+## T1 论文
 
-## T2 报告（商务/文档配图）
+**阅读顺序**：① `style-guide.md` §3 配色、§4 字体、§5 尺寸导出 → ② 数据图读 `data/` 对应目的文件 + `data/tool-matplotlib.md`；流程图读 `diagram/flowchart.md` + `tool-tikz.md`，示意图读 `diagram/schematic.md` → ③ 示例：`examples/data/`、`examples/diagram/flowchart/paper_embedded*.tex` → ④ 交付前过 `style-guide.md` §7.1。
 
-**典型任务**：咨询报告、工作文档、商务汇报的插图。
+**场景特例**：
+- figsize 按期刊栏宽换算：单栏 90mm = 3.54in，双栏 190mm = 7.48in
+- 流程图 `\pcPaperMode`（无底色），文档层声明中文宋体 + 西文 Times New Roman
 
-**阅读顺序**：
-1. `style-guide.md` §2、§6（防误导红线）、§7.2（T2 自查清单）
-2. 数据图 → `references/data/` 对应目的文件 + `tool-matplotlib.md` / `tool-echarts.md`
-3. 流程/架构 → `references/diagram/` 对应文件 + `tool-tikz.md`
-4. 示例：`examples/` 各目录（换主题为 business 即可）
+## T2 报告
 
-**场景专属规则**：
-- 主题 `business.mplstyle` / ECharts `business.json`；Word 配图宽度对齐版心（15–16cm）
-- 标题即结论（"Q3 华南区增速第一（+34% YoY）"），关键数值直接标注在图上
-- 数字口径、单位、时间范围在图内可追溯；柱状 y 轴零起点，无违规双轴
-- 允许语义色（success/warning/danger）表达达标/预警
-- 导出 200dpi PNG 或 SVG；嵌入文档后图内文字 ≥9pt
+**阅读顺序**：① `style-guide.md` §3、§4、§5 → ② `data/` 对应目的文件 + `data/tool-matplotlib.md` / `tool-echarts.md`；结构图读 `diagram/` 对应文件 → ③ `examples/`（换 business 主题）→ ④ §7.2。
 
-## T3 演示（PPT/海报/社交媒体）
+**场景特例**：
+- Word 配图宽度对齐版心（15–16cm）；网页交付 ECharts 用 business 主题
+- 允许语义色（success/warning/danger，见 `style-guide.md` §3.2 语义色条目）
 
-**典型任务**：幻灯片插图、海报版块、信息图数据块、网页大屏。
+## T3 演示
 
-**阅读顺序**：
-1. `style-guide.md` §2、§7.3（T3 自查清单）
-2. 数据图 → `references/data/` 对应目的文件 + `tool-echarts.md`（网页/交互）或 `tool-matplotlib.md`（静态位图）
-3. 流程/架构 → `references/diagram/flowchart.md`（TikZ `\pcPPTMode`）；信息图整页 → `diagram/infographic.md`
-4. 示例：`examples/diagram/flowchart/ppt_flow.tex`（演示版流程图）
+**阅读顺序**：① `style-guide.md` §3、§4、§5 → ② `data/` 对应目的文件 + `data/tool-echarts.md`（网页/交互）；流程图 `flowchart.md`（TikZ `\pcPPTMode`）；信息图整页 `diagram/infographic.md` → ③ `examples/diagram/flowchart/ppt_flow.tex` → ④ §7.3。
 
-**场景专属规则**：
-- 主题 `showcase.mplstyle` / ECharts `showcase.json` / TikZ `\pcPPTMode`；深色背景检查对比度
-- **一页一结论**：删掉与结论无关的系列，系列数 ≤3
-- 远距离可读：等效字号 ≥11pt、线宽 ≥2pt；标注直接放数据旁，不用小图例
-- 导出尺寸 = 插入位置等大（PPT 半页 15×8.4cm），位图不缩放；ECharts 动画仅入场
+**场景特例**：
+- 深色背景（大屏）需检查对比度；ECharts 动画仅入场
+- 导出尺寸 = 插入位置等大（PPT 半页 15×8.4cm），位图不缩放
 
 ## 通用收尾（三档都要）
 
-画完按 `style-guide.md` §7 对应档位清单**逐项自查**。交付说明必须写明三项（SKILL.md 执行顺序契约第 5 步）：**已读文件列表、所用主题与档位、自查清单逐项结论**。用户可凭这三项核验是否按规范执行。
+画完按 `style-guide.md` §7 对应档位清单**逐项自查**。交付说明必须写明三项（SKILL.md 执行顺序契约第 5 步）：**已读文件列表、所用主题与档位、自查清单逐项结论**。
