@@ -36,13 +36,13 @@ description: 高质量图表绘制技能。用户要画图、美化图、选图�
 
 | 介质 | 档位 | 色板 | 要加载的主题资产 |
 |---|---|---|---|
-| 印刷，可能只有黑白 | T1 出版级 | academic | `assets/matplotlib/academic.mplstyle`、`assets/echarts/academic.json` |
+| 印刷，可能只有黑白 | T1 出版级 | academic | `references/assets/matplotlib/academic.mplstyle`、`references/assets/echarts/academic.json` |
 | 屏幕文档，逐字阅读 | T2 报告级 | business | 上面两个文件，文件名换 `business` |
 | 投影、远距离、一屏一结论 | T3 展示级 | showcase | 上面两个文件，文件名换 `showcase` |
 
 本步产出：档位，加上表里最后一列那几个资产文件路径。同一交付物内所有图同档同色板。
 
-TikZ 例外：`assets/tikz/` 不按档位命名，也没有 business 模式，别去找 `assets/tikz/business.tex`。
+TikZ 例外：`references/assets/tikz/` 不按档位命名，也没有 business 模式（不存在名为 `business.tex` 的资产，别去找）。
 
 本步不查规范文档（`spec.md`、`tools/` 留到第 3 步）；字号、线宽、DPI、画布等数值参数在第 3 步读 `spec.md` 时一并用到。
 
@@ -75,9 +75,9 @@ TikZ 例外：`assets/tikz/` 不按档位命名，也没有 business 模式，�
 
 作图要求：
 
-- 显式加载主题资产，禁止硬编码样式常量（色值、字号、线宽、DPI、figsize）。颜色只从 `assets/palettes/*.json` 取。
+- 显式加载主题资产，禁止硬编码样式常量（色值、字号、线宽、DPI、figsize）。颜色只从 `references/assets/palettes/*.json` 取。
 - 非数据图交付级用 TikZ，不用 mermaid。
-- `\pcPaperMode` / `\pcPPTMode` 只切配色、线宽、字号，字体另用 `assets/tikz/fonts-serif.tex` 或 `fonts-sans.tex`。
+- `\pcPaperMode` / `\pcPPTMode` 只切配色、线宽、字号，字体另用 `references/assets/tikz/fonts-serif.tex` 或 `references/assets/tikz/fonts-sans.tex`。
 
 ## 第 4 步：交付
 

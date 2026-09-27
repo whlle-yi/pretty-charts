@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""堆叠柱状图：构成 × 类别，绝对量 + 总量标注（composition.md）。
+"""堆叠柱状图：构成 × 类别，绝对量 + 总量标注（charts/compare.md「构成类」）。
 
 堆叠图中只有最底块可直接比大小；如需比较上方分量，改用分面小倍数图。
 """
@@ -11,7 +11,7 @@ import numpy as np
 
 STYLE = Path(__file__).resolve().parents[3] / "references" / "assets" / "matplotlib"
 plt.rcParams.update(plt.rcParamsDefault)
-# 取色唯一来源：references/assets/palettes/academic.json（spec/color.md §1：禁止硬编码色值）
+# 取色唯一来源：references/assets/palettes/academic.json（references/spec.md「取色与配色」§1：禁止硬编码色值）
 SKILL_ROOT = Path(__file__).resolve().parents[3]
 PALETTE = json.loads(
     (SKILL_ROOT / "references" / "assets" / "palettes" / "academic.json")

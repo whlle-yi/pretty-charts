@@ -42,7 +42,7 @@
 | **示例可跑** | 16 个 Python 脚本 + 16 个 LaTeX 源文件，成图全部由仓库内代码实际渲染并提交 |
 | **可校验结构** | 五项自检脚本（引用完整性 / 孤儿方法论 / 孤儿示例 / 硬编码颜色 / 产出存在性） + 生成式示例索引 + GitHub Actions CI |
 | **跨平台** | LaTeX 字体层按字体存在性自动回退（Windows 宋体/雅黑 → Noto CJK → TeX Live 自带 Fandol），同一份示例在 Windows 与 Linux 均可编译 |
-| **降级路径** | 无 XeLaTeX、缺中文字体、只能出位图时怎么办，写在 [`routing.md` §5](skills/pretty-charts/SKILL.md)，不允许"默默出一张不合规的图" |
+| **降级路径** | 无 XeLaTeX、缺中文字体、只能出位图时怎么办，写在 [`SKILL.md`](skills/pretty-charts/SKILL.md)「环境缺失」一节，不允许"默默出一张不合规的图" |
 
 ## 示例
 
@@ -97,7 +97,7 @@ cp -r pretty-charts/skills/pretty-charts ~/.claude/skills/
 > 画一张论文用的训练流程图
 > 这张季度销售数据该怎么展示？给我三种方案
 
-Agent 会按 [`SKILL.md`](skills/pretty-charts/SKILL.md) 的四步契约执行：**定性（画什么图）→ 定档（按输出介质）→ 按 `routing.md` 加载对应方法论 → 交付前过清单自查**，并在交付说明里给出所用档位、导出规格与清单结论。
+Agent 会按 [`SKILL.md`](skills/pretty-charts/SKILL.md) 的四步契约执行：**定性（画什么图）→ 定档（按输出介质）→ 按 `SKILL.md` 第 3 步加载对应方法论 → 交付前过清单自查**，并在交付说明里给出所用档位、导出规格与清单结论。
 
 ### 2. 只用风格资产
 
@@ -151,7 +151,7 @@ LaTeX 示例需要 **XeLaTeX**（TeX Live 2026 实测），宏包：`pgfplots`�
 
 **已知限制（不隐瞒）**：
 
-- TikZ 侧目前只实现了 **academic（论文版）** 与 PPT 两种模式，**没有 business 模式**；[`routing.md`](skills/pretty-charts/SKILL.md) 与 `spec/` 已如实标注。
+- TikZ 侧目前只实现了 **academic（论文版）** 与 PPT 两种模式，**没有 business 模式**；[`SKILL.md`](skills/pretty-charts/SKILL.md) 与 [`references/spec.md`](skills/pretty-charts/references/spec.md) 已如实标注。
 - CI 只验证"能跑通、能编译、结构自洽"，**不做成图字节比对**——matplotlib 的字体光栅化与 xelatex 的 PDF ID/时间戳跨平台必然不同，字节比对只会产生噪声失败。
 - Windows 原生的宋体/雅黑与 Times New Roman/Arial 在 Linux 上不存在，字体由 [`fonts-serif.tex`](skills/pretty-charts/references/assets/tikz/fonts-serif.tex) / [`fonts-sans.tex`](skills/pretty-charts/references/assets/tikz/fonts-sans.tex) 逐级回退（Windows 原生 → Noto CJK → Fandol → 最后只发警告不报错，故缺字体不会中断编译）。该回退链**已由 CI（Ubuntu + TeX Live）实测通过**，Linux 前置包为 `fonts-noto-cjk fonts-noto-cjk-extra fonts-texgyre`——其中 `fonts-texgyre` 容易漏，漏了会报 `The font "TeX Gyre Termes" cannot be found`（TeX Live 自带的那份对 fontconfig 不可见）。
 - PNG 转换命令（Ghostscript）未在本机实测——环境未安装 `gs`；PDF 产物本身已验证。
@@ -164,7 +164,7 @@ LaTeX 示例需要 **XeLaTeX**（TeX Live 2026 实测），宏包：`pgfplots`�
 | T2 报告级 | 屏幕文档：咨询 / 商务文档 | business（Tableau 10） | 标题即结论、关键数值直标、语义色可用 |
 | T3 展示级 | 投影 / 远距离：PPT / 海报 / 大屏 | showcase（Tol Vibrant） | 一图一结论、系列 ≤3、远距离可读 |
 
-**档位由输出介质判定**（印刷 / 屏幕文档 / 投影），不是"学术 vs 商务"这类社交标签——完整判定表与参数差异见 [`routing.md` §1](skills/pretty-charts/SKILL.md)。档位是**场景标准而非质量排名**，质量以 [`checklist.md`](skills/pretty-charts/SKILL.md) 对应清单衡量。
+**档位由输出介质判定**（印刷 / 屏幕文档 / 投影），不是"学术 vs 商务"这类社交标签——完整判定表与参数差异见 [`SKILL.md`](skills/pretty-charts/SKILL.md) 第 2 步。档位是**场景标准而非质量排名**，质量以 `SKILL.md` 第 4 步对应清单衡量。
 
 ## 目录结构
 

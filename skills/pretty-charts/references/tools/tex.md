@@ -4,7 +4,7 @@
 
 
 > T1 出版级示意图主力：矢量、字体与 LaTeX 正文一致、几何精确。编译 XeLaTeX。导言区与配色模板：`references/assets/tikz/preamble.tex`。
-> **横切规范只在本技能 `spec/` 定义一次**（红线 [`../spec.md`](../spec.md)、取色 [`../spec.md`](../spec.md)、字体 [`../spec.md`](../spec.md)、尺寸与落盘 [`../spec.md`](../spec.md)）；本文件**只讲本工具栈的用法与坑**，不复述上述内容。
+> **横切规范只在本技能 `references/spec.md` 定义一次**（红线 [`../spec.md`](../spec.md)、取色 [`../spec.md`](../spec.md)、字体 [`../spec.md`](../spec.md)、尺寸与落盘 [`../spec.md`](../spec.md)）；本文件**只讲本工具栈的用法与坑**，不复述上述内容。
 
 ### 1. 定位
 
@@ -87,7 +87,7 @@ TikZ 侧只有两种模式，**没有 business 模式**，资产也不按档位�
 
 1. **Windows 的 Noto Sans SC 是可变字体，xdvipdfmx 无法嵌入**（报 `fatal: Invalid font`）→ TikZ 出 PDF 用 Microsoft YaHei 或静态版思源黑体；matplotlib/ECharts 不受影响。
 2. standalone 的中文支持：模板 `preamble.tex` 已 `\usepackage{xeCJK}`，无需另加；`standalone` 默认紧贴内容，故示例统一用 `\documentclass[border=6pt]{standalone}` 留白，中文不会被裁切。`varwidth` 是"按内容宽度折行"的选项，与中文无关，不要为中文去加它。
-3. 节点距离用 `positioning` 库的 `below=of` / `right=of` 做**相对定位**；确需坐标定位时（如 `flowchart.md` 的"节点用坐标对齐车道"、并列终点同行）才用 `at (x,y)`，且同类节点必须共用同一套 x/y 基线，避免只为躲线而把图撑宽。
+3. 节点距离用 `positioning` 库的 `below=of` / `right=of` 做**相对定位**；确需坐标定位时（如 `diagrams.md` 的"节点用坐标对齐车道"、并列终点同行）才用 `at (x,y)`，且同类节点必须共用同一套 x/y 基线，避免只为躲线而把图撑宽。
 4. 箭头 `->` 与 `-{Stealth}` 混用会导致全场箭头不一致——统一在 tikzset 定义。
 5. pgfplots 混排时坐标系：示意图元素放 `axis description cs` 或画在 axis 外层 tikzpicture。
 6. 编译慢/循环深：`\usetikzlibrary{positioning, arrows.meta, calc, fit, backgrounds}` 按需加，别全量。
@@ -98,7 +98,7 @@ TikZ 侧只有两种模式，**没有 business 模式**，资产也不按档位�
 
 
 > TikZ 手摆无法驾驭时的退路：模块多、边乱、需要自动最小化交叉的**有向图**。引擎 dot（分层，架构图）、neato/fdp（力导向，网络）、circo（环状）。本机未安装 dot，本文件样式未经实测，使用前先验证。
-> **横切规范只在本技能 `spec/` 定义一次**（红线 [`../spec.md`](../spec.md)、取色 [`../spec.md`](../spec.md)、字体 [`../spec.md`](../spec.md)、尺寸与落盘 [`../spec.md`](../spec.md)）；本文件**只讲本工具栈的用法与坑**，不复述上述内容。
+> **横切规范只在本技能 `references/spec.md` 定义一次**（红线 [`../spec.md`](../spec.md)、取色 [`../spec.md`](../spec.md)、字体 [`../spec.md`](../spec.md)、尺寸与落盘 [`../spec.md`](../spec.md)）；本文件**只讲本工具栈的用法与坑**，不复述上述内容。
 
 ### 1. 基本用法
 
@@ -145,11 +145,11 @@ digraph G {
 
 
 > 最后手段：信息图、海报、复杂插画、需要完全自定义视觉时。成本最高，先确认 TikZ/Graphviz 真不够用。
-> **横切规范只在本技能 `spec/` 定义一次**（红线 [`../spec.md`](../spec.md)、取色 [`../spec.md`](../spec.md)、字体 [`../spec.md`](../spec.md)、尺寸与落盘 [`../spec.md`](../spec.md)）；本文件**只讲本工具栈的用法与坑**，不复述上述内容。
+> **横切规范只在本技能 `references/spec.md` 定义一次**（红线 [`../spec.md`](../spec.md)、取色 [`../spec.md`](../spec.md)、字体 [`../spec.md`](../spec.md)、尺寸与落盘 [`../spec.md`](../spec.md)）；本文件**只讲本工具栈的用法与坑**，不复述上述内容。
 
 ### 1. 何时用 SVG
 
-- 信息图/海报整页版式（infographic.md）；
+- 信息图/海报整页版式（`diagrams.md`「信息图与海报」）；
 - 插画级示意图（渐变、圆角、阴影、图标组合）；
 - 需要在网页中带交互（CSS hover、JS 动画）的示意图。
 
@@ -167,7 +167,7 @@ digraph G {
 2. 字体族统一：`font-family: 'Noto Sans SC','Microsoft YaHei',Arial,sans-serif`；交付前 `svg.fonttype` 等价处理——**关键文字转路径**（印刷）或确认目标机器有字体（网页）。
 3. 网格与对齐：元素坐标落在 8px 栅格上；组用 `<g>` + `transform` 组织，不散放。
 4. 线宽体系：主线 2px / 次线 1px / 辅助虚线 1px dashed，全图一致。
-5. 信息图遵循 infographic.md 的三段式与防误导红线；示意图遵循 schematic.md 的三要素。
+5. 信息图遵循 `diagrams.md`「信息图与海报」的三段式与防误导红线；示意图遵循 `diagrams.md`「科研示意图」的三要素。
 
 ### 4. 校验与导出
 

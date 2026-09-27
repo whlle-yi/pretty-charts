@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-"""信息图实战（infographic.md 指导）：整页版式 = 标题带 + KPI 卡片 + 主图 + 落款。
+"""信息图实战（references/diagrams.md「信息图与海报」指导）：整页版式 = 标题带 + KPI 卡片 + 主图 + 落款。
 
-infographic.md 三段式：标题说结论、主体 2-4 个视觉块（每块一个图型）、落款标来源；
+diagrams.md 三段式：标题说结论、主体 2-4 个视觉块（每块一个图型）、落款标来源；
 关键数据放大 3-5 倍做 KPI 卡；配色来自 showcase 色板；字号有明确层级（画布 20in 宽时
 标题 46pt / 副标题 15pt / KPI 数字 54pt / 正文 13pt）。
 用法：python make_infographic.py
@@ -20,7 +20,7 @@ OUT = Path(__file__).resolve().parent
 plt.rcParams.update(plt.rcParamsDefault)
 plt.style.use(STYLE / "showcase.mplstyle")   # T3 展示级主题（含字体回退链与负号处理）
 
-# 取色唯一来源：references/assets/palettes/showcase.json（spec/color.md §1：禁止硬编码色值）
+# 取色唯一来源：references/assets/palettes/showcase.json（references/spec.md「取色与配色」§1：禁止硬编码色值）
 PALETTE = json.loads(
     (SKILL_ROOT / "references" / "assets" / "palettes" / "showcase.json").read_text(encoding="utf-8"))
 
@@ -86,7 +86,7 @@ ax.text(4, 3.5, "数据来源：示例数据（仅为版式演示） · 制图�
         fontsize=11, color=GREY)
 
 # 整页版式要的是固定画布尺寸：把主题默认的 tight bbox 关掉。
-# 注意 savefig(bbox_inches=None) 是“沿用 rcParams”，关不掉，必须置 rcParam（spec/layout.md §2.5）
+# 注意 savefig(bbox_inches=None) 是“沿用 rcParams”，关不掉，必须置 rcParam（references/spec.md「画布、尺寸、导出与落盘」§2 第 5 条）
 plt.rcParams["savefig.bbox"] = None
 fig.savefig(OUT / "infographic.png", dpi=100)
 print("infographic.png done")

@@ -1,4 +1,4 @@
-% 信号通路机制示意图（schematic.md 指导）：实体-箭头-标注三要素 + 激活/抑制语义 + 双层容器
+% 信号通路机制示意图（references/diagrams.md「科研示意图」指导）：实体-箭头-标注三要素 + 激活/抑制语义 + 双层容器
 % 编译：xelatex -interaction=nonstopmode signaling_schematic.tex
 % 转 PNG：gs -sDEVICE=png16m -r200 -dBATCH -dNOPAUSE -sOutputFile=signaling_schematic.png signaling_schematic.pdf
 \documentclass[border=6pt]{standalone}
@@ -7,7 +7,7 @@
 \usetikzlibrary{shapes.geometric, backgrounds, fit}
 \input{../../../references/assets/tikz/fonts-serif.tex}
 
-% 箭头语义：实线箭头=激活；T 形端=抑制（schematic.md 规范，图注声明）
+% 箭头语义：实线箭头=激活；T 形端=抑制（diagrams.md 规范，图注声明）
 \tikzset{
   act/.style={pc flow},
   inh/.style={{Bar[width=3.5mm]}-, line width=0.7pt, draw=\pcArrow},

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""环图：块数 ≤5、12 点起降序顺时针、块上直标、中心放总量（composition.md 六规则）。"""
+"""环图：块数 ≤5、12 点起降序顺时针、块上直标、中心放总量（charts/compare.md 六规则）。"""
 import json
 from pathlib import Path
 
@@ -11,7 +11,7 @@ STYLE = SKILL_ROOT / "references" / "assets" / "matplotlib"
 plt.rcParams.update(plt.rcParamsDefault)
 plt.style.use(STYLE / "academic.mplstyle")
 
-# 取色唯一来源：references/assets/palettes/academic.json（spec/color.md §1：禁止硬编码色值）
+# 取色唯一来源：references/assets/palettes/academic.json（references/spec.md「取色与配色」§1：禁止硬编码色值）
 PALETTE = json.loads(
     (SKILL_ROOT / "references" / "assets" / "palettes" / "academic.json").read_text(encoding="utf-8"))
 

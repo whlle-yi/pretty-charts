@@ -136,8 +136,8 @@ TikZ 侧同名颜色为 `pcNeutral`。**注意 `pcGray` 是 academic 的第 7 �
 **TikZ 的模式宏不含字体**：`\pcPaperMode` / `\pcPPTMode` 只切配色、线宽、字号。字体必须由你自己的文档用 `\setmainfont` / `\setCJKmainfont` 声明——只切宏而不声明字体，中文会变成豆腐块。示例见 `examples/diagram/flowchart/paper_flow.tex` 与 `ppt_flow.tex`（两者仅"1 行模式 + 2 行字体"之差）。
 
 **跨平台字体层（TikZ）**：两种搭配各封装为可 `\input` 的片段，按字体是否存在自动回退，**文档里不要写死字体名**：
-- [`fonts-serif.tex`](../style/tikz/fonts-serif.tex)：宋体 + Times New Roman（与论文正文一致的图）
-- [`fonts-sans.tex`](../style/tikz/fonts-sans.tex)：黑体 + Arial（演示版，以及黑体系的示意图）
+- [`fonts-serif.tex`](assets/tikz/fonts-serif.tex)：宋体 + Times New Roman（与论文正文一致的图）
+- [`fonts-sans.tex`](assets/tikz/fonts-sans.tex)：黑体 + Arial（演示版，以及黑体系的示意图）
 
   回退顺序：Windows 原生字体 → Noto CJK → **Fandol**（TeX Live 自带）。
   Linux 上还需让 fontspec（经 fontconfig）能找到西文回退字体，前置包为：
@@ -162,7 +162,7 @@ TikZ 侧同名颜色为 `pcNeutral`。**注意 `pcGray` 是 academic 的第 7 �
 ECharts（px，已内置主题）：T1 14/12/11、T2 16/13/12、T3 20/15/14（标题/图例/刻度）。
 TikZ：轴标题 `\small`、刻度与图例 `\footnotesize`。
 
-**下限约束的是"最终成品上的等效字号"，不是代码里的数字。** 如果图会被缩放排版（例：122mm 宽的原图放进 90mm 单栏，缩放比 0.74），等效字号 = 设定值 × 缩放比，必须按缩放后的值判断是否仍 ≥7pt。这与 本文件 §画布、尺寸、导出与落盘 §2.5 的 tight bbox 问题是同一个陷阱的两面。
+**下限约束的是"最终成品上的等效字号"，不是代码里的数字。** 如果图会被缩放排版（例：122mm 宽的原图放进 90mm 单栏，缩放比 0.74），等效字号 = 设定值 × 缩放比，必须按缩放后的值判断是否仍 ≥7pt。这与 本文件 「画布、尺寸、导出与落盘」§2 第 5 条的 tight bbox 问题是同一个陷阱的两面。
 
 ### 3. 两个必须知道的坑
 
@@ -247,7 +247,7 @@ mm → inch 一律除以 25.4，不要凭感觉。仓库示例中只有 `example
 
 
 > T1 数据图的出版级深化规范，补充 ``spec.md`` 与 `tools/python.md`。来源：SciencePlots（garrettj403，★9.3k）、Rougier《Scientific Visualisation: Python + Matplotlib》（★11.6k）、Scientific Colour Maps（Crameri）与各期刊投稿要求。
-> **横切规范只在本技能 `spec/` 定义一次**（红线 [`../spec.md`](../spec.md)、取色 [`../spec.md`](../spec.md)、字体 [`../spec.md`](../spec.md)、尺寸与落盘 [`../spec.md`](../spec.md)）；本文件**只讲本工具栈的用法与坑**，不复述上述内容。
+> **横切规范只在本技能 `references/spec.md` 定义一次**（红线 [`spec.md`](spec.md)、取色 [`spec.md`](spec.md)、字体 [`spec.md`](spec.md)、尺寸与落盘 [`spec.md`](spec.md)）；本文件**只讲本工具栈的用法与坑**，不复述上述内容。
 
 ### 1. 期刊规格速查
 
@@ -269,7 +269,7 @@ plt.style.use(["science", "ieee"])       # 期刊变体：ieee / nature / apa
 ```
 
 - `science` 是主样式（细框、无顶右刺、窄栏宽）；`ieee`（3.5in 栏宽、衬线）、`nature`（无网格）等变体叠加在后覆盖前者；
-- **中文必须加 `no-latex`**：`plt.style.use(["science", "no-latex", "../../../references/assets/matplotlib/academic.mplstyle"  # 相对脚本所在目录，见 spec/本文件 §画布、尺寸、导出与落盘 §3.3；该路径相对脚本目录，非本文件 check-refs: skip])`——`science` 默认 `text.usetex=True` 会因缺 LaTeX/中文配置直接报错；
+- **中文必须加 `no-latex`**：`plt.style.use(["science", "no-latex", "../../../references/assets/matplotlib/academic.mplstyle"  # 相对脚本所在目录，见本文件「画布、尺寸、导出与落盘」§3 第 3 条；该路径相对脚本目录，非本文件 check-refs: skip])`——`science` 默认 `text.usetex=True` 会因缺 LaTeX/中文配置直接报错；
 - 与本仓库主题叠加时，**本仓库主题写在最后**（保持取色与字体纪律，SciencePlots 只负责期刊尺寸与默认细节）；
 - 环境：`pip install SciencePlots`；无 LaTeX 环境永远带 `no-latex`。
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""分组柱状图：类别 × 2 系列，图例置顶不压柱（comparison.md 规范 2/4）。"""
+"""分组柱状图：类别 × 2 系列，图例置顶不压柱（charts/compare.md 规范 2/4）。"""
 import json
 from pathlib import Path
 
@@ -8,7 +8,7 @@ import numpy as np
 
 STYLE = Path(__file__).resolve().parents[3] / "references" / "assets" / "matplotlib"
 plt.rcParams.update(plt.rcParamsDefault)
-# 取色唯一来源：references/assets/palettes/academic.json（spec/color.md §1：禁止硬编码色值）
+# 取色唯一来源：references/assets/palettes/academic.json（references/spec.md「取色与配色」§1：禁止硬编码色值）
 SKILL_ROOT = Path(__file__).resolve().parents[3]
 PALETTE = json.loads(
     (SKILL_ROOT / "references" / "assets" / "palettes" / "academic.json")

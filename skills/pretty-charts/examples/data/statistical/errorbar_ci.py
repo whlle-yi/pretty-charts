@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""分组均值 + 95%CI + 个体散点 + 显著性标注（statistical.md 规范 1/2/4/5）。"""
+"""分组均值 + 95%CI + 个体散点 + 显著性标注（charts/inference.md 规范 1/2/4/5）。"""
 import json
 from pathlib import Path
 
@@ -8,7 +8,7 @@ import numpy as np
 from scipy import stats
 
 plt.rcParams.update(plt.rcParamsDefault)
-# 取色唯一来源：references/assets/palettes/academic.json（spec/color.md §1：禁止硬编码色值）
+# 取色唯一来源：references/assets/palettes/academic.json（references/spec.md「取色与配色」§1：禁止硬编码色值）
 SKILL_ROOT = Path(__file__).resolve().parents[3]
 PALETTE = json.loads(
     (SKILL_ROOT / "references" / "assets" / "palettes" / "academic.json")
@@ -27,7 +27,7 @@ ax.bar(groups, means, yerr=ci, capsize=4, width=0.5,
        color=[PALETTE["neutral"], PALETTE["categorical"][5], PALETTE["primary"], PALETTE["accent"]],
        error_kw=dict(lw=1, ecolor=PALETTE["text"]["label"]))
 rng2 = np.random.default_rng(3)
-for i, v in enumerate(raw):          # 个体散点叠加：n 可见（statistical.md 规范 4）
+for i, v in enumerate(raw):          # 个体散点叠加：n 可见（charts/inference.md 规范 4）
     ax.scatter(rng2.uniform(i - 0.16, i + 0.16, len(v)), v, s=7,
                color=PALETTE["background"], edgecolor=PALETTE["text"]["label"], linewidth=0.5,
                alpha=0.85, zorder=3)

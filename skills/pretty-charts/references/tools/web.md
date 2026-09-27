@@ -4,7 +4,7 @@
 
 
 > 适用 T2/T3 网页交付：交互报告、dashboard、大屏。T1 出版级不用本栈。
-> **横切规范只在本技能 `spec/` 定义一次**（红线 [`../spec.md`](../spec.md)、取色 [`../spec.md`](../spec.md)、字体 [`../spec.md`](../spec.md)、尺寸与落盘 [`../spec.md`](../spec.md)）；本文件**只讲本工具栈的用法与坑**，不复述上述内容。
+> **横切规范只在本技能 `references/spec.md` 定义一次**（红线 [`../spec.md`](../spec.md)、取色 [`../spec.md`](../spec.md)、字体 [`../spec.md`](../spec.md)、尺寸与落盘 [`../spec.md`](../spec.md)）；本文件**只讲本工具栈的用法与坑**，不复述上述内容。
 
 ### 0. 何时选本栈
 
@@ -26,7 +26,7 @@ const chart = echarts.init(dom, "pretty-charts", { renderer: "svg" });
 
 - `renderer: "svg"`：网页内嵌首选（清晰、可缩放）；大数据量动画场景用默认 canvas。
 - 主题已内置：色板、字体族、标题/图例/轴/tooltip 样式。**option 里不要再覆盖颜色与字体**，个别覆盖需注释原因。
-- T3 大屏：底色深色时用 showcase 色板 + 容器深色背景，并按 `../SKILL.md` 的 T3 一节 检查对比度。
+- T3 大屏：底色深色时用 showcase 色板 + 容器深色背景，并按 `../../SKILL.md` 的 T3 一节 检查对比度。
 
 ### 2. 高频规范落地
 

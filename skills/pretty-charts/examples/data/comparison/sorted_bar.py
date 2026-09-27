@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """哑铃图：两个时点的类别对比（比较类，点图变体）。
 
-comparison.md：比大小首选位置/长度编码；两时点多类别对比时，哑铃图比双柱
+charts/compare.md：比大小首选位置/长度编码；两时点多类别对比时，哑铃图比双柱
 更清晰地呈现"变化量"——线长即增幅，端点直接标注，无需图例查色。
+文件名 sorted_bar 为历史遗留，实际图型是哑铃图。
 用法：python sorted_bar.py
 """
 import json
@@ -11,7 +12,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 
 plt.rcParams.update(plt.rcParamsDefault)
-# 取色唯一来源：references/assets/palettes/academic.json（spec/color.md §1：禁止硬编码色值）
+# 取色唯一来源：references/assets/palettes/academic.json（references/spec.md「取色与配色」§1：禁止硬编码色值）
 SKILL_ROOT = Path(__file__).resolve().parents[3]
 PALETTE = json.loads(
     (SKILL_ROOT / "references" / "assets" / "palettes" / "academic.json")

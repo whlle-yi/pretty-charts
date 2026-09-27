@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""论文数据图实战（paper-data.md 指导）：期刊规格 + SciencePlots 叠加 + Crameri 色图。
+"""论文数据图实战（references/spec.md「T1 期刊规格」指导）：期刊规格 + SciencePlots 叠加 + Crameri 色图。
 
 产出两个矢量 PDF（供 paper_embedded_data.tex 引用）：
   fig1.pdf  单栏 90mm 折线图：均值±95%CI + 线端直标，无图内标题（caption 在论文里）
@@ -24,7 +24,7 @@ STYLE = SKILL_ROOT / "references" / "assets" / "matplotlib"
 OUT = Path(__file__).resolve().parent
 rng = np.random.default_rng(7)
 
-# 取色唯一来源：references/assets/palettes/academic.json（spec/color.md §1：禁止硬编码色值）
+# 取色唯一来源：references/assets/palettes/academic.json（references/spec.md「取色与配色」§1：禁止硬编码色值）
 PALETTE = json.loads(
     (SKILL_ROOT / "references" / "assets" / "palettes" / "academic.json").read_text(encoding="utf-8"))
 CAT = PALETTE["categorical"]
@@ -37,7 +37,7 @@ N_PER_GROUP = 32         # 图 2a：每组样本量（图注声明 n=32/组）
 def gs_safe_fonts():
     """Noto Sans SC 是可变字体，matplotlib PDF 子集经 Ghostscript 渲染会丢字形
     （PDF 本身正常，Adobe/浏览器可读；但出版系统的 gs 管线会翻车）。
-    把静态字体 Microsoft YaHei 提到回退链首位即可。见 tool-matplotlib.md 已知坑 1。"""
+    把静态字体 Microsoft YaHei 提到回退链首位即可。见 references/tools/python.md 已知坑 5。"""
     sans = list(plt.rcParams["font.sans-serif"])
     if "Microsoft YaHei" in sans:
         sans.remove("Microsoft YaHei")
@@ -51,7 +51,7 @@ def reset_style():
     gs_safe_fonts()
 
 
-# ---- 图 1：单栏 90mm = 3.54in（scenarios T1 场景特例）；SciencePlots 期刊仿真叠加本仓库主题 ----
+# ---- 图 1：单栏 90mm = 3.54in（T1 场景特例）；SciencePlots 期刊仿真叠加本仓库主题 ----
 reset_style()
 fig, ax = plt.subplots(figsize=(3.54, 2.55))
 x = np.arange(0, 8)

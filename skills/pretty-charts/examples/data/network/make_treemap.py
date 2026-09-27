@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-"""树图（treemap）实战（network.md 指导）：层级构成，面积 ∝ 数值。
+"""树图（treemap）实战（charts/structure.md 指导）：层级构成，面积 ∝ 数值。
 
-network.md：树图适合"层级 + 数量构成"（预算、磁盘、销售），面积必须 ∝ 数值，
+charts/structure.md：树图适合"层级 + 数量构成"（预算、磁盘、销售），面积必须 ∝ 数值，
 层级 ≤3，标签放不下就留白。本例演示产品线两级构成的单层展开。
 用法：python make_treemap.py
 """
@@ -22,7 +22,7 @@ if "Microsoft YaHei" in sans:
 sans.insert(0, "Microsoft YaHei")
 plt.rcParams["font.sans-serif"] = sans
 
-# 取色唯一来源：references/assets/palettes/business.json（spec/color.md §1：禁止硬编码色值）
+# 取色唯一来源：references/assets/palettes/business.json（references/spec.md「取色与配色」§1：禁止硬编码色值）
 PALETTE = json.loads(
     (SKILL_ROOT / "references" / "assets" / "palettes" / "business.json").read_text(encoding="utf-8")
 )

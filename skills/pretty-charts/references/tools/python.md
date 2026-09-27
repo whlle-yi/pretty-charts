@@ -4,7 +4,7 @@
 
 
 > 适用 T1/T2 静态出版级与报告级出图。选型：**pandas.plot 快速探索 → seaborn 统计图 → matplotlib 手工精修 → plotly 需要交互时**。
-> **横切规范只在本技能 `spec/` 定义一次**（红线 [`../spec.md`](../spec.md)、取色 [`../spec.md`](../spec.md)、字体 [`../spec.md`](../spec.md)、尺寸与落盘 [`../spec.md`](../spec.md)）；本文件**只讲本工具栈的用法与坑**，不复述上述内容。
+> **横切规范只在本技能 `references/spec.md` 定义一次**（红线 [`../spec.md`](../spec.md)、取色 [`../spec.md`](../spec.md)、字体 [`../spec.md`](../spec.md)、尺寸与落盘 [`../spec.md`](../spec.md)）；本文件**只讲本工具栈的用法与坑**，不复述上述内容。
 
 ### 0. 主题加载（每个脚本第一件事）
 
@@ -13,7 +13,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 
 SKILL_ROOT = Path(__file__).resolve().parents[3]   # examples/<类>/<图型>/x.py → 技能根，按脚本层级调整
-STYLE = SKILL_ROOT / "references" / "style" / "matplotlib"
+STYLE = SKILL_ROOT / "references" / "assets" / "matplotlib"
 plt.style.use(STYLE / "academic.mplstyle")   # 或 business / showcase
 ```
 
@@ -64,14 +64,14 @@ fig.legend(handles, labels, loc="outside upper center", ncols=len(labels))
 ### 3. 布局与导出
 
 - 用 `fig.subplots_adjust`/`constrained_layout=True` 防标签裁切；保存默认 `bbox_inches="tight"`（主题已设）。
-  **T1 投稿例外**：期刊要求精确栏宽时，`tight` 会裁掉留白、使成品宽度不再等于 `figsize`，投出去被缩放排版就会连带改变等效字号（可能跌破 7pt 下限）——此时 `plt.rcParams["savefig.bbox"] = None` 恢复固定画布，再用 `subplots_adjust` 留足边距。注意 `savefig(bbox_inches=None)` **不是**关闭它，而是“沿用 rcParams”（详见 `spec/`../spec.md` §画布、尺寸、导出与落盘` §2.5）。
+  **T1 投稿例外**：期刊要求精确栏宽时，`tight` 会裁掉留白、使成品宽度不再等于 `figsize`，投出去被缩放排版就会连带改变等效字号（可能跌破 7pt 下限）——此时 `plt.rcParams["savefig.bbox"] = None` 恢复固定画布，再用 `subplots_adjust` 留足边距。注意 `savefig(bbox_inches=None)` **不是**关闭它，而是“沿用 rcParams”（详见 [`../spec.md`](../spec.md)「画布、尺寸、导出与落盘」§2 第 5 条）。
 - 子图共享轴必须 `sharex/sharey=True`；比较类子图 y 轴范围必须一致。
 - 导出：`fig.savefig("name.pdf")` 矢量（T1 首选）、`fig.savefig("name.png")` 按 DPI 主题；**先 savefig 再 plt.close**。
 - 图内中文与负号已由主题处理（Noto Sans SC + `axes.unicode_minus: False`）。
 
 ### 4. T1 出版级附加检查
 
-> 期刊规格速查、SciencePlots 集成、Crameri 色图标准、多面板规范与退稿清单见 [`../spec.md` §T1 期刊规格](`../spec.md` §T1 期刊规格)；本节只列与 matplotlib 操作直接相关的检查。
+> 期刊规格速查、SciencePlots 集成、Crameri 色图标准、多面板规范与退稿清单见 [`../spec.md`](../spec.md)「T1 期刊规格」一节；本节只列与 matplotlib 操作直接相关的检查。
 
 - 字号 ≥7pt：缩小图后用 `fig.canvas.draw()` 后检查实际渲染，别只看代码参数。
 - 灰度打印可辨：系列叠加线型/标记（linestyle + marker）冗余编码。
