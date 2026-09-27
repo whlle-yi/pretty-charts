@@ -40,11 +40,11 @@ description: 高质量图表绘制技能。用户要画图、美化图、选图�
 | 屏幕文档，逐字阅读 | T2 报告级 | business | 上面两个文件，文件名换 `business` |
 | 投影、远距离、一屏一结论 | T3 展示级 | showcase | 上面两个文件，文件名换 `showcase` |
 
-TikZ 例外：`assets/tikz/` 不按档位命名，也没有 business 模式——别去找 `assets/tikz/business.tex`，细节见 `tools/tex.md`。
+本步产出就这两样：档位，以及该加载的主题资产。同一交付物内所有图同档同色板。
 
-数值参数：字号层级见 `spec.md`「字体与文字」；线宽、DPI、画布见「画布、尺寸、导出与落盘」。
+TikZ 例外：`assets/tikz/` 不按档位命名，也没有 business 模式，别去找 `assets/tikz/business.tex`。
 
-同一交付物内所有图同档同色板；多图交付时"语义 → 颜色"映射全局一致（`spec.md`「取色与配色」）。
+字号、线宽、DPI、画布等数值参数不在本步查——第 3 步读 `spec.md` 时自然会用到；本步只需要上面那四个格子。
 
 ## 第 3 步：加载规范并作图
 
