@@ -22,7 +22,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: 五项自检（引用 / 孤儿方法论 / 孤儿示例 / 硬编码颜色 / 产出存在性）
+      - name: 八项自检（引用 / 死链 / 行内相对路径 / 资产路径 / 孤儿方法论 / 孤儿示例 / 硬编码颜色 / 产出）
         run: python scripts/check_refs.py
       - name: 示例索引与仓库保持一致
         run: |
@@ -58,14 +58,14 @@ jobs:
             echo "::endgroup::"
           done < <(find skills/pretty-charts/examples -name '*.py' | sort)
           exit $fail
-      - name: 主题循环色必须等于色板 JSON（spec/color.md §1）
+      - name: 主题循环色必须等于色板 JSON（references/spec.md「取色与配色」§1）
         run: |
           cd skills/pretty-charts/examples/style-demo
           python demo_styles.py || {
             echo "::error file=skills/pretty-charts/examples/style-demo/demo_styles.py::主题循环色与 palettes/*.json 不一致"
             exit 1
           }
-      - name: 复查五项自检（含产出存在性）
+      - name: 复查八项自检（含产出存在性）
         run: python scripts/check_refs.py
 
   latex-examples:
@@ -103,7 +103,7 @@ jobs:
             echo "::endgroup::"
           done < <(find skills/pretty-charts/examples -name '*.tex' | sort)
           exit $fail
-      - name: 复查五项自检（含 .tex 同名 PDF 存在性）
+      - name: 复查八项自检（含 .tex 同名 PDF 存在性）
         run: python scripts/check_refs.py
 
   # 说明：本仓库的成图（PNG/PDF）是提交进仓库的交付物，但 CI 不做字节比对——

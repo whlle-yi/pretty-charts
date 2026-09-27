@@ -27,7 +27,7 @@
 
 1. **规格单一来源**。红线、取色、字体、尺寸、非数据图布局只在 [`references/spec.md`](skills/pretty-charts/references/spec.md) 定义一次；14 份图型文件与 6 份工具文件只**引用**，不复述。
 2. **参数化落到机器可读资产**。三档质量差异（色板、字号、线宽、DPI、画布）全部落在 `.mplstyle` / ECharts 主题 JSON / TikZ 模式宏里——散文不再重复描述它们，因此也不会与实现对不上。
-3. **结构可机器校验**。[`scripts/check_refs.py`](scripts/check_refs.py) 校验引用完整性、孤儿方法论、孤儿示例；示例索引 [`examples/INDEX.md`](skills/pretty-charts/examples/INDEX.md) 由脚本生成，杜绝"文档说画廊里没有、其实早做完了"这类漂移。
+3. **结构可机器校验**。[`scripts/check_refs.py`](scripts/check_refs.py) 校验引用完整性（Markdown 链接 / 行内代码相对路径 / 裸资产路径三种形态）、孤儿方法论、孤儿示例、硬编码颜色、产出存在性；示例索引 [`examples/INDEX.md`](skills/pretty-charts/examples/INDEX.md) 由脚本生成，杜绝"文档说画廊里没有、其实早做完了"这类漂移。
 
 人类也可以直接取用风格资产（见 [快速开始 §2](#2-只用风格资产)），不必走 Agent 流程。
 
@@ -40,7 +40,7 @@
 | **图型方法论** | 数据图按 **7 个编码家族**组织（覆盖比较 / 构成 / 趋势 / 分布 / 关系 / 结构 / 地理共 20+ 种形式）+ 非数据图 5 类（流程与时序 / 架构 / 层级 / 示意 / 信息图）；误差与显著性作为**可叠加**规范单列 |
 | **防误导红线** | 九条硬规则（柱状零起点、不确定度不省略、气泡面积编码、样本归一…）+ 诚实原则：**图注里的 n、置信区间、p 值必须由脚本真实计算，不得编造** |
 | **示例可跑** | 16 个 Python 脚本 + 16 个 LaTeX 源文件，成图全部由仓库内代码实际渲染并提交 |
-| **可校验结构** | 五项自检脚本（引用完整性 / 孤儿方法论 / 孤儿示例 / 硬编码颜色 / 产出存在性） + 生成式示例索引 + GitHub Actions CI |
+| **可校验结构** | 八项自检脚本（引用完整性 / Markdown 死链 / 行内相对路径 / 相对资产路径 / 孤儿方法论 / 孤儿示例 / 硬编码颜色 / 产出存在性） + 生成式示例索引 + GitHub Actions CI |
 | **跨平台** | LaTeX 字体层按字体存在性自动回退（Windows 宋体/雅黑 → Noto CJK → TeX Live 自带 Fandol），同一份示例在 Windows 与 Linux 均可编译 |
 | **降级路径** | 无 XeLaTeX、缺中文字体、只能出位图时怎么办，写在 [`SKILL.md`](skills/pretty-charts/SKILL.md)「环境缺失」一节，不允许"默默出一张不合规的图" |
 
@@ -144,7 +144,7 @@ LaTeX 示例需要 **XeLaTeX**（TeX Live 2026 实测），宏包：`pgfplots`�
 |---|---|
 | 16 个 Python 示例执行 | 16/16 通过（exit 0） |
 | 16 个 LaTeX 源文件编译 | 16/16 `xelatex` 通过 |
-| 五项自检 `scripts/check_refs.py` | 通过：无悬空引用 · 无孤儿方法论 · 无孤儿示例 · 无硬编码颜色 · 产出齐备 |
+| 八项自检 `scripts/check_refs.py` | 通过：无悬空引用 · 无死链 · 无失效的行内相对路径 · 无缺失 references/ 前缀的资产路径 · 无孤儿方法论 · 无孤儿示例 · 无硬编码颜色 · 产出齐备 |
 | 主题 ↔ 色板一致性 | [`demo_styles.py`](skills/pretty-charts/examples/style-demo/demo_styles.py) 断言三套主题的循环色逐色等于 `palettes/*.json` |
 | 规格单一来源 | 横切事实仅存在于 `references/spec.md`；14 份图型文件与 6 份工具文件只引用不复述 |
 | **CI** | GitHub Actions 三个作业：结构与引用自检 · Python 示例 · LaTeX 编译（[.github/workflows/ci.yml](.github/workflows/ci.yml)） |
@@ -172,7 +172,7 @@ LaTeX 示例需要 **XeLaTeX**（TeX Live 2026 实测），宏包：`pgfplots`�
 pretty-charts/
 ├── README.md / LICENSE / .gitignore / requirements.txt
 ├── .github/workflows/ci.yml    # CI：结构与引用自检 · Python 示例 · LaTeX 编译
-├── scripts/check_refs.py       # 仓库维护工具（不属于 skill 本体）：五项自检 + 生成示例索引
+├── scripts/check_refs.py       # 仓库维护工具（不属于 skill 本体）：八项自检 + 生成示例索引
 └── skills/
     └── pretty-charts/          # skill 本体：自包含，拷走即用
         ├── SKILL.md            # 唯一入口：哲学 + 四步契约（选型 / 档位 / 清单 / 降级）
@@ -216,7 +216,7 @@ pretty-charts/
 
 欢迎提交图型、示例与规范改进。提交前请确保：
 
-1. **自检通过**：`python scripts/check_refs.py` 退出码为 0（五项校验，CI 会重复执行）。
+1. **自检通过**：`python scripts/check_refs.py` 退出码为 0（八项校验，CI 会重复执行）。
 2. **新增示例必须被引用**：新脚本要在对应图型方法论文件的「示例」节里**按名**出现，否则自检会判定为孤儿示例。
 3. **改完示例重跑索引**：`python scripts/check_refs.py --write-index`。
 4. **遵守规格单一来源**：字体/配色/尺寸/红线只在 `references/spec.md` 定义；图型与工具文件**引用而不复述**。新增横切事实请加进 `references/spec.md`；交付清单在 `SKILL.md` 第 4 步，一并更新。

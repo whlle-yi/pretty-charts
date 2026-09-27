@@ -6,12 +6,15 @@
     python scripts/check_refs.py                  # 校验，有问题则退出码 1
     python scripts/check_refs.py --write-index    # 重新生成 examples/INDEX.md
 
-三项校验（都是"必然漂移"的那几类问题，靠人眼盯不住）：
+八项校验（都是"必然漂移"的那几类问题，靠人眼盯不住）：
   A. 文档里提到的 references/** 与 examples/** 路径必须真实存在
-  B. references/{data,diagram,spec} 下每个 .md 都必须被入口文件按名引用（杜绝"孤儿方法论"）
+  B. references 下每个 .md 都必须被入口文件按名引用（杜绝"孤儿方法论"）
   C. examples 下每个 .py 都必须被 references/**.md 按名引用（杜绝"孤儿示例"）
   D. 示例脚本里不得出现硬编码颜色（hex 或 white/black/gray），必须从 palette JSON 取色
   E. 每个示例都要有产出：.py 有成图，.tex 有同名且非空的 PDF
+  F. 文档里的 Markdown 链接必须解析到真实文件（相对路径按该文档所在目录解析）
+  G. 文档行内代码里的相对路径（`../x.md`、`./x.py`）必须按该文档目录可解析
+  H. 文档里裸写的 `assets/…` 必须按该文档自身目录可解析（防漏写 references/ 前缀）
 """
 from __future__ import annotations
 
@@ -34,6 +37,16 @@ DIR_RE = re.compile(
 
 PATH_RE = re.compile(
     r"(?:\.\./)*(?:skills/pretty-charts/)?(?:references|examples)/[A-Za-z0-9_./\-]+\.(?:" + EXT + r")")
+
+# Markdown 链接目标（含图片）：只取括号内第一个 token，"路径#锚点" 的锚点部分后剥
+MD_LINK_RE = re.compile(r"\[[^\]]*\]\(([^)\s]+)\)")
+# 裸写的资产路径（前面不是 / . 等路径分隔，即没带 references/ 前缀）；按文档自身目录解析
+BARE_ASSET_RE = re.compile(
+    r"(?<![\w./\\-])assets/(?:[A-Za-z0-9_.\-]+/)*[A-Za-z0-9_.\-]+\.(?:" + EXT + r")")
+# 行内代码里的相对路径（`../x.md` / `./x.py`）：基准是文档自身目录。
+# 不含省略号/通配，故 `../../../references/assets/tikz/…` 这类示意写法不会被误判。
+CODE_REL_RE = re.compile(r"`((?:\.\.?/)+[A-Za-z0-9_./\-]+\.(?:" + EXT + r"))`")
+SKIP_MARK = "check-refs: skip"
 
 
 def read(path):
@@ -61,7 +74,7 @@ def check_paths(problems):
     for md in walk(REPO, ".md"):
         for lineno, line in enumerate(read(md).splitlines(), 1):
             # 行内逃生舱：路径基准不是本 .md（例如 LaTeX 片段相对 .tex 文件）时标 `check-refs: skip`
-            if "check-refs: skip" in line:
+            if SKIP_MARK in line:
                 continue
             for rx, kind in ((PATH_RE, "文件"), (DIR_RE, "目录")):
                 for m in rx.finditer(line):
@@ -71,6 +84,71 @@ def check_paths(problems):
                     if not ok:
                         problems.append("悬空%s  %s:%d  ->  %s"
                                         % (kind, os.path.relpath(md, REPO), lineno, raw))
+
+
+def check_md_links(problems):
+    """Markdown 链接目标必须存在——按该 .md 自身所在目录解析相对路径。
+
+    A 项只认带 references/ 或 examples/ 前缀的裸文本，兄弟相对链接（如
+    `references/diagrams.md` 里写 `../spec.md`）与 `[[text]](target)` 的链接
+    结构都漏检；这里按真正的链接语法再查一遍。
+    """
+    for md in walk(REPO, ".md"):
+        for lineno, line in enumerate(read(md).splitlines(), 1):
+            if SKIP_MARK in line:
+                continue
+            for m in MD_LINK_RE.finditer(line):
+                raw = m.group(1).strip()
+                if raw.startswith(("http://", "https://", "#", "mailto:", "//")):
+                    continue
+                if raw.startswith("<") and raw.endswith(">"):
+                    raw = raw[1:-1].strip()
+                target = raw.split("#", 1)[0].strip()
+                if not target:
+                    continue
+                base = REPO if target.startswith("/") else os.path.dirname(md)
+                full = os.path.normpath(os.path.join(base, target.lstrip("/")))
+                if not os.path.exists(full):
+                    problems.append("死链  %s:%d  ->  %s"
+                                    % (os.path.relpath(md, REPO), lineno, raw))
+
+
+def check_inline_rel_paths(problems):
+    """行内代码里的相对路径必须可解析（按文档自身目录）。
+
+    这一类对 A、F 两项都是盲区：A 只认带 references/ 或 examples/ 前缀的写法，
+    F 只解析 `[text](target)` 的链接语法。曾漏掉 `../spec.md`、`../charts/trend.md`
+    （所在目录已在 references/ 根下）与 tools/web.md 的 `../SKILL.md`（差一层）。
+    """
+    for md in walk(REPO, ".md"):
+        for lineno, line in enumerate(read(md).splitlines(), 1):
+            if SKIP_MARK in line:
+                continue
+            for m in CODE_REL_RE.finditer(line):
+                raw = m.group(1)
+                full = os.path.normpath(os.path.join(os.path.dirname(md), raw))
+                if not os.path.exists(full):
+                    problems.append("行内相对路径解析不到  %s:%d  ->  %s"
+                                    % (os.path.relpath(md, REPO), lineno, raw))
+
+
+def check_bare_asset_paths(problems):
+    """文档里的资产路径必须带 references/ 前缀（或按自身目录可解析）。
+
+    SKILL.md 曾把 `references/assets/matplotlib/…` 写成 `assets/matplotlib/…`，
+    而 A 项的 PATH_RE 只认带 references/ 前缀的写法，漏检。这里专查裸写形式，
+    按文档自身目录解析——`references/spec.md` 里写 `assets/tikz/x.tex` 是合法的。
+    """
+    for md in walk(REPO, ".md"):
+        for lineno, line in enumerate(read(md).splitlines(), 1):
+            if SKIP_MARK in line:
+                continue
+            for m in BARE_ASSET_RE.finditer(line):
+                raw = m.group(0)
+                full = os.path.normpath(os.path.join(os.path.dirname(md), raw))
+                if not os.path.exists(full):
+                    problems.append("资产路径缺 references/ 前缀  %s:%d  ->  %s"
+                                    % (os.path.relpath(md, REPO), lineno, raw))
 
 
 def check_reachable_docs(problems):
@@ -161,14 +239,14 @@ HEX_OR_NAMED = re.compile(r"""["'](?:#[0-9A-Fa-f]{6}|white|black|gray|grey)["']"
 
 
 def check_no_hardcoded_colors(problems):
-    """示例脚本里的颜色必须来自 palette JSON（spec/color.md §1：禁止硬编码色值）。"""
+    """示例脚本里的颜色必须来自 palette JSON（references/spec.md「取色与配色」§1：禁止硬编码色值）。"""
     for py in walk(EXAMPLES, ".py"):
         for lineno, line in enumerate(read(py).splitlines(), 1):
             if line.lstrip().startswith("#"):
                 continue
             for m in HEX_OR_NAMED.finditer(line):
                 problems.append(
-                    "硬编码颜色  %s:%d  ->  %s（改为从 palette JSON 取色，见 spec/color.md §1）"
+                    "硬编码颜色  %s:%d  ->  %s（改为从 palette JSON 取色，见 references/spec.md「取色与配色」§1）"
                     % (os.path.relpath(py, REPO), lineno, m.group(0)))
 
 
@@ -196,6 +274,9 @@ def main():
 
     problems = []
     check_paths(problems)
+    check_md_links(problems)
+    check_inline_rel_paths(problems)
+    check_bare_asset_paths(problems)
     check_no_hardcoded_colors(problems)
     check_outputs(problems)
     check_reachable_docs(problems)
@@ -206,7 +287,7 @@ def main():
         for p in problems:
             print("  -", p)
         return 1
-    print("自检通过：引用完整、无孤儿方法论、无孤儿示例。")
+    print("自检通过：引用完整、无死链、无孤儿方法论、无孤儿示例、无硬编码颜色、产出齐备。")
     return 0
 
 
