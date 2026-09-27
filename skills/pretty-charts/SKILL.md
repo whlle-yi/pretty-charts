@@ -36,13 +36,15 @@ description: 高质量图表绘制技能。用户要画图、美化图、选图�
 
 | 介质 | 档位 | 色板 | 主题资产 |
 |---|---|---|---|
-| 印刷，可能只有黑白 | T1 出版级 | academic | `assets/matplotlib/academic.mplstyle` · `assets/echarts/academic.json` · `assets/tikz/preamble.tex` |
-| 屏幕文档，逐字阅读 | T2 报告级 | business | 同上，文件名换 `business` |
-| 投影、远距离、一屏一结论 | T3 展示级 | showcase | 同上，文件名换 `showcase` |
+| 印刷，可能只有黑白 | T1 出版级 | academic | `assets/matplotlib/academic.mplstyle`、`assets/echarts/academic.json` |
+| 屏幕文档，逐字阅读 | T2 报告级 | business | 上面两个文件，文件名换 `business` |
+| 投影、远距离、一屏一结论 | T3 展示级 | showcase | 上面两个文件，文件名换 `showcase` |
 
-字号、线宽、DPI、画布等数值参数已写进上述资产，`spec.md` 的「画布、尺寸、导出与落盘」一节是唯一说明处。
+TikZ 例外：`assets/tikz/` 不按档位命名，也没有 business 模式——别去找 `assets/tikz/business.tex`，细节见 `tools/tex.md`。
 
-同一交付物内所有图同档同色板；多图交付时"语义 → 颜色"映射全局一致。
+数值参数：字号层级见 `spec.md`「字体与文字」；线宽、DPI、画布见「画布、尺寸、导出与落盘」。
+
+同一交付物内所有图同档同色板；多图交付时"语义 → 颜色"映射全局一致（`spec.md`「取色与配色」）。
 
 ## 第 3 步：加载规范并作图
 

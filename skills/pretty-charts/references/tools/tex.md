@@ -56,6 +56,8 @@
 
 可用样式：`pc start`（圆角起止）/ `pc process`（处理）/ `pc key`（关键路径：论文版粗边框、演示版主色实心）/ `pc decision`（菱形判断）/ `pc io`（平行四边形）/ `pc db`（圆柱）/ `pc sub`+`pc sub label`（阶段虚线框）/ `pc flow`、`pc flow back`（回流虚线）/ `pc label`（分支标签白底）。
 
+TikZ 侧只有两种模式，**没有 business 模式**，资产也不按档位命名（`references/assets/tikz/` 里是 `preamble.tex` 加两个模式宏，不是 `academic/business/showcase` 三份文件）。
+
 两模式约定：**论文版无底色**（黑白印刷安全，中文宋体 + 西文 Times New Roman），**演示版 showcase 彩色**（中文黑体 + 西文 Arial）。注意 `\pcPaperMode` / `\pcPPTMode` **只切换配色、线宽与字号，不含字体**——中英文字体由你文档里的 `\setmainfont` / `\setCJKmainfont` 自行决定；示例 `examples/diagram/flowchart/paper_flow.tex` 与 `ppt_flow.tex` 的结构完全相同，差异只有"模式行 1 行 + 字体 2 行"共 3 行。
 
 ### 4. 示意图常用技法（高质量的关键）
