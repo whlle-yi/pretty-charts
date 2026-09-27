@@ -1,27 +1,31 @@
 # -*- coding: utf-8 -*-
-"""箱线图 + 抖动散点：多组分布比较，个体可见（distribution.md 规范 2/3）。"""
+"""小提琴 + 箱线 + 抖动散点三层组合：分布形态、中位数与个体一并可见（distribution.md）。"""
 from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
 
-STYLE = Path(__file__).resolve().parents[3] / "references" / "style" / "matplotlib"
-plt.style.use(STYLE / "academic.mplstyle")
+plt.rcParams.update(plt.rcParamsDefault)
+plt.style.use(Path(__file__).resolve().parents[3] /
+              "references" / "style" / "matplotlib" / "academic.mplstyle")
 
 rng = np.random.default_rng(11)
 groups = ["对照组", "低剂量", "中剂量", "高剂量"]
-means = [52, 56, 63, 70]
-data = [rng.normal(m, 6, 40) for m in means]
+data = [rng.normal(m, s, 40) for m, s in [(52, 6), (56, 6.5), (63, 7), (70, 8)]]
 
-fig, ax = plt.subplots(figsize=(4.8, 2.9))
-bp = ax.boxplot(data, tick_labels=groups, showfliers=False, patch_artist=True, widths=0.5)
-for patch in bp["boxes"]:
-    patch.set_facecolor("#0072B2")
-    patch.set_alpha(0.35)
-    patch.set_edgecolor("#333333")
-for i, vals in enumerate(data, start=1):
-    ax.scatter(rng.uniform(i - 0.12, i + 0.12, len(vals)), vals,
-               s=9, color="#0072B2", alpha=0.6, zorder=3, linewidths=0)
+fig, ax = plt.subplots(figsize=(4.8, 3.0))
+vp = ax.violinplot(data, positions=range(4), widths=0.82, showextrema=False)
+for body in vp["bodies"]:
+    body.set_facecolor("#0072B2"); body.set_alpha(0.18); body.set_edgecolor("none")
+bp = ax.boxplot(data, positions=range(4), widths=0.16, showfliers=False,
+                patch_artist=True, medianprops=dict(color="#D55E00", lw=1.4),
+                boxprops=dict(facecolor="white", edgecolor="#333333", lw=0.8),
+                whiskerprops=dict(color="#333333", lw=0.8),
+                capprops=dict(color="#333333", lw=0.8))
+for i, vals in enumerate(data):
+    ax.scatter(rng.uniform(i - 0.09, i + 0.09, len(vals)), vals, s=7,
+               color="#0072B2", alpha=0.55, linewidths=0, zorder=3)
+ax.set_xticks(range(4), groups)
 ax.set_ylabel("反应时间（min）")
 ax.set_title("剂量越高反应越快（n=40/组）")
 fig.savefig(Path(__file__).with_suffix(".png"))

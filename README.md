@@ -28,7 +28,7 @@
 | **[比较](skills/pretty-charts/references/data/comparison.md)** | **[分布](skills/pretty-charts/references/data/distribution.md)** | **[构成](skills/pretty-charts/references/data/composition.md)** |
 | ![](skills/pretty-charts/examples/data/comparison/sorted_bar.png) | ![](skills/pretty-charts/examples/data/distribution/box_violin.png) | ![](skills/pretty-charts/examples/data/composition/donut.png) |
 | **[趋势](skills/pretty-charts/references/data/trend.md)** | **[关系](skills/pretty-charts/references/data/relationship.md)** | **[层次网络](skills/pretty-charts/references/data/network.md)** |
-| ![](skills/pretty-charts/examples/data/trend/line_direct_label.png) | ![](skills/pretty-charts/examples/data/relationship/scatter_trend.png) | ![](skills/pretty-charts/examples/data/network/treemap.png) |
+| ![](skills/pretty-charts/examples/data/trend/line_direct_label.png) | ![](skills/pretty-charts/examples/data/relationship/fig1_preview.png) | ![](skills/pretty-charts/examples/data/network/treemap.png) |
 | **[地理](skills/pretty-charts/references/data/geo.md)** | **[热图矩阵](skills/pretty-charts/references/data/heatmap.md)** | **[统计推断](skills/pretty-charts/references/data/statistical.md)** |
 | ![](skills/pretty-charts/examples/data/geo/fig1_preview.png) | ![](skills/pretty-charts/examples/data/heatmap/corr_heatmap.png) | ![](skills/pretty-charts/examples/data/statistical/errorbar_ci.png) |
 
