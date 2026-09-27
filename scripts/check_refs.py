@@ -24,7 +24,7 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SKILL = os.path.join(REPO, "skills", "pretty-charts")
 REFS = os.path.join(SKILL, "references")
 EXAMPLES = os.path.join(SKILL, "examples")
-ENTRY_FILES = ["SKILL.md", "routing.md", "selection.md", "checklist.md"]
+ENTRY_FILES = ["SKILL.md"]          # 入口唯一：路由/选型/清单都已并入 SKILL.md
 IMG_EXT = (".png", ".pdf", ".svg")
 
 EXT = "md|py|json|mplstyle|tex|png|pdf|svg|geojson"
@@ -67,15 +67,14 @@ def check_paths(problems):
 
 
 def check_reachable_docs(problems):
-    entry_text = "\n".join(read(os.path.join(REFS, f)) for f in ENTRY_FILES
-                           if os.path.exists(os.path.join(REFS, f)))
-    entry_text += read(os.path.join(SKILL, "SKILL.md"))
-    for folder in ("data", "diagram", "spec"):
-        for md in walk(os.path.join(REFS, folder), ".md"):
-            name = os.path.basename(md)
-            if name not in entry_text:
-                problems.append("孤儿方法论  references/%s/%s 未被路由文件按名引用"
-                                % (folder, name))
+    """references 下每个 .md 都必须被 SKILL.md 按名引用（杜绝孤儿方法论）。"""
+    entry_text = read(os.path.join(SKILL, "SKILL.md"))
+    for md in walk(REFS, ".md"):
+        rel = os.path.relpath(md, REFS).replace(os.sep, "/")
+        if rel.startswith("assets/"):
+            continue
+        if os.path.basename(rel) not in entry_text:
+            problems.append("孤儿方法论  references/%s 未被 SKILL.md 按名引用" % rel)
 
 
 def check_reachable_examples(problems):

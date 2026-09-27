@@ -16,8 +16,8 @@ import numpy as np
 from matplotlib.colors import to_hex
 
 SKILL_ROOT = Path(__file__).resolve().parents[2]
-STYLES = SKILL_ROOT / "references" / "style" / "matplotlib"
-PALETTES = SKILL_ROOT / "references" / "style" / "palettes"
+STYLES = SKILL_ROOT / "references" / "assets" / "matplotlib"
+PALETTES = SKILL_ROOT / "references" / "assets" / "palettes"
 OUT = Path(__file__).resolve().parent / "output"
 OUT.mkdir(exist_ok=True)
 
@@ -33,7 +33,7 @@ bars = rng.uniform(30, 90, (3, 4))
 
 
 def load_palette(theme):
-    """取色唯一来源：references/style/palettes/<theme>.json（spec/color.md §1）。"""
+    """取色唯一来源：references/assets/palettes/<theme>.json（spec/color.md §1）。"""
     return json.loads((PALETTES / f"{theme}.json").read_text(encoding="utf-8"))
 
 

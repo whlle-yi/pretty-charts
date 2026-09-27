@@ -2,10 +2,10 @@
 % 编译：xelatex -interaction=nonstopmode signaling_schematic.tex
 % 转 PNG：gs -sDEVICE=png16m -r200 -dBATCH -dNOPAUSE -sOutputFile=signaling_schematic.png signaling_schematic.pdf
 \documentclass[border=6pt]{standalone}
-\input{../../../references/style/tikz/preamble.tex}
-\input{../../../references/style/tikz/flowchart-styles.tex}
+\input{../../../references/assets/tikz/preamble.tex}
+\input{../../../references/assets/tikz/flowchart-styles.tex}
 \usetikzlibrary{shapes.geometric, backgrounds, fit}
-\input{../../../references/style/tikz/fonts-serif.tex}
+\input{../../../references/assets/tikz/fonts-serif.tex}
 
 % 箭头语义：实线箭头=激活；T 形端=抑制（schematic.md 规范，图注声明）
 \tikzset{

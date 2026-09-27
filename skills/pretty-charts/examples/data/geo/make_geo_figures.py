@@ -22,12 +22,12 @@ from matplotlib.colors import LinearSegmentedColormap, Normalize
 import cmcrameri.cm as cmc
 
 SKILL_ROOT = Path(__file__).resolve().parents[3]
-STYLE = SKILL_ROOT / "references" / "style" / "matplotlib"
+STYLE = SKILL_ROOT / "references" / "assets" / "matplotlib"
 OUT = Path(__file__).resolve().parent
 
-# 取色唯一来源：references/style/palettes/academic.json（spec/color.md §1：禁止硬编码色值）
+# 取色唯一来源：references/assets/palettes/academic.json（spec/color.md §1：禁止硬编码色值）
 PALETTE = json.loads(
-    (SKILL_ROOT / "references" / "style" / "palettes" / "academic.json").read_text(encoding="utf-8")
+    (SKILL_ROOT / "references" / "assets" / "palettes" / "academic.json").read_text(encoding="utf-8")
 )
 
 # ---- 演示用合成数据：ISO3 → (研发人员密度/百万, 支出总额 $B, 2015 密度, 2020 密度) ----

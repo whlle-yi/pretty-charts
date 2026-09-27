@@ -1,4 +1,4 @@
-# business.mplstyle —— T2 报告级默认主题（配合 references/style/palettes/business.json 使用）
+# business.mplstyle —— T2 报告级默认主题（配合 references/assets/palettes/business.json 使用）
 # 注意：mplstyle 文件中 "#" 会被解析为行内注释，颜色一律用 RGB 元组（0-1 浮点）书写，
 # 与色板 JSON 中十六进制的对应关系已在各行注释中标明（注释在行首，安全）。
 # 16:9 报告画布，字号比出版级大一档，适合文档与投屏

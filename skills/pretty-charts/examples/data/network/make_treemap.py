@@ -15,16 +15,16 @@ import squarify
 SKILL_ROOT = Path(__file__).resolve().parents[3]
 OUT = Path(__file__).resolve().parent
 plt.rcParams.update(plt.rcParamsDefault)
-plt.style.use(SKILL_ROOT / "references" / "style" / "matplotlib" / "business.mplstyle")
+plt.style.use(SKILL_ROOT / "references" / "assets" / "matplotlib" / "business.mplstyle")
 sans = list(plt.rcParams["font.sans-serif"])
 if "Microsoft YaHei" in sans:
     sans.remove("Microsoft YaHei")
 sans.insert(0, "Microsoft YaHei")
 plt.rcParams["font.sans-serif"] = sans
 
-# 取色唯一来源：references/style/palettes/business.json（spec/color.md §1：禁止硬编码色值）
+# 取色唯一来源：references/assets/palettes/business.json（spec/color.md §1：禁止硬编码色值）
 PALETTE = json.loads(
-    (SKILL_ROOT / "references" / "style" / "palettes" / "business.json").read_text(encoding="utf-8")
+    (SKILL_ROOT / "references" / "assets" / "palettes" / "business.json").read_text(encoding="utf-8")
 )
 palette = PALETTE["categorical"]
 

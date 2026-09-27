@@ -14,15 +14,15 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import to_rgba
 
 SKILL_ROOT = Path(__file__).resolve().parents[3]
-STYLE = SKILL_ROOT / "references" / "style" / "matplotlib"
+STYLE = SKILL_ROOT / "references" / "assets" / "matplotlib"
 OUT = Path(__file__).resolve().parent
 
 plt.rcParams.update(plt.rcParamsDefault)
 plt.style.use(STYLE / "showcase.mplstyle")   # T3 展示级主题（含字体回退链与负号处理）
 
-# 取色唯一来源：references/style/palettes/showcase.json（spec/color.md §1：禁止硬编码色值）
+# 取色唯一来源：references/assets/palettes/showcase.json（spec/color.md §1：禁止硬编码色值）
 PALETTE = json.loads(
-    (SKILL_ROOT / "references" / "style" / "palettes" / "showcase.json").read_text(encoding="utf-8"))
+    (SKILL_ROOT / "references" / "assets" / "palettes" / "showcase.json").read_text(encoding="utf-8"))
 
 PRIMARY = PALETTE["primary"]
 ACCENT = PALETTE["accent"]

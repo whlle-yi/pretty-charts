@@ -8,13 +8,13 @@ import numpy as np
 from scipy.stats import gaussian_kde
 
 SKILL_ROOT = Path(__file__).resolve().parents[3]
-STYLE = SKILL_ROOT / "references" / "style" / "matplotlib"
+STYLE = SKILL_ROOT / "references" / "assets" / "matplotlib"
 plt.rcParams.update(plt.rcParamsDefault)
 plt.style.use(STYLE / "academic.mplstyle")
 
-# 取色唯一来源：references/style/palettes/academic.json（spec/color.md §1：禁止硬编码色值）
+# 取色唯一来源：references/assets/palettes/academic.json（spec/color.md §1：禁止硬编码色值）
 PALETTE = json.loads(
-    (SKILL_ROOT / "references" / "style" / "palettes" / "academic.json").read_text(encoding="utf-8"))
+    (SKILL_ROOT / "references" / "assets" / "palettes" / "academic.json").read_text(encoding="utf-8"))
 
 rng = np.random.default_rng(7)
 data = np.concatenate([rng.normal(168, 5.5, 900), rng.normal(178, 5.0, 300)])  # 双峰

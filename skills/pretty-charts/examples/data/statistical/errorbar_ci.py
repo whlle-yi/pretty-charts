@@ -8,13 +8,13 @@ import numpy as np
 from scipy import stats
 
 plt.rcParams.update(plt.rcParamsDefault)
-# 取色唯一来源：references/style/palettes/academic.json（spec/color.md §1：禁止硬编码色值）
+# 取色唯一来源：references/assets/palettes/academic.json（spec/color.md §1：禁止硬编码色值）
 SKILL_ROOT = Path(__file__).resolve().parents[3]
 PALETTE = json.loads(
-    (SKILL_ROOT / "references" / "style" / "palettes" / "academic.json")
+    (SKILL_ROOT / "references" / "assets" / "palettes" / "academic.json")
     .read_text(encoding="utf-8"))
 plt.style.use(Path(__file__).resolve().parents[3] /
-              "references" / "style" / "matplotlib" / "academic.mplstyle")
+              "references" / "assets" / "matplotlib" / "academic.mplstyle")
 
 rng = np.random.default_rng(21)
 groups = ["安慰剂", "低剂量", "中剂量", "高剂量"]

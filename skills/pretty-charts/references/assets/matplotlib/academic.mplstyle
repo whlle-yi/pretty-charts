@@ -1,4 +1,4 @@
-# academic.mplstyle —— T1 出版级默认主题（配合 references/style/palettes/academic.json 使用）
+# academic.mplstyle —— T1 出版级默认主题（配合 references/assets/palettes/academic.json 使用）
 # 注意：mplstyle 文件中 "#" 会被解析为行内注释，颜色一律用 RGB 元组（0-1 浮点）书写，
 # 与色板 JSON 中十六进制的对应关系已在各行注释中标明（注释在行首，安全）。
 # 尺寸按期刊单栏 90mm = 3.54in 设计；双栏图请覆盖 figsize 为 (7.48, h)

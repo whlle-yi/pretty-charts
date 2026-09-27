@@ -18,13 +18,13 @@ from matplotlib.colors import LinearSegmentedColormap
 from scipy import stats
 
 SKILL_ROOT = Path(__file__).resolve().parents[3]
-STYLE = SKILL_ROOT / "references" / "style" / "matplotlib"
+STYLE = SKILL_ROOT / "references" / "assets" / "matplotlib"
 OUT = Path(__file__).resolve().parent
 rng = np.random.default_rng(11)
 
-# 取色唯一来源：references/style/palettes/academic.json（spec/color.md §1：禁止硬编码色值）
+# 取色唯一来源：references/assets/palettes/academic.json（spec/color.md §1：禁止硬编码色值）
 PALETTE = json.loads(
-    (SKILL_ROOT / "references" / "style" / "palettes" / "academic.json").read_text(encoding="utf-8"))
+    (SKILL_ROOT / "references" / "assets" / "palettes" / "academic.json").read_text(encoding="utf-8"))
 CAT = PALETTE["categorical"]
 INK = PALETTE["text"]["label"]      # 描边/参照圆用文字墨色，不再引入色板外颜色
 
