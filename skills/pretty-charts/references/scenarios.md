@@ -19,7 +19,7 @@
 
 ## T1 论文
 
-**阅读顺序**：① `style-guide.md` §3 配色、§4 字体、§5 尺寸导出 → ② 数据图读 `data/` 对应目的文件 + `data/tool-matplotlib.md`；流程图读 `diagram/flowchart.md` + `tool-tikz.md`，示意图读 `diagram/schematic.md` → ③ 示例：`examples/data/`、`examples/diagram/flowchart/paper_embedded*.tex` → ④ 交付前过 `style-guide.md` §7.1。
+**阅读顺序**：① `style-guide.md` §3 配色、§4 字体、§5 尺寸导出 → ② 数据图读 `data/` 对应目的文件 + `data/tool-matplotlib.md` + `data/paper-data.md`（期刊规格/SciencePlots/色图标准/退稿清单）；流程图读 `diagram/flowchart.md` + `tool-tikz.md`，示意图读 `diagram/schematic.md` → ③ 示例：`examples/data/`、`examples/diagram/flowchart/paper_embedded*.tex` → ④ 交付前过 `style-guide.md` §7.1。
 
 **场景特例**：
 - figsize 按期刊栏宽换算：单栏 90mm = 3.54in，双栏 190mm = 7.48in

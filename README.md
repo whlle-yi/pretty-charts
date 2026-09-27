@@ -109,6 +109,7 @@ pretty-charts/
 | [scenarios.md](skills/pretty-charts/references/scenarios.md) | 三档场景：阅读顺序与专属规则 |
 | [style-guide.md](skills/pretty-charts/references/style-guide.md) | 配色 / 字体 / 导出 / 防误导红线 / 三档清单（字体的唯一出处） |
 | [chart-selection.md](skills/pretty-charts/references/data/chart-selection.md) | 数据图选型决策树 |
+| [paper-data.md](skills/pretty-charts/references/data/paper-data.md) | 论文数据图深化：期刊规格 / SciencePlots / Crameri 色图 / 退稿清单 |
 | [diagram-selection.md](skills/pretty-charts/references/diagram/diagram-selection.md) | 非数据图选型决策树 |
 
 ## 路线图

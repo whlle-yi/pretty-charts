@@ -65,6 +65,8 @@ fig.legend(handles, labels, loc="outside upper center", ncols=len(labels))
 
 ## 4. T1 出版级附加检查
 
+> 期刊规格速查、SciencePlots 集成、Crameri 色图标准、多面板规范与退稿清单见 [`paper-data.md`](paper-data.md)；本节只列与 matplotlib 操作直接相关的检查。
+
 - 字号 ≥7pt：缩小图后用 `fig.canvas.draw()` 后检查实际渲染，别只看代码参数。
 - 灰度打印可辨：系列叠加线型/标记（linestyle + marker）冗余编码。
 - 图注自含：n、统计口径、误差类型、显著性标注定义，全在 caption。
