@@ -110,7 +110,6 @@ pretty-charts/
 | [style-guide.md](skills/pretty-charts/references/style-guide.md) | 配色 / 字体 / 导出 / 防误导红线 / 三档清单（字体的唯一出处） |
 | [chart-selection.md](skills/pretty-charts/references/data/chart-selection.md) | 数据图选型决策树 |
 | [diagram-selection.md](skills/pretty-charts/references/diagram/diagram-selection.md) | 非数据图选型决策树 |
-| [fonts.md](skills/pretty-charts/references/style/fonts.md) | 字体方案与回退链 |
 
 ## 路线图
 
