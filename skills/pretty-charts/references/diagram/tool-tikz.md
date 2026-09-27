@@ -1,6 +1,7 @@
 # 工具栈：TikZ / pgfplots（tool-tikz）
 
 > T1 出版级示意图主力：矢量、字体与 LaTeX 正文一致、几何精确。编译 XeLaTeX。导言区与配色模板：`references/style/tikz/preamble.tex`。
+> **横切规范只在本技能 `spec/` 定义一次**（红线 [`../spec/integrity.md`](../spec/integrity.md)、取色 [`../spec/color.md`](../spec/color.md)、字体 [`../spec/type.md`](../spec/type.md)、尺寸与落盘 [`../spec/layout.md`](../spec/layout.md)）；本文件**只讲本工具栈的用法与坑**，不复述上述内容。
 
 ## 1. 定位
 
@@ -15,7 +16,7 @@
 
 ```latex
 \documentclass[border=6pt]{standalone}                % 单图输出（示例用）
-\input{../../../references/style/tikz/preamble.tex}   % 配色 pcBlue… 与轴风格
+\input{../../../references/style/tikz/preamble.tex}   % 配色 pcBlue… 与轴风格  % check-refs: skip
 \begin{document}
 \begin{tikzpicture}
   ...
@@ -32,8 +33,8 @@
 流程图**不要手写节点样式**，直接加载预置文件后选模式：
 
 ```latex
-\input{../../../references/style/tikz/preamble.tex}
-\input{../../../references/style/tikz/flowchart-styles.tex}
+\input{../../../references/style/tikz/preamble.tex}        % check-refs: skip
+\input{../../../references/style/tikz/flowchart-styles.tex} % check-refs: skip
 \setmainfont{Times New Roman}\setCJKmainfont{SimSun} % 论文版字体；演示版改 Arial + 黑体
 % \pcPPTMode  % 演示版开关（默认 \pcPaperMode）
 \begin{document}

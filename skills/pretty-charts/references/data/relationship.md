@@ -1,7 +1,7 @@
 # 关系类（relationship）
 
 > 核心问题："两个/多个量之间有没有关联、有多强、什么形状"。视觉通道首选**位置**（散点）。
-> 通用红线（防误导九条）与配色/字体/导出规范见 `../style-guide.md`；本文件只列本图型特有规范。
+> **横切规范只在本技能 `spec/` 定义一次**：红线九条见 [`../spec/integrity.md`](../spec/integrity.md)，取色见 [`../spec/color.md`](../spec/color.md)，字体字号见 [`../spec/type.md`](../spec/type.md)，尺寸导出与落盘见 [`../spec/layout.md`](../spec/layout.md)。本文件**只列本图型特有规范**，不复述上述任何内容。
 
 ## 图型清单
 
@@ -32,4 +32,4 @@
 
 ## 示例
 
-`examples/data/relationship/scatter_trend.py`（散点+回归带+边际）
+`examples/data/relationship/scatter_trend.py`、`examples/data/relationship/make_relationship_figures.py`（三面板：分组回归带 + 大样本二维密度防过绘 + 气泡图参照定标，产出论文内嵌用 fig1.pdf）（散点+回归带+边际）

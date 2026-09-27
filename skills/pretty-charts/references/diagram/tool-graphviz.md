@@ -1,6 +1,7 @@
 # 工具栈：Graphviz（tool-graphviz）
 
 > TikZ 手摆无法驾驭时的退路：模块多、边乱、需要自动最小化交叉的**有向图**。引擎 dot（分层，架构图）、neato/fdp（力导向，网络）、circo（环状）。本机未安装 dot，本文件样式未经实测，使用前先验证。
+> **横切规范只在本技能 `spec/` 定义一次**（红线 [`../spec/integrity.md`](../spec/integrity.md)、取色 [`../spec/color.md`](../spec/color.md)、字体 [`../spec/type.md`](../spec/type.md)、尺寸与落盘 [`../spec/layout.md`](../spec/layout.md)）；本文件**只讲本工具栈的用法与坑**，不复述上述内容。
 
 ## 1. 基本用法
 

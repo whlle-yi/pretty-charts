@@ -1,7 +1,7 @@
 # 层级与逻辑（hierarchy）
 
 > 表达归类、从属、分解：思维导图、组织架构、概念图。主力工具 TikZ mindmap（单色墨泡、论文可用），逻辑结构复杂时用 Graphviz。
-> 通用红线（防误导九条）与配色/字体/导出规范见 `../style-guide.md`；本文件只列本图型特有规范。
+> **横切规范只在本技能 `spec/` 定义一次**：红线九条见 [`../spec/integrity.md`](../spec/integrity.md)，取色见 [`../spec/color.md`](../spec/color.md)，字体字号见 [`../spec/type.md`](../spec/type.md)，尺寸导出与落盘见 [`../spec/layout.md`](../spec/layout.md)。本文件**只列本图型特有规范**，不复述上述任何内容；非数据图通用布局见 [`../spec/diagram.md`](../spec/diagram.md)。
 
 ## 图型清单
 

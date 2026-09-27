@@ -1,7 +1,7 @@
 # 分布类（distribution）
 
 > 核心问题："数值怎么分布的？集中在哪里、散多开、有没有离群值"。
-> 通用红线（防误导九条）与配色/字体/导出规范见 `../style-guide.md`；本文件只列本图型特有规范。
+> **横切规范只在本技能 `spec/` 定义一次**：红线九条见 [`../spec/integrity.md`](../spec/integrity.md)，取色见 [`../spec/color.md`](../spec/color.md)，字体字号见 [`../spec/type.md`](../spec/type.md)，尺寸导出与落盘见 [`../spec/layout.md`](../spec/layout.md)。本文件**只列本图型特有规范**，不复述上述任何内容。
 
 ## 图型清单
 

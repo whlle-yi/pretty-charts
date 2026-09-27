@@ -1,6 +1,7 @@
 # 论文数据图深化指南（paper-data）
 
-> T1 数据图的出版级深化规范，补充 `style-guide.md` 与 `tool-matplotlib.md`。来源：SciencePlots（garrettj403，★9.3k）、Rougier《Scientific Visualisation: Python + Matplotlib》（★11.6k）、Scientific Colour Maps（Crameri）与各期刊投稿要求。
+> T1 数据图的出版级深化规范，补充 ``../spec/`` 与 `tool-matplotlib.md`。来源：SciencePlots（garrettj403，★9.3k）、Rougier《Scientific Visualisation: Python + Matplotlib》（★11.6k）、Scientific Colour Maps（Crameri）与各期刊投稿要求。
+> **横切规范只在本技能 `spec/` 定义一次**（红线 [`../spec/integrity.md`](../spec/integrity.md)、取色 [`../spec/color.md`](../spec/color.md)、字体 [`../spec/type.md`](../spec/type.md)、尺寸与落盘 [`../spec/layout.md`](../spec/layout.md)）；本文件**只讲本工具栈的用法与坑**，不复述上述内容。
 
 ## 1. 期刊规格速查
 
@@ -22,7 +23,7 @@ plt.style.use(["science", "ieee"])       # 期刊变体：ieee / nature / apa
 ```
 
 - `science` 是主样式（细框、无顶右刺、窄栏宽）；`ieee`（3.5in 栏宽、衬线）、`nature`（无网格）等变体叠加在后覆盖前者；
-- **中文必须加 `no-latex`**：`plt.style.use(["science", "no-latex", "../references/style/matplotlib/academic.mplstyle"])`——`science` 默认 `text.usetex=True` 会因缺 LaTeX/中文配置直接报错；
+- **中文必须加 `no-latex`**：`plt.style.use(["science", "no-latex", "../../../references/style/matplotlib/academic.mplstyle"  # 相对脚本所在目录，见 spec/layout.md §3.3；该路径相对脚本目录，非本文件 check-refs: skip])`——`science` 默认 `text.usetex=True` 会因缺 LaTeX/中文配置直接报错；
 - 与本仓库主题叠加时，**本仓库主题写在最后**（保持取色与字体纪律，SciencePlots 只负责期刊尺寸与默认细节）；
 - 环境：`pip install SciencePlots`；无 LaTeX 环境永远带 `no-latex`。
 
@@ -55,4 +56,4 @@ plt.style.use(["science", "ieee"])       # 期刊变体：ieee / nature / apa
 
 ## 6. 与本仓库工作流的整合
 
-走 `scenarios.md` T1 路径：本文件排在 `tool-matplotlib.md` 之后、作图之前；主题仍用 academic.mplstyle（取色与字体纪律不变），SciencePlots 与 cmcrameri 是**期刊适配层**，不替代本仓库主题。
+走 `../routing.md` T1 路径：本文件排在 `tool-matplotlib.md` 之后、作图之前；主题仍用 academic.mplstyle（取色与字体纪律不变），SciencePlots 与 cmcrameri 是**期刊适配层**，不替代本仓库主题。

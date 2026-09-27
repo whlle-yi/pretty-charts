@@ -66,53 +66,63 @@ cp -r pretty-charts/skills/pretty-charts ~/.zcode/skills/
 
 ## 质量分档
 
-| 档位 | 场景 | 主题（色板来源） | 关键约束 |
+| 档位 | 介质 / 场景 | 主题（色板来源） | 关键约束 |
 |:---:|---|:---:|---|
 | T1 出版级 | 期刊 / 学位论文 | academic（Okabe-Ito） | 流程图无底色、黑白可辨、误差与显著性规范、矢量导出 |
 | T2 报告级 | 咨询 / 商务文档 | business（Tableau 10） | 标题即结论、关键数值直标、语义色可用 |
 | T3 展示级 | PPT / 海报 / 大屏 | showcase（Tol Vibrant） | 一图一结论、系列 ≤3、远距离可读 |
 
-档位是场景标准而非质量排名，质量以各档[自查清单](skills/pretty-charts/references/style-guide.md)衡量。
+**档位由输出介质判定**（印刷 / 屏幕文档 / 投影），不是“学术 vs 商务”这类社交标签——判定表与参数差异见 [routing.md](skills/pretty-charts/references/routing.md) §1。档位是场景标准而非质量排名，质量以 [checklist.md](skills/pretty-charts/references/checklist.md) 对应清单衡量。
 
 ## 文件地图
 
 | 时机 | 文件 |
 |---|---|
-| ① 被代码加载，不读 | `references/style/matplotlib/*.mplstyle` · `references/style/echarts/*.json` · `references/style/tikz/*.tex` |
-| ② AI 每次任务必读 | `SKILL.md`（定性 + 定档） |
-| ③ 定档后读一次 | [`references/scenarios.md`](skills/pretty-charts/references/scenarios.md)（对应档位一节） |
-| ④ 画什么读什么 | `references/data/`（9 类分析目的 + 选型）· `references/diagram/`（5 类图型 + 选型） |
-| ⑤ 按工具栈读 | `data/tool-{matplotlib,echarts}.md` · `diagram/tool-{tikz,graphviz,svg}.md` |
-| ⑥ 交付前查 | `references/style-guide.md` §7 对应清单 · §4 字体 · §6 红线 |
-| ⑦ 参照模仿 | `examples/`（代码 + 成图） |
+| ① 每次任务必读 | [`SKILL.md`](skills/pretty-charts/SKILL.md)（设计哲学 + 四步契约） |
+| ② 定档 | [`routing.md`](skills/pretty-charts/references/routing.md)（档位 · 工具 · 读取顺序 · 降级） |
+| ③ 图型未定时选型 | [`selection.md`](skills/pretty-charts/references/selection.md) |
+| ④ 画什么读什么 | 图型专属：`references/data/`（9 类）· `references/diagram/`（5 类） |
+| ⑤ 横切规范 | `references/spec/{integrity,color,type,layout,diagram}.md`（只定义一次） |
+| ⑥ 按工具栈读 | `data/tool-{matplotlib,echarts}.md` · `diagram/tool-{tikz,graphviz,svg}.md` |
+| ⑦ 交付前查 | [`checklist.md`](skills/pretty-charts/references/checklist.md) 对应档位 |
+| ⑧ 参照模仿 | [`examples/INDEX.md`](skills/pretty-charts/examples/INDEX.md)（脚本 ↔ 成图） |
+| ⑨ 被代码加载，不必通读 | `references/style/`（palettes / matplotlib / echarts / tikz） |
 
 ## 仓库结构
 
 ```
 pretty-charts/
 ├── README.md / LICENSE / .gitignore
+├── scripts/check_refs.py       # 仓库维护工具（不属于 skill 本体）：引用自检 + 生成示例索引
 └── skills/
     └── pretty-charts/          # skill 本体：自包含，拷走即用
-        ├── SKILL.md            # 入口：定性路由 + 执行顺序契约
+        ├── SKILL.md            # 入口：设计哲学 + 四步契约 + 交付要求
         ├── references/
-        │   ├── scenarios.md    # 三档场景入口（阅读路径 + 专属规则）
-        │   ├── style-guide.md  # 风格总纲（配色/字体/导出/防误导/清单）
-        │   ├── data/           # 数据图：选型 + 9 类目的 + 2 工具栈
-        │   ├── diagram/        # 非数据图：5 类图型 + 3 工具栈
-        │   └── style/          # 风格资产：palettes / matplotlib / echarts / tikz
-        ├── examples/           # 示例画廊：代码 + 成图
+        │   ├── routing.md      # 唯一路由：档位（按介质）+ 工具 + 读取顺序 + 降级路径
+        │   ├── selection.md    # 唯一选型：要不要画 + 数据图/非数据图 + 归属判定
+        │   ├── checklist.md    # 三档自查清单
+        │   ├── spec/           # 横切规范（只定义一次）：integrity / color / type / layout / diagram
+        │   ├── data/           # 数据图：9 类图型专属 + 2 工具栈 + paper-data.md
+        │   ├── diagram/        # 非数据图：5 类图型专属 + 3 工具栈
+        │   └── style/          # 机器可读资产：palettes / matplotlib / echarts / tikz
+        ├── examples/           # 示例画廊：INDEX.md + 代码 + 成图
 ```
 
 ## 文档
 
 | 文档 | 内容 |
 |---|---|
-| [SKILL.md](skills/pretty-charts/SKILL.md) | 入口：内容审读 → 定档 → 执行顺序契约 |
-| [scenarios.md](skills/pretty-charts/references/scenarios.md) | 三档场景：阅读顺序与专属规则 |
-| [style-guide.md](skills/pretty-charts/references/style-guide.md) | 配色 / 字体 / 导出 / 防误导红线 / 三档清单（字体的唯一出处） |
-| [chart-selection.md](skills/pretty-charts/references/data/chart-selection.md) | 数据图选型决策树 |
+| [SKILL.md](skills/pretty-charts/SKILL.md) | 入口：设计哲学 + 四步契约 + 交付要求 |
+| [routing.md](skills/pretty-charts/references/routing.md) | 档位（按输出介质）· 工具选择 · 读取顺序 · 降级路径 |
+| [selection.md](skills/pretty-charts/references/selection.md) | 要不要画 · 数据图/非数据图 · 目的+修饰维度 · 归属判定 |
+| [checklist.md](skills/pretty-charts/references/checklist.md) | 三档自查清单（交付前逐项过） |
+| [spec/integrity.md](skills/pretty-charts/references/spec/integrity.md) | 防误导九条红线 · 图注自含 · 诚实原则 |
+| [spec/color.md](skills/pretty-charts/references/spec/color.md) | 取色唯一来源 · token 表 · 多图一致性 |
+| [spec/type.md](skills/pretty-charts/references/spec/type.md) | 字体与字号层级 · VF 字体与 gs 管线两个坑 |
+| [spec/layout.md](skills/pretty-charts/references/spec/layout.md) | 尺寸速查 · 导出参数 · 落盘与命名 |
+| [spec/diagram.md](skills/pretty-charts/references/spec/diagram.md) | 非数据图通用布局 |
 | [paper-data.md](skills/pretty-charts/references/data/paper-data.md) | 论文数据图深化：期刊规格 / SciencePlots / Crameri 色图 / 退稿清单 |
-| [diagram-selection.md](skills/pretty-charts/references/diagram/diagram-selection.md) | 非数据图选型决策树 |
+| [examples/INDEX.md](skills/pretty-charts/examples/INDEX.md) | 示例索引：脚本 ↔ 成图（脚本自动生成） |
 
 ## 路线图
 

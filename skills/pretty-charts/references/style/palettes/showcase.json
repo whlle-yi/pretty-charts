@@ -8,7 +8,7 @@
   "primary": "#0077BB",
   "accent": "#EE7733",
   "sequential": ["#FDE725", "#B4DE2C", "#6DCD59", "#35B779", "#1F9E89", "#26828E", "#31688E", "#3E4989", "#482878", "#440154"],
-  "sequential_note": "viridis 反向采样：索引 0 = 最亮（#FDE725）= 最大值，末位 = 最暗 = 最小值。方向与 academic/business 的 sequential（浅 = 小）相反，取用前先统一方向（style-guide §3.2.2）",
+  "sequential_note": "viridis 反向采样：索引 0 = 最亮（#FDE725）= 最大值，末位 = 最暗 = 最小值。方向与 academic/business 的 sequential（浅 = 小）相反，取用前先统一方向（spec/color.md §4.2）",
   "diverging": ["#3B4CC0", "#6788EE", "#9ABBFF", "#C9D7F0", "#DDDDDD", "#F2CBB7", "#F0A387", "#E56B5D", "#B40426"],
   "diverging_note": "coolwarm（9 级），索引中点 #DDDDDD = 无意义点",
   "neutral": "#BBBBBB",
@@ -19,6 +19,6 @@
   "subtext": "#666666",
   "missing": "#E8E8E8",
   "semantic": { "success": "#2E7D32", "warning": "#ED6C02", "danger": "#C62828", "info": "#0288D1" },
-  "role_note": "axis=轴线与边框；subtext=副标题/脚注/次要文字；missing=无数据区域填充，必须与 sequential 最浅端可区分；semantic 仅 T2/T3 使用（style-guide §3.2.6）",
+  "role_note": "axis=轴线与边框；subtext=副标题/脚注/次要文字；missing=无数据区域填充，必须与 sequential 最浅端可区分；semantic 仅 T2/T3 使用（spec/color.md §3）",
   "background": "#FFFFFF"
 }

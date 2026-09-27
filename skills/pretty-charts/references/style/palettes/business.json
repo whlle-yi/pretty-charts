@@ -19,6 +19,6 @@
   "subtext": "#666666",
   "missing": "#E8E8E8",
   "semantic": { "success": "#2E7D32", "warning": "#ED6C02", "danger": "#C62828", "info": "#0288D1" },
-  "role_note": "axis=轴线与边框；subtext=副标题/脚注/次要文字；missing=无数据区域填充，必须与 sequential 最浅端可区分；semantic 仅 T2/T3 使用（style-guide §3.2.6）",
+  "role_note": "axis=轴线与边框；subtext=副标题/脚注/次要文字；missing=无数据区域填充，必须与 sequential 最浅端可区分；semantic 仅 T2/T3 使用（spec/color.md §3）",
   "background": "#FFFFFF"
 }

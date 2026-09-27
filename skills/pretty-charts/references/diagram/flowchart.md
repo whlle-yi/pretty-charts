@@ -1,7 +1,7 @@
 # 流程与时序（flowchart）
 
 > 覆盖：流程图、时序图、甘特图、状态图。**交付级一律 TikZ**：流程图用预置样式 `references/style/tikz/flowchart-styles.tex`，时序图用 `sequence-styles.tex`（两者都要先 `\input` `preamble.tex`，且 sequence 复用 flowchart 的模式变量），甘特图用 pgfgantt——流程图/时序图为论文/演示双模式，甘特图与状态图无预置样式。复杂有向图退到 Graphviz。**禁止使用 mermaid**：本文件的示例语法一律是 TikZ/pgfgantt 写法。
-> 通用红线（防误导九条）与配色/字体/导出规范见 `../style-guide.md`；本文件只列本图型特有规范。
+> **横切规范只在本技能 `spec/` 定义一次**：红线九条见 [`../spec/integrity.md`](../spec/integrity.md)，取色见 [`../spec/color.md`](../spec/color.md)，字体字号见 [`../spec/type.md`](../spec/type.md)，尺寸导出与落盘见 [`../spec/layout.md`](../spec/layout.md)。本文件**只列本图型特有规范**，不复述上述任何内容；非数据图通用布局见 [`../spec/diagram.md`](../spec/diagram.md)。
 
 ## 0. 流程图工具策略：TikZ 双模式
 

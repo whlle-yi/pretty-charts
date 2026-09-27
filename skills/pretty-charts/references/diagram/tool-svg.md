@@ -1,6 +1,7 @@
 # 工具栈：SVG 手绘（tool-svg）
 
 > 最后手段：信息图、海报、复杂插画、需要完全自定义视觉时。成本最高，先确认 TikZ/Graphviz 真不够用。
+> **横切规范只在本技能 `spec/` 定义一次**（红线 [`../spec/integrity.md`](../spec/integrity.md)、取色 [`../spec/color.md`](../spec/color.md)、字体 [`../spec/type.md`](../spec/type.md)、尺寸与落盘 [`../spec/layout.md`](../spec/layout.md)）；本文件**只讲本工具栈的用法与坑**，不复述上述内容。
 
 ## 1. 何时用 SVG
 

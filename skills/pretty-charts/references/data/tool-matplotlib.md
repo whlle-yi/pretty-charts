@@ -1,6 +1,7 @@
 # 工具栈：matplotlib 生态（tool-matplotlib）
 
 > 适用 T1/T2 静态出版级与报告级出图。选型：**pandas.plot 快速探索 → seaborn 统计图 → matplotlib 手工精修 → plotly 需要交互时**。
+> **横切规范只在本技能 `spec/` 定义一次**（红线 [`../spec/integrity.md`](../spec/integrity.md)、取色 [`../spec/color.md`](../spec/color.md)、字体 [`../spec/type.md`](../spec/type.md)、尺寸与落盘 [`../spec/layout.md`](../spec/layout.md)）；本文件**只讲本工具栈的用法与坑**，不复述上述内容。
 
 ## 0. 主题加载（每个脚本第一件事）
 

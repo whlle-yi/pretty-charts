@@ -22,7 +22,7 @@ if "Microsoft YaHei" in sans:
 sans.insert(0, "Microsoft YaHei")
 plt.rcParams["font.sans-serif"] = sans
 
-# 取色唯一来源：references/style/palettes/business.json（style-guide §3：禁止硬编码色值）
+# 取色唯一来源：references/style/palettes/business.json（spec/color.md §1：禁止硬编码色值）
 PALETTE = json.loads(
     (SKILL_ROOT / "references" / "style" / "palettes" / "business.json").read_text(encoding="utf-8")
 )

@@ -1,7 +1,7 @@
 # 系统架构图（architecture）
 
 > 表达系统组成：分层、模块、部署拓扑、数据流。工具：**TikZ 为主**（复用 `flowchart-styles.tex` 双模式与 `pc sub`/`pc db` 样式）；Graphviz 仅在节点极多需要自动布局时备用。
-> 通用红线（防误导九条）与配色/字体/导出规范见 `../style-guide.md`；本文件只列本图型特有规范。
+> **横切规范只在本技能 `spec/` 定义一次**：红线九条见 [`../spec/integrity.md`](../spec/integrity.md)，取色见 [`../spec/color.md`](../spec/color.md)，字体字号见 [`../spec/type.md`](../spec/type.md)，尺寸导出与落盘见 [`../spec/layout.md`](../spec/layout.md)。本文件**只列本图型特有规范**，不复述上述任何内容；非数据图通用布局见 [`../spec/diagram.md`](../spec/diagram.md)。
 
 ## 图型清单
 
