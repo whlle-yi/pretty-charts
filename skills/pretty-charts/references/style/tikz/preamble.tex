@@ -11,8 +11,14 @@
 % 故 TikZ 导出 PDF 用 Microsoft YaHei；装有静态版思源黑体(Source Han Sans SC)的机器可换回。
 \usepackage{fontspec}
 \usepackage{xeCJK}
-\newCJKfontfamily\chartcjk{Microsoft YaHei}
-\newcommand{\chartfont}[1]{{\chartcjk\fontspec{Arial}#1}}
+\IfFontExistsTF{Microsoft YaHei}
+  {\newCJKfontfamily\chartcjk{Microsoft YaHei}}% 静态字体，可嵌入 PDF
+  {\IfFontExistsTF{Noto Sans CJK SC}
+     {\newCJKfontfamily\chartcjk{Noto Sans CJK SC}}% Linux（fonts-noto-cjk）
+     {\newCJKfontfamily\chartcjk{FandolHei}}}% 兜底：TeX Live 自带
+\IfFontExistsTF{Arial}
+  {\newcommand{\chartfont}[1]{{\chartcjk\fontspec{Arial}#1}}}
+  {\newcommand{\chartfont}[1]{{\chartcjk\fontspec{TeX Gyre Heros}#1}}}
 
 % ---- 色板：academic（Okabe-Ito 重排，与 references/style/palettes/academic.json 一致）----
 \definecolor{pcBlue}{HTML}{0072B2}

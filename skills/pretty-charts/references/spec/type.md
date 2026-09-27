@@ -15,6 +15,12 @@
 
 **TikZ 的模式宏不含字体**：`\pcPaperMode` / `\pcPPTMode` 只切配色、线宽、字号。字体必须由你自己的文档用 `\setmainfont` / `\setCJKmainfont` 声明——只切宏而不声明字体，中文会变成豆腐块。示例见 `examples/diagram/flowchart/paper_flow.tex` 与 `ppt_flow.tex`（两者仅"1 行模式 + 2 行字体"之差）。
 
+**跨平台字体层（TikZ）**：两种搭配各封装为可 `\input` 的片段，按字体是否存在自动回退，**文档里不要写死字体名**：
+- [`fonts-serif.tex`](../style/tikz/fonts-serif.tex)：宋体 + Times New Roman（与论文正文一致的图）
+- [`fonts-sans.tex`](../style/tikz/fonts-sans.tex)：黑体 + Arial（演示版，以及黑体系的示意图）
+
+  回退顺序：Windows 原生字体 → Noto CJK → **Fandol**（TeX Live 自带，故无需系统字体包）。
+
 **回退链**（已内置在 `.mplstyle`）：`Source Han Sans SC → Noto Sans SC → Microsoft YaHei → Arial → Helvetica → DejaVu Sans`。
 数学符号用 STIX（`mathtext.fontset: stix`）。
 

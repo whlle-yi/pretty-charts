@@ -39,7 +39,8 @@
 | **14 类图型方法论** | 数据图 9 类（比较 / 分布 / 构成 / 趋势 / 关系 / 层次网络 / 地理 / 热图矩阵 / 统计推断）+ 非数据图 5 类（流程与时序 / 系统架构 / 层级与逻辑 / 科研示意 / 信息图） |
 | **防误导红线** | 九条硬规则（柱状零起点、不确定度不省略、气泡面积编码、样本归一…）+ 诚实原则：**图注里的 n、置信区间、p 值必须由脚本真实计算，不得编造** |
 | **示例可跑** | 16 个 Python 脚本 + 16 个 LaTeX 源文件，成图全部由仓库内代码实际渲染并提交 |
-| **可校验结构** | 引用自检脚本 + 生成式示例索引，接入提交前检查 |
+| **可校验结构** | 五项自检脚本（引用完整性 / 孤儿方法论 / 孤儿示例 / 硬编码颜色 / 产出存在性） + 生成式示例索引 + GitHub Actions CI |
+| **跨平台** | LaTeX 字体层按字体存在性自动回退（Windows 宋体/雅黑 → Noto CJK → TeX Live 自带 Fandol），同一份示例在 Windows 与 Linux 均可编译 |
 | **降级路径** | 无 XeLaTeX、缺中文字体、只能出位图时怎么办，写在 [`routing.md` §5](skills/pretty-charts/references/routing.md)，不允许"默默出一张不合规的图" |
 
 ## 示例
@@ -140,16 +141,18 @@ LaTeX 示例需要 **XeLaTeX**（TeX Live 2026 实测），宏包：`pgfplots`�
 
 | 检查 | 结果 |
 |---|---|
-| 16 个 Python 示例执行 | 16/16 通过（exit 0），成图重新渲染一致 |
+| 16 个 Python 示例执行 | 16/16 通过（exit 0） |
 | 16 个 LaTeX 源文件编译 | 16/16 `xelatex` 通过 |
-| 引用自检 `scripts/check_refs.py` | 通过：无悬空引用、无孤儿方法论、无孤儿示例 |
-| 规格单一来源 | 横切事实仅存在于 `references/spec/`；14 份图型文件与 6 份工具文件只引用 |
+| 五项自检 `scripts/check_refs.py` | 通过：无悬空引用 · 无孤儿方法论 · 无孤儿示例 · 无硬编码颜色 · 产出齐备 |
+| 主题 ↔ 色板一致性 | [`demo_styles.py`](skills/pretty-charts/examples/style-demo/demo_styles.py) 断言三套主题的循环色逐色等于 `palettes/*.json` |
+| 规格单一来源 | 横切事实仅存在于 `references/spec/`；14 份图型文件与 6 份工具文件只引用不复述 |
+| **CI** | GitHub Actions 三个作业：结构与引用自检 · Python 示例 · LaTeX 编译（[.github/workflows/ci.yml](.github/workflows/ci.yml)） |
 
 **已知限制（不隐瞒）**：
 
 - TikZ 侧目前只实现了 **academic（论文版）** 与 PPT 两种模式，**没有 business 模式**；[`routing.md`](skills/pretty-charts/references/routing.md) 与 `spec/` 已如实标注。
-- 取色"单一来源"尚未收尾：**16 个示例中 6 个**已改为从 palette JSON 读色，其余 10 个仍硬编码**色板内**的 hex 值（值正确，但违反"禁止硬编码"约定）。
-- 尚无 CI：以上验证是本地一次性实测，未接入 GitHub Actions。
+- CI 只验证"能跑通、能编译、结构自洽"，**不做成图字节比对**——matplotlib 的字体光栅化与 xelatex 的 PDF ID/时间戳跨平台必然不同，字节比对只会产生噪声失败。
+- Windows 原生的宋体/雅黑与 Times New Roman/Arial 在 Linux 上不存在，字体由 [`fonts-serif.tex`](skills/pretty-charts/references/style/tikz/fonts-serif.tex) / [`fonts-sans.tex`](skills/pretty-charts/references/style/tikz/fonts-sans.tex) 自动回退到 Noto CJK 或 TeX Live 自带的 Fandol。**Linux 侧回退链尚未在本地实测**（开发机为 Windows），首次 CI 运行可能需要微调字体名。
 - PNG 转换命令（Ghostscript）未在本机实测——环境未安装 `gs`；PDF 产物本身已验证。
 
 ## 质量分档
@@ -167,7 +170,8 @@ LaTeX 示例需要 **XeLaTeX**（TeX Live 2026 实测），宏包：`pgfplots`�
 ```
 pretty-charts/
 ├── README.md / LICENSE / .gitignore / requirements.txt
-├── scripts/check_refs.py       # 仓库维护工具（不属于 skill 本体）：引用自检 + 生成示例索引
+├── .github/workflows/ci.yml    # CI：结构与引用自检 · Python 示例 · LaTeX 编译
+├── scripts/check_refs.py       # 仓库维护工具（不属于 skill 本体）：五项自检 + 生成示例索引
 └── skills/
     └── pretty-charts/          # skill 本体：自包含，拷走即用
         ├── SKILL.md            # 入口：设计哲学 + 四步契约 + 交付要求
@@ -222,7 +226,7 @@ pretty-charts/
 
 欢迎提交图型、示例与规范改进。提交前请确保：
 
-1. **自检通过**：`python scripts/check_refs.py` 退出码为 0。
+1. **自检通过**：`python scripts/check_refs.py` 退出码为 0（五项校验，CI 会重复执行）。
 2. **新增示例必须被引用**：新脚本要在对应图型方法论文件的「示例」节里**按名**出现，否则自检会判定为孤儿示例。
 3. **改完示例重跑索引**：`python scripts/check_refs.py --write-index`。
 4. **遵守规格单一来源**：字体/配色/尺寸/红线只在 `references/spec/` 定义；图型与工具文件**引用而不复述**。新增横切事实请加进 `spec/` 并同步 `checklist.md`。
@@ -238,8 +242,9 @@ pretty-charts/
 - [x] 非数据图方法论 + 画廊：13 个 `.tex` 源文件，5 类图型全部有成图
 - [x] 地理可视化、信息图整页版式、树图、哑铃图
 - [x] 文档结构重构：横切规范单一来源 + 唯一路由 + 生成式示例索引 + 引用自检
-- [ ] 取色单一来源收尾：其余 10 个示例改为从 palette JSON 读色（含信息图脚本）
-- [ ] CI：把自检 + 示例渲染 + `.tex` 编译接入 GitHub Actions
+- [x] 取色单一来源收尾：16 个示例全部从 palette JSON 读色；`demo_styles.py` 兼作主题↔色板一致性校验
+- [x] CI：结构与引用自检 + Python 示例执行 + `.tex` 编译（GitHub Actions 三作业）
+- [x] LaTeX 字体层跨平台回退（Windows 原生字体 → Noto CJK → Fandol）
 - [ ] TikZ business / showcase 模式
 - [ ] 插件清单（`.zcode-plugin/` / `.claude-plugin/`），安装从手动拷贝变为一条命令
 - [ ] 数据图第二批画廊：桑基、山脊图、ECDF、日历热图

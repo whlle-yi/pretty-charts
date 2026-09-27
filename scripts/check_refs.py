@@ -11,6 +11,7 @@
   B. references/{data,diagram,spec} 下每个 .md 都必须被入口文件按名引用（杜绝"孤儿方法论"）
   C. examples 下每个 .py 都必须被 references/**.md 按名引用（杜绝"孤儿示例"）
   D. 示例脚本里不得出现硬编码颜色（hex 或 white/black/gray），必须从 palette JSON 取色
+  E. 每个示例都要有产出：.py 有成图，.tex 有同名且非空的 PDF
 """
 from __future__ import annotations
 
@@ -156,6 +157,17 @@ def check_no_hardcoded_colors(problems):
                     % (os.path.relpath(py, REPO), lineno, m.group(0)))
 
 
+def check_outputs(problems):
+    """每个示例都要有产出：.py 有成图，.tex 有同名 PDF（空文件也算缺失）。"""
+    for py in walk(EXAMPLES, ".py"):
+        if not script_outputs(py):
+            problems.append("无成图  %s 未产出任何图片/PDF" % os.path.relpath(py, REPO))
+    for tex in walk(EXAMPLES, ".tex"):
+        pdf = os.path.splitext(tex)[0] + ".pdf"
+        if not os.path.exists(pdf) or os.path.getsize(pdf) == 0:
+            problems.append("缺编译产物  %s 未生成同名 PDF" % os.path.relpath(tex, REPO))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--write-index", action="store_true")
@@ -170,6 +182,7 @@ def main():
     problems = []
     check_paths(problems)
     check_no_hardcoded_colors(problems)
+    check_outputs(problems)
     check_reachable_docs(problems)
     check_reachable_examples(problems)
 

@@ -1,6 +1,7 @@
 % ============================================================
-% pretty-charts 字体层：论文版（T1）
-% 用法：\input{.../references/style/tikz/fonts-paper.tex}
+% pretty-charts 字体层：衬线搭配（宋体 + Times New Roman）
+% 适用：与论文正文一致的图（流程图论文版、示意图的衬线方案、内嵌论文的示例）
+% 用法：\input{.../references/style/tikz/fonts-serif.tex}
 %
 % 为什么要单独成文件：示例此前各自写 \setmainfont{Times New Roman}
 % + \setCJKmainfont{SimSun}，这两个字体只存在于 Windows，导致同一份示例在
@@ -14,4 +15,6 @@
   {\setmainfont{TeX Gyre Termes}}          % TeX Live 自带，Times 的开源等价物
 \IfFontExistsTF{SimSun}
   {\setCJKmainfont{SimSun}}                % 中文宋体（Windows）
-  {\setCJKmainfont{Noto Serif CJK SC}}     % Linux: apt install fonts-noto-cjk
+  {\IfFontExistsTF{Noto Serif CJK SC}
+     {\setCJKmainfont{Noto Serif CJK SC}}   % Linux（apt install fonts-noto-cjk）
+     {\setCJKmainfont{FandolSong}}}         % 兜底：TeX Live 自带，无需系统字体包

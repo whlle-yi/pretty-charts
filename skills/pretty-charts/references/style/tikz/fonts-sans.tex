@@ -1,8 +1,9 @@
 % ============================================================
-% pretty-charts 字体层：演示版（PPT / T3）
-% 用法：\input{.../references/style/tikz/fonts-ppt.tex}
+% pretty-charts 字体层：无衬线搭配（黑体 + Arial）
+% 适用：演示版流程图、海报、大屏，以及需要黑体系的示意图
+% 用法：\input{.../references/style/tikz/fonts-sans.tex}
 %
-% 与 fonts-paper.tex 同理，按字体是否存在自动回退：
+% 与 fonts-serif.tex 同理，按字体是否存在自动回退：
 %   Windows → Arial + Microsoft YaHei
 %   其他平台 → TeX Gyre Heros + Noto Sans CJK SC
 % 注意：Microsoft YaHei 是静态字体，可以安全嵌入 PDF；Noto Sans SC 在 Windows
@@ -13,4 +14,6 @@
   {\setmainfont{TeX Gyre Heros}}           % TeX Live 自带，Helvetica/Arial 的等价物
 \IfFontExistsTF{Microsoft YaHei}
   {\setCJKmainfont{Microsoft YaHei}}       % 中文黑体（Windows，静态字体）
-  {\setCJKmainfont{Noto Sans CJK SC}}      % Linux: apt install fonts-noto-cjk
+  {\IfFontExistsTF{Noto Sans CJK SC}
+     {\setCJKmainfont{Noto Sans CJK SC}}    % Linux（apt install fonts-noto-cjk）
+     {\setCJKmainfont{FandolHei}}}          % 兜底：TeX Live 自带
