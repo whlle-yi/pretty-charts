@@ -4,6 +4,7 @@
 
 **高质量绘图技能库 —— AI Agent 与人类共用的统一图表风格体系**
 
+[![CI](https://github.com/whlle-yi/pretty-charts/actions/workflows/ci.yml/badge.svg)](https://github.com/whlle-yi/pretty-charts/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-0072B2.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-%E2%89%A53.9-4E79A7.svg)](#依赖与环境)
 [![Platform](https://img.shields.io/badge/Platform-ZCode%20%2F%20Claude%20Code-4E79A7.svg)](#1-作为-ai-skill-安装)
@@ -152,7 +153,7 @@ LaTeX 示例需要 **XeLaTeX**（TeX Live 2026 实测），宏包：`pgfplots`�
 
 - TikZ 侧目前只实现了 **academic（论文版）** 与 PPT 两种模式，**没有 business 模式**；[`routing.md`](skills/pretty-charts/references/routing.md) 与 `spec/` 已如实标注。
 - CI 只验证"能跑通、能编译、结构自洽"，**不做成图字节比对**——matplotlib 的字体光栅化与 xelatex 的 PDF ID/时间戳跨平台必然不同，字节比对只会产生噪声失败。
-- Windows 原生的宋体/雅黑与 Times New Roman/Arial 在 Linux 上不存在，字体由 [`fonts-serif.tex`](skills/pretty-charts/references/style/tikz/fonts-serif.tex) / [`fonts-sans.tex`](skills/pretty-charts/references/style/tikz/fonts-sans.tex) 自动回退到 Noto CJK 或 TeX Live 自带的 Fandol。**Linux 侧回退链尚未在本地实测**（开发机为 Windows），首次 CI 运行可能需要微调字体名。
+- Windows 原生的宋体/雅黑与 Times New Roman/Arial 在 Linux 上不存在，字体由 [`fonts-serif.tex`](skills/pretty-charts/references/style/tikz/fonts-serif.tex) / [`fonts-sans.tex`](skills/pretty-charts/references/style/tikz/fonts-sans.tex) 逐级回退（Windows 原生 → Noto CJK → Fandol → 最后只发警告不报错，故缺字体不会中断编译）。该回退链**已由 CI（Ubuntu + TeX Live）实测通过**，Linux 前置包为 `fonts-noto-cjk fonts-noto-cjk-extra fonts-texgyre`——其中 `fonts-texgyre` 容易漏，漏了会报 `The font "TeX Gyre Termes" cannot be found`（TeX Live 自带的那份对 fontconfig 不可见）。
 - PNG 转换命令（Ghostscript）未在本机实测——环境未安装 `gs`；PDF 产物本身已验证。
 
 ## 质量分档
