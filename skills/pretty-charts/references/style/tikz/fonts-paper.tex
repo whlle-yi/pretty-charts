@@ -1,0 +1,17 @@
+% ============================================================
+% pretty-charts 字体层：论文版（T1）
+% 用法：\input{.../references/style/tikz/fonts-paper.tex}
+%
+% 为什么要单独成文件：示例此前各自写 \setmainfont{Times New Roman}
+% + \setCJKmainfont{SimSun}，这两个字体只存在于 Windows，导致同一份示例在
+% Linux/macOS 上无法编译（CI 也就无从编译）。这里按"字体是否存在"自动回退：
+%   Windows → Times New Roman + SimSun（与原行为完全一致）
+%   其他平台 → TeX Gyre Termes + Noto Serif CJK SC（Linux 装 fonts-noto-cjk）
+% \IfFontExistsTF 由 fontspec 提供（preamble.tex 已加载 fontspec）。
+% ============================================================
+\IfFontExistsTF{Times New Roman}
+  {\setmainfont{Times New Roman}}
+  {\setmainfont{TeX Gyre Termes}}          % TeX Live 自带，Times 的开源等价物
+\IfFontExistsTF{SimSun}
+  {\setCJKmainfont{SimSun}}                % 中文宋体（Windows）
+  {\setCJKmainfont{Noto Serif CJK SC}}     % Linux: apt install fonts-noto-cjk

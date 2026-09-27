@@ -41,7 +41,7 @@ def text_color(hexcolor):
     """按相对亮度自动选深/浅文字，保证对比度（不靠手工维护的色名白名单）。"""
     r, g, b = (int(hexcolor[i:i + 2], 16) / 255 for i in (1, 3, 5))
     luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b
-    return "#1A1A1A" if luminance > 0.5 else "white"
+    return PALETTE["text"]["title"] if luminance > 0.5 else PALETTE["background"]
 
 
 fig, ax = plt.subplots(figsize=(7.0, 4.2))
@@ -55,14 +55,15 @@ rects = squarify.squarify(norm_sizes, 0, 0, W, H)
 
 for (name, v), r, c in zip(items, rects, palette):
     ax.add_patch(mpl.patches.Rectangle((r["x"], r["y"]), r["dx"], r["dy"],
-                 facecolor=c, edgecolor="white", linewidth=2))
+                 facecolor=c, edgecolor=PALETTE["background"], linewidth=2))
     cx, cy = r["x"] + r["dx"] / 2, r["y"] + r["dy"] / 2
     share = f"{v} 亿（{v / total * 100:.0f}%）"
     if r["dx"] > 0.18 * W and r["dy"] > 0.15 * H:     # 大块：名称 + 数值
         ax.text(cx, cy, f"{name}\n{share}", ha="center", va="center",
                 fontsize=10, color=text_color(c))
     elif r["dx"] > 0.08 * W:                           # 中块：只放名称
-        ax.text(cx, cy, name, ha="center", va="center", fontsize=9, color="#1A1A1A")
+        ax.text(cx, cy, name, ha="center", va="center", fontsize=9,
+                color=PALETTE["text"]["title"])
     # 小块：不放文字（图注与交互补足）
 
 ax.set_xlim(0, W)

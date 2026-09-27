@@ -3,12 +3,19 @@
 
 堆叠图中只有最底块可直接比大小；如需比较上方分量，改用分面小倍数图。
 """
+import json
 from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
 
 STYLE = Path(__file__).resolve().parents[3] / "references" / "style" / "matplotlib"
+plt.rcParams.update(plt.rcParamsDefault)
+# 取色唯一来源：references/style/palettes/academic.json（spec/color.md §1：禁止硬编码色值）
+SKILL_ROOT = Path(__file__).resolve().parents[3]
+PALETTE = json.loads(
+    (SKILL_ROOT / "references" / "style" / "palettes" / "academic.json")
+    .read_text(encoding="utf-8"))
 plt.style.use(STYLE / "academic.mplstyle")
 
 quarters = ["一季度", "二季度", "三季度", "四季度"]
@@ -17,7 +24,7 @@ parts = {
     "门店": np.array([300, 310, 330, 360]),
     "批发": np.array([180, 190, 210, 240]),
 }
-palette = ["#0072B2", "#56B4E9", "#999999"]  # 底块最易比较 → 主色；最次要 → 灰
+palette = [PALETTE["primary"], PALETTE["categorical"][5], PALETTE["categorical"][6]]  # 底块最易比较 → 主色；最次要 → 灰
 totals = sum(parts.values())
 
 fig, ax = plt.subplots(figsize=(4.8, 3.0))
@@ -28,7 +35,7 @@ for (name, vals), c in zip(parts.items(), palette):
         pct = v / totals[i] * 100
         if pct >= 8:  # 小于 8% 的块不放文字，防溢出
             ax.text(i, b + v / 2, f"{pct:.0f}%", ha="center", va="center",
-                    fontsize=8, color="white" if c != "#56B4E9" else "#1A1A1A")
+                    fontsize=8, color=PALETTE["background"] if c != PALETTE["categorical"][5] else PALETTE["text"]["title"])
     bottom += vals
 
 for i, t in enumerate(totals):  # 柱顶标总量

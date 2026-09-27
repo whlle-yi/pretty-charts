@@ -1,11 +1,17 @@
 # -*- coding: utf-8 -*-
 """折线图 + 波动带 + 线端直标：季节性双系列趋势（trend.md 规范 2/3/5）。"""
+import json
 from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
 
 plt.rcParams.update(plt.rcParamsDefault)
+# 取色唯一来源：references/style/palettes/academic.json（spec/color.md §1：禁止硬编码色值）
+SKILL_ROOT = Path(__file__).resolve().parents[3]
+PALETTE = json.loads(
+    (SKILL_ROOT / "references" / "style" / "palettes" / "academic.json")
+    .read_text(encoding="utf-8"))
 plt.style.use(Path(__file__).resolve().parents[3] /
               "references" / "style" / "matplotlib" / "academic.mplstyle")
 
@@ -16,10 +22,10 @@ fuel = 320 - 3.6 * x + 8 * np.sin(2 * np.pi * x / 12) + rng.normal(0, 4, 24)
 band = 6 + 0.25 * x
 
 fig, ax = plt.subplots(figsize=(5.4, 3.0))
-ax.plot(x, neu, color="#0072B2", lw=1.6)
-ax.fill_between(x, neu - band, neu + band, color="#0072B2", alpha=0.15, lw=0)
-ax.plot(x, fuel, color="#999999", lw=1.6)
-for name, y, c in [("新能车", neu, "#0072B2"), ("燃油车", fuel, "#999999")]:
+ax.plot(x, neu, color=PALETTE["primary"], lw=1.6)
+ax.fill_between(x, neu - band, neu + band, color=PALETTE["primary"], alpha=0.15, lw=0)
+ax.plot(x, fuel, color=PALETTE["categorical"][6], lw=1.6)
+for name, y, c in [("新能车", neu, PALETTE["primary"]), ("燃油车", fuel, PALETTE["categorical"][6])]:
     ax.annotate(f"{name} {y[-1]:.0f}", (x[-1], y[-1]), xytext=(5, 0),
                 textcoords="offset points", va="center", fontsize=8.5,
                 color=c, fontweight="bold")

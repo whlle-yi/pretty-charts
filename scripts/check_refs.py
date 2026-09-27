@@ -10,6 +10,7 @@
   A. 文档里提到的 references/** 与 examples/** 路径必须真实存在
   B. references/{data,diagram,spec} 下每个 .md 都必须被入口文件按名引用（杜绝"孤儿方法论"）
   C. examples 下每个 .py 都必须被 references/**.md 按名引用（杜绝"孤儿示例"）
+  D. 示例脚本里不得出现硬编码颜色（hex 或 white/black/gray），必须从 palette JSON 取色
 """
 from __future__ import annotations
 
@@ -140,6 +141,21 @@ def build_index():
     return "\n".join(lines) + "\n"
 
 
+HEX_OR_NAMED = re.compile(r"""["'](?:#[0-9A-Fa-f]{6}|white|black|gray|grey)["']""")
+
+
+def check_no_hardcoded_colors(problems):
+    """示例脚本里的颜色必须来自 palette JSON（spec/color.md §1：禁止硬编码色值）。"""
+    for py in walk(EXAMPLES, ".py"):
+        for lineno, line in enumerate(read(py).splitlines(), 1):
+            if line.lstrip().startswith("#"):
+                continue
+            for m in HEX_OR_NAMED.finditer(line):
+                problems.append(
+                    "硬编码颜色  %s:%d  ->  %s（改为从 palette JSON 取色，见 spec/color.md §1）"
+                    % (os.path.relpath(py, REPO), lineno, m.group(0)))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--write-index", action="store_true")
@@ -153,6 +169,7 @@ def main():
 
     problems = []
     check_paths(problems)
+    check_no_hardcoded_colors(problems)
     check_reachable_docs(problems)
     check_reachable_examples(problems)
 

@@ -5,11 +5,17 @@ comparison.md：比大小首选位置/长度编码；两时点多类别对比时
 更清晰地呈现"变化量"——线长即增幅，端点直接标注，无需图例查色。
 用法：python sorted_bar.py
 """
+import json
 from pathlib import Path
 
 import matplotlib.pyplot as plt
 
 plt.rcParams.update(plt.rcParamsDefault)
+# 取色唯一来源：references/style/palettes/academic.json（spec/color.md §1：禁止硬编码色值）
+SKILL_ROOT = Path(__file__).resolve().parents[3]
+PALETTE = json.loads(
+    (SKILL_ROOT / "references" / "style" / "palettes" / "academic.json")
+    .read_text(encoding="utf-8"))
 plt.style.use(Path(__file__).resolve().parents[3] /
               "references" / "style" / "matplotlib" / "academic.mplstyle")
 
@@ -28,9 +34,9 @@ star = gains.index(max(gains))               # 增幅最大的城市
 
 fig, ax = plt.subplots(figsize=(4.8, 3.1))
 for i, (a, b) in enumerate(zip(v24, v25)):
-    color = "#D55E00" if i == star else "#0072B2"
+    color = PALETTE["accent"] if i == star else PALETTE["primary"]
     ax.plot([a, b], [i, i], color=color, lw=2.2, solid_capstyle="round", zorder=2)
-    ax.scatter(a, i, s=42, facecolor="white", edgecolor="#4D4D4D",
+    ax.scatter(a, i, s=42, facecolor=PALETTE["background"], edgecolor=PALETTE["text"]["tick"],
                linewidth=1.1, zorder=3)
     ax.scatter(b, i, s=52, color=color, zorder=3)
     ax.text(b + 22, i, f"+{b - a}", va="center", fontsize=8,
@@ -39,8 +45,8 @@ for i, (a, b) in enumerate(zip(v24, v25)):
 ax.set_yticks(range(len(names)), names)
 ax.set_xlabel("销售额（亿元）")
 ax.set_xlim(580, 1400)
-ax.scatter([], [], s=42, facecolor="white", edgecolor="#4D4D4D", linewidth=1.1,
+ax.scatter([], [], s=42, facecolor=PALETTE["background"], edgecolor=PALETTE["text"]["tick"], linewidth=1.1,
            label="2024")
-ax.scatter([], [], s=52, color="#0072B2", label="2025")
+ax.scatter([], [], s=52, color=PALETTE["primary"], label="2025")
 ax.legend(loc="lower right", fontsize=8)
 fig.savefig(Path(__file__).with_suffix(".png"))

@@ -6,21 +6,31 @@ infographic.md 三段式：标题说结论、主体 2-4 个视觉块（每块一
 标题 46pt / 副标题 15pt / KPI 数字 54pt / 正文 13pt）。
 用法：python make_infographic.py
 """
+import json
 from pathlib import Path
 
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-from matplotlib.patches import FancyBboxPatch
+from matplotlib.colors import to_rgba
 
+SKILL_ROOT = Path(__file__).resolve().parents[3]
+STYLE = SKILL_ROOT / "references" / "style" / "matplotlib"
 OUT = Path(__file__).resolve().parent
-plt.rcParams.update(plt.rcParamsDefault)
-sans = ["Noto Sans SC", "Microsoft YaHei", "Arial"]
-plt.rcParams["font.sans-serif"] = sans
-plt.rcParams["font.family"] = "sans-serif"
-plt.rcParams["axes.unicode_minus"] = False
 
-PRIMARY, ACCENT, GREY = "#0077BB", "#EE7733", "#C7C7C7"
-INK, SUB, LINE = "#1A1A1A", "#666666", "#E3E3E3"
+plt.rcParams.update(plt.rcParamsDefault)
+plt.style.use(STYLE / "showcase.mplstyle")   # T3 展示级主题（含字体回退链与负号处理）
+
+# 取色唯一来源：references/style/palettes/showcase.json（spec/color.md §1：禁止硬编码色值）
+PALETTE = json.loads(
+    (SKILL_ROOT / "references" / "style" / "palettes" / "showcase.json").read_text(encoding="utf-8"))
+
+PRIMARY = PALETTE["primary"]
+ACCENT = PALETTE["accent"]
+GREY = PALETTE["neutral"]
+INK = PALETTE["text"]["title"]
+SUB = PALETTE["subtext"]
+LINE = PALETTE["grid"]
+CARD = to_rgba(PRIMARY, 0.07)                # KPI 卡浅底 = 主色的极浅色调，仍属色板体系
 BARS = [("华南", 34), ("华东", 28), ("华北", 19), ("西部", 12), ("东北", 7)]
 
 fig = plt.figure(figsize=(20, 11.25))          # 16:9，2000×1125 px @100dpi
@@ -40,20 +50,20 @@ kpis = [("34%", "华南区同比增速", ACCENT), ("1.2 亿", "Q3 总销售额�
         ("6 倍", "较 2020 年同期", PRIMARY)]
 for i, (num, label, color) in enumerate(kpis):
     x0 = 4 + i * 31.5
-    ax.add_patch(FancyBboxPatch((x0, 61), 26, 15.5,
+    ax.add_patch(mpl.patches.FancyBboxPatch((x0, 61), 26, 15.5,
                  boxstyle="round,pad=0.6,rounding_size=1.2",
-                 facecolor="#F4F7FA", edgecolor="none"))
+                 facecolor=CARD, edgecolor="none"))
     ax.text(x0 + 2.2, 71.5, num, fontsize=54, fontweight="bold", color=color, va="top")
     ax.text(x0 + 2.2, 64.2, label, fontsize=13.5, color=SUB, va="top")
 
-# ---- 主图：区域增速条形（华南 = 强调色，其余灰；数值直标）----
+# ---- 主图：区域增速条形（华南 = 强调色，其余中性灰；数值直标）----
 ax.text(4, 55.5, "各区域同比增速", fontsize=17, fontweight="bold", color=INK, va="top")
 bx = fig.add_axes([0.04, 0.12, 0.60, 0.40])
 for i, (name, v) in enumerate(BARS):
     color = ACCENT if name == "华南" else GREY
     bx.barh(i, v, height=0.58, color=color)
     bx.text(v + 0.9, i, f"{v}%", va="center", fontsize=14,
-            color=INK if name == "华南" else "#999999",
+            color=INK if name == "华南" else GREY,
             fontweight="bold" if name == "华南" else "normal")
 bx.set_yticks(range(5), [b[0] for b in BARS], fontsize=14, color=INK)
 bx.invert_yaxis()
@@ -73,7 +83,10 @@ for i, line in enumerate(notes):
 # ---- 落款区 ----
 ax.plot([4, 96], [6.5, 6.5], color=LINE, lw=1.5)
 ax.text(4, 3.5, "数据来源：示例数据（仅为版式演示） · 制图：pretty-charts",
-        fontsize=11, color="#999999")
+        fontsize=11, color=GREY)
 
+# 整页版式要的是固定画布尺寸：把主题默认的 tight bbox 关掉。
+# 注意 savefig(bbox_inches=None) 是“沿用 rcParams”，关不掉，必须置 rcParam（spec/layout.md §2.5）
+plt.rcParams["savefig.bbox"] = None
 fig.savefig(OUT / "infographic.png", dpi=100)
 print("infographic.png done")

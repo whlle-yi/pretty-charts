@@ -23,7 +23,16 @@ mm → inch 一律除以 25.4，不要凭感觉。仓库示例中只有 `example
 2. 位图：T1 ≥600dpi（线图 ≥1200 更佳），T2/T3 200dpi；白底。
 3. matplotlib 文字保持可编辑：`pdf.fonttype: 42`（主题已设）；SVG 用 `svg.fonttype: none`——注意这是 **matplotlib 的 rcParam**，不是 SVG 工具本身的设置，网页内嵌场景应改 `paths` 或直接用 ECharts。
 4. 顺序：先 `savefig`，再 `plt.close`。
-5. **T1 精确栏宽的例外**：主题默认 `savefig.bbox: tight`，会把留白裁掉，使成品宽度**不再等于** `figsize`。投稿要求精确栏宽时显式 `savefig(..., bbox_inches=None)`，并用 `subplots_adjust` 留足边距；否则排版时一旦缩放，等效字号跟着变，可能跌破 `type.md` §2 的下限。
+5. **T1 精确栏宽的例外**：主题默认 `savefig.bbox: tight`，会把留白裁掉，使成品宽度**不再等于** `figsize`。投稿要求精确栏宽时，必须把 rcParam 关掉：
+
+   ```python
+   plt.rcParams["savefig.bbox"] = None      # 正确：恢复固定画布尺寸
+   fig.savefig("fig1.pdf")
+   ```
+
+   ⚠️ **`savefig(..., bbox_inches=None)` 关不掉**——它的语义是“沿用 `rcParams["savefig.bbox"]`”，所以仍然 tight；`bbox_inches="standard"` 会直接抛 `AttributeError`。已实测：4×3in @100dpi 在 tight 下输出 290×215，置 rcParam 为 `None` 后才是 400×300。
+
+   留白用 `subplots_adjust` 控制。否则排版时一旦缩放，等效字号跟着变，可能跌破 `type.md` §2 的下限。
 
 ## 3. 落盘（输出目录与命名）
 

@@ -1,11 +1,18 @@
 # -*- coding: utf-8 -*-
 """相关矩阵热图：diverging 色板中心对齐 0 + 数值标注（heatmap.md 规范 1/4）。"""
+import json
 from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
 
 STYLE = Path(__file__).resolve().parents[3] / "references" / "style" / "matplotlib"
+plt.rcParams.update(plt.rcParamsDefault)
+# 取色唯一来源：references/style/palettes/academic.json（spec/color.md §1：禁止硬编码色值）
+SKILL_ROOT = Path(__file__).resolve().parents[3]
+PALETTE = json.loads(
+    (SKILL_ROOT / "references" / "style" / "palettes" / "academic.json")
+    .read_text(encoding="utf-8"))
 plt.style.use(STYLE / "academic.mplstyle")
 
 rng = np.random.default_rng(5)
@@ -28,7 +35,7 @@ for i in range(5):  # 格内标 r 值
     for j in range(5):
         v = corr[i, j]
         ax.text(j, i, f"{v:.2f}", ha="center", va="center", fontsize=8,
-                color="white" if abs(v) > 0.6 else "#1A1A1A")
+                color=PALETTE["background"] if abs(v) > 0.6 else PALETTE["text"]["title"])
 cbar = fig.colorbar(im, ax=ax, shrink=0.82)
 cbar.set_label("Pearson r", fontsize=9)
 ax.set_title("指标相关矩阵（n = 300）")

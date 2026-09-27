@@ -1,16 +1,23 @@
 # -*- coding: utf-8 -*-
-"""pretty-charts 风格验证样张：三个主题各渲染一张图，验证字体/配色/主题生效。
+"""pretty-charts 风格验证样张：三个主题各渲染一张图，并**校验主题循环色 = 色板 JSON**。
+
+为什么要把"校验"放进来：`spec/color.md` §1 规定色板 JSON 是唯一取色来源，主题文件只是它的投影。
+主题与色板一旦漂移（历史上出现过 showcase 循环色写成 `#CC3344`、色板是 `#CC3311` 这类问题），
+本脚本会立即失败——因此它既是样张，也是 CI 里的色板一致性测试。
 
 用法：python demo_styles.py
 输出：output/{academic,business,showcase}.png
 """
+import json
 from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.colors import to_hex
 
 SKILL_ROOT = Path(__file__).resolve().parents[2]
 STYLES = SKILL_ROOT / "references" / "style" / "matplotlib"
+PALETTES = SKILL_ROOT / "references" / "style" / "palettes"
 OUT = Path(__file__).resolve().parent / "output"
 OUT.mkdir(exist_ok=True)
 
@@ -25,8 +32,28 @@ groups = ["一季度", "二季度", "三季度", "四季度"]
 bars = rng.uniform(30, 90, (3, 4))
 
 
+def load_palette(theme):
+    """取色唯一来源：references/style/palettes/<theme>.json（spec/color.md §1）。"""
+    return json.loads((PALETTES / f"{theme}.json").read_text(encoding="utf-8"))
+
+
+def assert_cycle_matches_palette(theme):
+    """断言主题的循环色与色板 categorical 逐色一致（含顺序与数量）。"""
+    palette = load_palette(theme)
+    expected = [c.lower() for c in palette["categorical"]]
+    actual = [to_hex(c).lower() for c in plt.rcParams["axes.prop_cycle"].by_key()["color"]]
+    if actual != expected:
+        raise SystemExit(
+            "%s.mplstyle 的循环色与色板 JSON 不一致（spec/color.md §1 要求二者同源）\n"
+            "  主题: %s\n  色板: %s" % (theme, actual, expected))
+    return palette
+
+
 def render(theme: str) -> None:
+    plt.rcParams.update(plt.rcParamsDefault)
     plt.style.use(STYLES / f"{theme}.mplstyle")
+    palette = assert_cycle_matches_palette(theme)
+
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 3.2), gridspec_kw={"wspace": 0.28})
 
     for name, y in series.items():
@@ -50,7 +77,7 @@ def render(theme: str) -> None:
 
     fig.savefig(OUT / f"{theme}.png")
     plt.close(fig)
-    print(f"done: {theme}")
+    print(f"done: {theme}（循环色 = {len(palette['categorical'])} 色，与色板一致）")
 
 
 for theme in ("academic", "business", "showcase"):
