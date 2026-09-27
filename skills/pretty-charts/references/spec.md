@@ -326,7 +326,7 @@ plt.style.use(["science", "ieee"])       # 期刊变体：ieee / nature / apa
 - 工具选择见 `../SKILL.md` §第 3 步；交付级非数据图一律 TikZ（**不使用 mermaid**）。
 - 尺寸、字号下限、矢量导出、落盘命名统一遵守 本文件 §画布、尺寸、导出与落盘；着色统一遵守 本文件 §取色与配色。
 - TikZ 出单图用 `\documentclass[border=6pt]{standalone}`；论文内嵌时把 `tikzpicture` 整体放进正文的 `figure` 环境，并删掉 `\documentclass`、`\begin{document}`、`\end{document}` **三行**（只删 `\documentclass` 会留下孤立的 `\begin{document}`），`\input{preamble.tex}` 移到正文导言区。
-- `\input` 路径基准是**当前 .tex 文件所在目录**；仓库示例位于 `examples/<类>/<图型>/`，距技能根 3 层，故写作 `../../../references/assets/tikz/…`。
+- `\input` 路径基准是**当前 .tex 文件所在目录**；仓库示例位于 `examples/<类>/<图型>/`，距技能根 3 层，故写作 `../../../references/assets/tikz/…`。 <!-- check-refs: skip -->
 
 ### 3. 图注与符号
 

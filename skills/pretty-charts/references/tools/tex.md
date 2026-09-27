@@ -15,7 +15,7 @@
 
 ### 2. 模板接入
 
-**路径基准**：本文所有 `\input` 均相对**当前 .tex 文件所在目录**。仓库示例位于 `examples/<类>/<图型>/`，距技能根 3 层，故写作 `../../../references/assets/tikz/…`。若把片段搬进自己的项目，请把整个 `references/assets/tikz/` 拷入项目，并按实际层级调整前缀。
+**路径基准**：本文所有 `\input` 均相对**当前 .tex 文件所在目录**。仓库示例位于 `examples/<类>/<图型>/`，距技能根 3 层，故写作 `../../../references/assets/tikz/…`。若把片段搬进自己的项目，请把整个 `references/assets/tikz/` 拷入项目，并按实际层级调整前缀。 <!-- check-refs: skip -->
 
 ```latex
 \documentclass[border=6pt]{standalone}                % 单图输出（示例用）

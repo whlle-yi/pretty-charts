@@ -25,7 +25,7 @@
 
 给 AI Agent 用的图表规范，通常有两个失败模式：**规范写在散文里，Agent 读不完也记不住**；以及**同一个事实被复述在十几个文件里，改一处漏三处**。本项目针对这两点设计：
 
-1. **规格单一来源**。红线、取色、字体、尺寸、非数据图布局只在 [`references/spec/`](skills/pretty-charts/references/spec/) 定义一次；14 份图型文件与 6 份工具文件只**引用**，不复述。
+1. **规格单一来源**。红线、取色、字体、尺寸、非数据图布局只在 [`references/spec.md`](skills/pretty-charts/references/spec.md) 定义一次；14 份图型文件与 6 份工具文件只**引用**，不复述。
 2. **参数化落到机器可读资产**。三档质量差异（色板、字号、线宽、DPI、画布）全部落在 `.mplstyle` / ECharts 主题 JSON / TikZ 模式宏里——散文不再重复描述它们，因此也不会与实现对不上。
 3. **结构可机器校验**。[`scripts/check_refs.py`](scripts/check_refs.py) 校验引用完整性、孤儿方法论、孤儿示例；示例索引 [`examples/INDEX.md`](skills/pretty-charts/examples/INDEX.md) 由脚本生成，杜绝"文档说画廊里没有、其实早做完了"这类漂移。
 
@@ -146,7 +146,7 @@ LaTeX 示例需要 **XeLaTeX**（TeX Live 2026 实测），宏包：`pgfplots`�
 | 16 个 LaTeX 源文件编译 | 16/16 `xelatex` 通过 |
 | 五项自检 `scripts/check_refs.py` | 通过：无悬空引用 · 无孤儿方法论 · 无孤儿示例 · 无硬编码颜色 · 产出齐备 |
 | 主题 ↔ 色板一致性 | [`demo_styles.py`](skills/pretty-charts/examples/style-demo/demo_styles.py) 断言三套主题的循环色逐色等于 `palettes/*.json` |
-| 规格单一来源 | 横切事实仅存在于 `references/spec/`；14 份图型文件与 6 份工具文件只引用不复述 |
+| 规格单一来源 | 横切事实仅存在于 `references/spec.md`；14 份图型文件与 6 份工具文件只引用不复述 |
 | **CI** | GitHub Actions 三个作业：结构与引用自检 · Python 示例 · LaTeX 编译（[.github/workflows/ci.yml](.github/workflows/ci.yml)） |
 
 **已知限制（不隐瞒）**：
@@ -219,8 +219,8 @@ pretty-charts/
 1. **自检通过**：`python scripts/check_refs.py` 退出码为 0（五项校验，CI 会重复执行）。
 2. **新增示例必须被引用**：新脚本要在对应图型方法论文件的「示例」节里**按名**出现，否则自检会判定为孤儿示例。
 3. **改完示例重跑索引**：`python scripts/check_refs.py --write-index`。
-4. **遵守规格单一来源**：字体/配色/尺寸/红线只在 `references/spec/` 定义；图型与工具文件**引用而不复述**。新增横切事实请加进 `spec/` 并同步 `checklist.md`。
-5. **示例必须真跑**：成图提交前重新渲染；图注里出现的统计量必须由脚本真实计算（见 `spec/integrity.md` §3）。
+4. **遵守规格单一来源**：字体/配色/尺寸/红线只在 `references/spec.md` 定义；图型与工具文件**引用而不复述**。新增横切事实请加进 `references/spec.md`；交付清单在 `SKILL.md` 第 4 步，一并更新。
+5. **示例必须真跑**：成图提交前重新渲染；图注里出现的统计量必须由脚本真实计算（见 `references/spec.md` §3）。
 6. **文件组织**：脚本与成图同目录；输出路径用 `Path(__file__)` 推导，不依赖当前工作目录；中间产物不入库。
 
 提交信息建议采用 `类型: 摘要` 的形式（如 `fix:`、`docs:`、`refactor:`、`feat:`）。

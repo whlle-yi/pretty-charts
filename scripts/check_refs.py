@@ -28,6 +28,10 @@ ENTRY_FILES = ["SKILL.md"]          # 入口唯一：路由/选型/清单都已�
 IMG_EXT = (".png", ".pdf", ".svg")
 
 EXT = "md|py|json|mplstyle|tex|png|pdf|svg|geojson"
+# 目录形引用（以 / 结尾）单独校验：原 PATH_RE 要求扩展名，会漏掉断链的目录
+DIR_RE = re.compile(
+    r"(?:\.\./)*(?:skills/pretty-charts/)?(?:references|examples)/[A-Za-z0-9_./\-]*/")
+
 PATH_RE = re.compile(
     r"(?:\.\./)*(?:skills/pretty-charts/)?(?:references|examples)/[A-Za-z0-9_./\-]+\.(?:" + EXT + r")")
 
@@ -59,11 +63,14 @@ def check_paths(problems):
             # 行内逃生舱：路径基准不是本 .md（例如 LaTeX 片段相对 .tex 文件）时标 `check-refs: skip`
             if "check-refs: skip" in line:
                 continue
-            for m in PATH_RE.finditer(line):
-                raw = m.group(0)
-                if not os.path.exists(resolve(md, raw)):
-                    problems.append("悬空路径  %s:%d  ->  %s"
-                                    % (os.path.relpath(md, REPO), lineno, raw))
+            for rx, kind in ((PATH_RE, "文件"), (DIR_RE, "目录")):
+                for m in rx.finditer(line):
+                    raw = m.group(0)
+                    target = resolve(md, raw)
+                    ok = os.path.isdir(target) if kind == "目录" else os.path.exists(target)
+                    if not ok:
+                        problems.append("悬空%s  %s:%d  ->  %s"
+                                        % (kind, os.path.relpath(md, REPO), lineno, raw))
 
 
 def check_reachable_docs(problems):
