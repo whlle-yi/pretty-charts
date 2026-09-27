@@ -1,0 +1,53 @@
+% 科研流程图（CONSORT 风格实验研究流程，T1 论文版：无底色、宋体+Times New Roman）
+% 编译：xelatex -interaction=nonstopmode research_flow.tex
+% 转 PNG：rungs -sDEVICE=png16m -r200 -dBATCH -dNOPAUSE -sOutputFile=research_flow.png research_flow.pdf
+\documentclass[border=6pt]{standalone}
+\input{../../../references/style/tikz/preamble.tex}
+\input{../../../references/style/tikz/flowchart-styles.tex}
+\setmainfont{Times New Roman}
+\setCJKmainfont{SimSun}
+\begin{document}
+\begin{tikzpicture}
+  % ---- 节点：主轴 x=0，剔除支线在右，变换回路在左 ----
+  \node[pc start]   (recruit) at (0,0)      {招募研究对象};
+  \node[pc decision](include) at (0,-2.2)  {符合纳入标准？};
+  \node[pc process] (excl)    at (3.8,-2.2) {剔除并记录原因};
+  \node[pc key]     (random)  at (0,-4.4)   {随机分组};
+  \node[pc process] (ctrl)    at (-2.6,-6.4){对照组：常规方案};
+  \node[pc process] (treat)   at (2.6,-6.4) {干预组：强化方案};
+  \node[pc process] (clean)   at (0,-8.6)   {数据汇总与清洗};
+  \node[pc decision](norm)    at (0,-10.6)  {满足正态性？};
+  \node[pc process] (trans)   at (-4.2,-10.6){数据变换};
+  \node[pc key]     (test)    at (0,-12.6)  {组间显著性检验};
+  \node[pc process] (effect) at (0,-14.4)   {效应量与 95\%CI};
+  \node[pc start]   (concl)   at (0,-16.2)  {研究结论};
+
+  % ---- 阶段容器 ----
+  \node[pc sub, fit=(recruit)(include)(excl)(random), inner sep=9pt,
+        label={[pc sub label]above:（一）研究设计与分组}] {};
+  \node[pc sub, fit=(ctrl)(treat)(clean), inner sep=9pt,
+        label={[pc sub label]above:（二）干预与数据采集}] {};
+  \node[pc sub, fit=(norm)(trans)(test)(effect), inner sep=9pt,
+        label={[pc sub label]above:（三）统计分析}] {};
+
+  % ---- 主轴 ----
+  \draw[pc flow] (recruit.south) -- (include.north);
+  \draw[pc flow] (include.east) -- node[pc label, above=1pt]{否} (excl.west);
+  \draw[pc flow] (include.south) -- node[pc label, right=3pt]{是} (random.north);
+  % 平行分组：竖干 + 横轨 + 双落
+  \draw[pc flow] (random.south) -- (0,-5.15);
+  \draw[draw=black!80, line width=0.6pt] (-2.6,-5.15) -- (2.6,-5.15);
+  \draw[pc flow] (-2.6,-5.15) -- (ctrl.north);
+  \draw[pc flow] (2.6,-5.15) -- (treat.north);
+  % 汇流：两臂从左右两侧进入汇总节点顶部两角
+  \draw[pc flow] (ctrl.south)  -- ++(0,-0.5) -| (clean.north west);
+  \draw[pc flow] (treat.south) -- ++(0,-0.5) -| (clean.north east);
+  \draw[pc flow] (clean.south) -- (norm.north);
+  % 正态性回路：不满足 → 变换 → 重新检验
+  \draw[pc flow] (norm.west) -- node[pc label, above=1pt]{否} (trans.east);
+  \draw[pc flow back] (trans.north) |- node[pc label, above=1pt, pos=0.75]{变换后重新检验} (norm.west);
+  \draw[pc flow] (norm.south) -- node[pc label, right=3pt]{是} (test.north);
+  \draw[pc flow] (test) -- (effect);
+  \draw[pc flow] (effect) -- (concl);
+\end{tikzpicture}
+\end{document}

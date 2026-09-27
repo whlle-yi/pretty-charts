@@ -37,13 +37,13 @@
 | | |
 |:---:|:---:|
 | **[流程与时序](skills/pretty-charts/references/diagram/flowchart.md)** | **[系统架构](skills/pretty-charts/references/diagram/architecture.md)** |
-| ![](skills/pretty-charts/examples/diagram/flowchart/ppt_flow.png) | ![](skills/pretty-charts/examples/diagram/architecture/three_tier.png) |
+| ![](skills/pretty-charts/examples/diagram/flowchart/research_flow.png) | ![](skills/pretty-charts/examples/diagram/architecture/three_tier.png) |
 | **[层级与逻辑](skills/pretty-charts/references/diagram/hierarchy.md)** | **[科研示意图](skills/pretty-charts/references/diagram/schematic.md)** |
 | ![](skills/pretty-charts/examples/diagram/hierarchy/org_chart.png) | ![](skills/pretty-charts/examples/diagram/schematic/pipeline_schematic.png) |
 | **[信息图](skills/pretty-charts/references/diagram/infographic.md)** | |
 | ![](skills/pretty-charts/examples/diagram/infographic/infographic.png) | |
 
-更多论文内嵌效果：[流程图论文/演示双版](skills/pretty-charts/examples/diagram/flowchart/paper_flow.png) · [数据图内嵌](skills/pretty-charts/examples/data/paper/paper_embedded_data.pdf) · [地理图内嵌](skills/pretty-charts/examples/data/geo/paper_embedded_geo.pdf) · [关系图内嵌](skills/pretty-charts/examples/data/relationship/paper_embedded_relationship.pdf) · [层级图内嵌](skills/pretty-charts/examples/diagram/hierarchy/paper_embedded_hierarchy.pdf) · [管线示意图](skills/pretty-charts/examples/diagram/schematic/pipeline_schematic.pdf)
+更多论文内嵌效果：[科研流程图](skills/pretty-charts/examples/diagram/flowchart/research_flow.pdf) · [流程图演示版](skills/pretty-charts/examples/diagram/flowchart/ppt_flow.png) · [流程图论文版](skills/pretty-charts/examples/diagram/flowchart/paper_flow.png) · [数据图内嵌](skills/pretty-charts/examples/data/paper/paper_embedded_data.pdf) · [地理图内嵌](skills/pretty-charts/examples/data/geo/paper_embedded_geo.pdf) · [关系图内嵌](skills/pretty-charts/examples/data/relationship/paper_embedded_relationship.pdf) · [层级图内嵌](skills/pretty-charts/examples/diagram/hierarchy/paper_embedded_hierarchy.pdf) · [管线示意图](skills/pretty-charts/examples/diagram/schematic/pipeline_schematic.pdf)
 
 ## 快速开始
 
