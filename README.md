@@ -39,7 +39,7 @@
 | **[流程与时序](skills/pretty-charts/references/diagram/flowchart.md)** | **[系统架构](skills/pretty-charts/references/diagram/architecture.md)** |
 | ![](skills/pretty-charts/examples/diagram/flowchart/research_flow.png) | ![](skills/pretty-charts/examples/diagram/architecture/three_tier.png) |
 | **[层级与逻辑](skills/pretty-charts/references/diagram/hierarchy.md)** | **[科研示意图](skills/pretty-charts/references/diagram/schematic.md)** |
-| ![](skills/pretty-charts/examples/diagram/hierarchy/org_chart.png) | ![](skills/pretty-charts/examples/diagram/schematic/pipeline_schematic.png) |
+| ![](skills/pretty-charts/examples/diagram/hierarchy/org_chart.png) | ![](skills/pretty-charts/examples/diagram/schematic/signaling_schematic.png) |
 | **[信息图](skills/pretty-charts/references/diagram/infographic.md)** | |
 | ![](skills/pretty-charts/examples/diagram/infographic/infographic.png) | |
 
