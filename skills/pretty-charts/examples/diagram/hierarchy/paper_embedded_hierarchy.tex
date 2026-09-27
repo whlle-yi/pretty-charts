@@ -1,6 +1,8 @@
 % 论文层级类图内嵌效果演示（hierarchy.md 指导）：组织架构（含虚线汇报）+ 思维导图 + 概念图
 % 编译：xelatex -interaction=nonstopmode paper_embedded_hierarchy.tex（两遍，交叉引用）
-\documentclass[12pt]{ctexart}
+% fontset=none：禁止 ctex 自行选择 CJK 字体（它在 Linux 上会去找 Fandol 并可能失败），
+% 中英文字体统一由下面的 \input{.../fonts-serif.tex} 决定（见 spec/type.md §1）
+\documentclass[12pt,fontset=none]{ctexart}
 \ctexset{fontset=none}
 \usepackage[a4paper, margin=2.6cm]{geometry}
 \input{../../../references/style/tikz/preamble.tex}
