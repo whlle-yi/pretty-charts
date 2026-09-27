@@ -19,7 +19,10 @@
 - [`fonts-serif.tex`](../style/tikz/fonts-serif.tex)：宋体 + Times New Roman（与论文正文一致的图）
 - [`fonts-sans.tex`](../style/tikz/fonts-sans.tex)：黑体 + Arial（演示版，以及黑体系的示意图）
 
-  回退顺序：Windows 原生字体 → Noto CJK → **Fandol**（TeX Live 自带，故无需系统字体包）。
+  回退顺序：Windows 原生字体 → Noto CJK → **Fandol**（TeX Live 自带）。
+  Linux 上还需让 fontspec（经 fontconfig）能找到西文回退字体，前置包为：
+  `apt install fonts-noto-cjk fonts-noto-cjk-extra fonts-texgyre`（缺 `fonts-texgyre` 会报 `The font "TeX Gyre Termes" cannot be found`——TeX Live 自带的那份对 fontconfig 不可见）。
+  两级回退都找不到时只发 `\PackageWarning` 而**不报错**，因此缺字体不会中断编译。
 
 **回退链**（已内置在 `.mplstyle`）：`Source Han Sans SC → Noto Sans SC → Microsoft YaHei → Arial → Helvetica → DejaVu Sans`。
 数学符号用 STIX（`mathtext.fontset: stix`）。

@@ -12,8 +12,11 @@
 % \IfFontExistsTF 由 fontspec 提供（preamble.tex 已加载 fontspec）。
 % ============================================================
 \IfFontExistsTF{Times New Roman}
-  {\setmainfont{Times New Roman}}
-  {\setmainfont{TeX Gyre Termes}}          % TeX Live 自带，Times 的开源等价物
+  {\setmainfont{Times New Roman}}          % Windows / macOS
+  {\IfFontExistsTF{TeX Gyre Termes}
+     {\setmainfont{TeX Gyre Termes}}        % Linux 需 apt install fonts-texgyre
+     {\PackageWarning{pretty-charts}{未找到西文衬线字体（Times New Roman / TeX Gyre %
+       Termes），改用 XeLaTeX 默认西文字体；如需一致字形请安装 fonts-texgyre}}}
 \IfFontExistsTF{SimSun}
   {\setCJKmainfont{SimSun}}                % 中文宋体（Windows）
   {\IfFontExistsTF{Noto Serif CJK SC}

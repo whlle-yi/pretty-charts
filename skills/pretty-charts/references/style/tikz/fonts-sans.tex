@@ -11,8 +11,11 @@
 % 可变字体，xdvipdfmx 无法嵌入（见 spec/type.md §3），故这里不做该回退。
 % ============================================================
 \IfFontExistsTF{Arial}
-  {\setmainfont{Arial}}
-  {\setmainfont{TeX Gyre Heros}}           % TeX Live 自带，Helvetica/Arial 的等价物
+  {\setmainfont{Arial}}                    % Windows / macOS
+  {\IfFontExistsTF{TeX Gyre Heros}
+     {\setmainfont{TeX Gyre Heros}}         % Linux 需 apt install fonts-texgyre
+     {\PackageWarning{pretty-charts}{未找到西文无衬线字体（Arial / TeX Gyre %
+       Heros），改用 XeLaTeX 默认西文字体；如需一致字形请安装 fonts-texgyre}}}
 \IfFontExistsTF{Microsoft YaHei}
   {\setCJKmainfont{Microsoft YaHei}}       % 中文黑体（Windows，静态字体）
   {\IfFontExistsTF{Noto Sans CJK SC}
