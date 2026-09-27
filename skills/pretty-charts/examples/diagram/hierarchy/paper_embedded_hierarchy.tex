@@ -1,0 +1,132 @@
+% 论文层级类图内嵌效果演示（hierarchy.md 指导）：组织架构（含虚线汇报）+ 思维导图 + 概念图
+% 编译：xelatex -interaction=nonstopmode paper_embedded_hierarchy.tex（两遍，交叉引用）
+\documentclass[12pt]{ctexart}
+\ctexset{fontset=none}
+\usepackage[a4paper, margin=2.6cm]{geometry}
+\input{../../../references/style/tikz/preamble.tex}
+\input{../../../references/style/tikz/flowchart-styles.tex}
+\usepackage{caption}
+\captionsetup{font=small, labelsep=quad}
+\setcounter{section}{2}
+\renewcommand{\thefigure}{\thesection.\arabic{figure}}
+\setmainfont{Times New Roman}
+\setCJKmainfont{SimSun}
+\usetikzlibrary{mindmap}
+
+\begin{document}
+\section{系统设计与实现}
+
+研发团队的组织设计遵循"职能线与质量线双轨并行"的原则：各部门实线汇报至总经理，
+质量条线以虚线汇报至董事会审计委员会，保证测试环节的独立性。组织结构、效能提升
+思路与核心概念间的关系分别如图~\ref{fig:org}、图~\ref{fig:mind}~与图~\ref{fig:concept}~所示。
+
+% ================= 图 3.1 组织架构图 =================
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}
+    % ---- 节点 ----
+    \node[pc process] (board) at (0,1.7)    {董事会};
+    \node[pc process] (audit) at (4.6,1.7)  {审计委员会};
+    \node[pc key]     (ceo)   at (0,0)      {总经理};
+    \node[pc process] (rd)    at (-5.2,-1.9){研发中心};
+    \node[pc process] (mkt)   at (0.7,-1.9) {市场部};
+    \node[pc process] (hr)    at (4.2,-1.9) {人事部};
+    \node[pc process] (fin)   at (6.8,-1.9) {财务部};
+    \node[pc process] (fe)    at (-7.2,-3.9){前端组};
+    \node[pc process] (be)    at (-5.2,-3.9){后端组};
+    \node[pc process] (qa)    at (-3.2,-3.9){测试组};
+    \node[pc process] (dom)   at (-0.2,-3.9){国内部};
+    \node[pc process] (ovs)   at (1.6,-3.9) {海外部};
+    \node[pc process] (rec)   at (3.4,-3.9) {招聘组};
+    \node[pc process] (trn)   at (5.0,-3.9) {培训组};
+
+    % ---- 治理层：实线=直接汇报，虚线=虚线汇报 ----
+    \draw[pc flow] (board.south) -- (ceo.north);
+    \draw[pc flow back] (audit.west) -- node[pc label, above=1pt]{虚线汇报} (board.east);
+
+    % ---- 一级汇报：竖干 + 横轨 + 落入各部门 ----
+    \draw[pc flow] (ceo.south) -- (0,-0.95);
+    \draw[draw=black!80, line width=0.6pt] (-5.2,-0.95) -- (6.8,-0.95);
+    \foreach \x/\d in {-5.2/rd, 0.7/mkt, 4.2/hr, 6.8/fin}
+      \draw[pc flow] (\x,-0.95) -- (\d.north);
+
+    % ---- 二级汇报 ----
+    \draw (rd.south) -- (-5.2,-2.9);
+    \draw[draw=black!80, line width=0.6pt] (-7.2,-2.9) -- (-3.2,-2.9);
+    \foreach \x/\d in {-7.2/fe, -5.2/be, -3.2/qa}
+      \draw[pc flow] (\x,-2.9) -- (\d.north);
+    \draw (mkt.south) -- (0.7,-2.9);
+    \draw[draw=black!80, line width=0.6pt] (-0.2,-2.9) -- (1.6,-2.9);
+    \foreach \x/\d in {-0.2/dom, 1.6/ovs}
+      \draw[pc flow] (\x,-2.9) -- (\d.north);
+    \draw (hr.south) -- (4.2,-2.9);
+    \draw[draw=black!80, line width=0.6pt] (3.4,-2.9) -- (5.0,-2.9);
+    \foreach \x/\d in {3.4/rec, 5.0/trn}
+      \draw[pc flow] (\x,-2.9) -- (\d.north);
+  \end{tikzpicture}
+  \caption{研发团队组织架构。实线为直接汇报关系，虚线为审计条线的虚线汇报；
+  加粗节点为关键管理岗位。}
+  \label{fig:org}
+\end{figure}
+
+图~\ref{fig:org}~中，测试组除实线汇报研发中心外，其质量结论同时虚线汇报审计
+委员会——双轨设计使质量评估独立于交付节奏。组织架构图遵循"一人一框、同层
+互斥"的规范，跨部门协作不在此图中表达（那是流程图的职责）。
+
+% ================= 图 3.2 思维导图 =================
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[mindmap, grow cyclic,
+    every node/.style=concept, concept color=black!8,
+    root concept/.append style={concept color=black!18, font=\small\bfseries,
+                                minimum size=2.8cm, text width=2.4cm},
+    level 1/.append style={level distance=4.3cm, sibling angle=90,
+                           font=\footnotesize, minimum size=1.8cm, text width=1.6cm},
+    level 2/.append style={level distance=3.0cm, sibling angle=60,
+                           font=\footnotesize, minimum size=1.35cm, text width=1.15cm}]
+    \node[root concept]{研发效能}
+      child {node{流程}
+        child {node{需求评审}}
+        child {node{自动化测试}}
+        child {node{持续集成}}}
+      child {node{工具}
+        child {node{代码审查}}
+        child {node{效能平台}}}
+      child {node{组织}
+        child {node{技能培训}}
+        child {node{团队协作}}}
+      child {node{度量}
+        child {node{交付周期}}
+        child {node{缺陷密度}}};
+  \end{tikzpicture}
+  \caption{研发效能提升思维导图（一级分支 4 个，层级 ≤3）。}
+  \label{fig:mind}
+\end{figure}
+
+% ================= 图 3.3 概念图 =================
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}
+    \node[pc key]     (dtype) at (-4.4,0.6)  {数据类型};
+    \node[pc process] (chan)  at (-0.4,2.4)  {视觉通道};
+    \node[pc process] (task)  at (3.8,1.7)   {读者任务};
+    \node[pc key]     (sel)   at (1.0,-1.4)  {图型选择};
+    \node[pc process] (eff)   at (-4.6,-2.0) {编码效率};
+    \node[pc process] (mis)   at (4.2,-2.8)  {防误导规范};
+
+    \draw[pc flow] (dtype.east) -- node[pc label, above=1pt]{决定} (chan.west);
+    \draw[pc flow] (chan.east) -- node[pc label, above=1pt]{服务于} (task.west);
+    \draw[pc flow] (task.south) -- node[pc label, right=2pt]{驱动} (sel.north east);
+    \draw[pc flow] (eff.north) -- node[pc label, above=1pt, pos=0.4]{决定} (chan.south west);
+    \draw[pc flow] (sel.east) -- node[pc label, above=1pt]{遵循} (mis.west);
+    \draw[pc flow] (dtype.south) -- node[pc label, above=1pt, pos=0.35]{影响} (sel.north west);
+  \end{tikzpicture}
+  \caption{可视化设计核心概念图。连线标注概念间的关系类型：每条边都必须
+  可读出"主语—关系—宾语"。}
+  \label{fig:concept}
+\end{figure}
+
+图~\ref{fig:concept}~与思维导图的差别在于：概念图的连线承载语义（"决定""服务于"
+"遵循"），表达的是概念间的**关系**而非**从属**——这是二者不可混用的根本原因。
+
+\end{document}
