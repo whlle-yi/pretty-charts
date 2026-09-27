@@ -60,7 +60,7 @@ cp -r pretty-charts/skills/pretty-charts ~/.zcode/skills/
 
 | 工具 | 用法 |
 |---|---|
-| matplotlib | `plt.style.use("references/style/matplotlib/academic.mplstyle")` |
+| matplotlib | `plt.style.use("<技能根>/references/style/matplotlib/academic.mplstyle")`（路径相对技能根；示例代码用 `Path(__file__)` 定位，不依赖当前工作目录） |
 | ECharts | `echarts.registerTheme("pc", theme)` —— 主题 JSON 见 [references/style/echarts/](skills/pretty-charts/references/style/echarts/) |
 | TikZ | `\input{references/style/tikz/preamble.tex}` + `\input{references/style/tikz/flowchart-styles.tex}` |
 
@@ -98,7 +98,7 @@ pretty-charts/
         │   ├── scenarios.md    # 三档场景入口（阅读路径 + 专属规则）
         │   ├── style-guide.md  # 风格总纲（配色/字体/导出/防误导/清单）
         │   ├── data/           # 数据图：选型 + 9 类目的 + 2 工具栈
-        │   └── diagram/        # 非数据图：5 类图型 + 4 工具栈
+        │   ├── diagram/        # 非数据图：5 类图型 + 3 工具栈
         │   └── style/          # 风格资产：palettes / matplotlib / echarts / tikz
         ├── examples/           # 示例画廊：代码 + 成图
 ```
@@ -116,10 +116,11 @@ pretty-charts/
 
 ## 路线图
 
-- [x] 风格基建（三套色盲友好主题 × 4 工具栈）
+- [x] 风格基建（三套色盲友好主题 + matplotlib / ECharts / TikZ 三套资产；TikZ 目前只落了 academic 一套）
 - [x] 数据图方法论 + 首批画廊（9 类全有代表成图）
-- [x] 非数据图方法论 + 首批画廊（TikZ 9 例，全部 5 类图型有成图）
-- [ ] 数据图第二批画廊：树图、桑基、山脊图、ECDF、哑铃图
+- [x] 非数据图方法论 + 首批画廊（TikZ 13 个源文件，5 类图型全部有成图）
+- [x] 树图、哑铃图（`examples/data/network/make_treemap.py`、`examples/data/comparison/sorted_bar.py`）
+- [ ] 数据图第二批画廊（余）：桑基、山脊图、ECDF
 - [x] 地理可视化示例（choropleth / 比例符号 / 小倍数）
 - [x] 信息图整页版式示例（简版）
 - [ ] CI 自动渲染示例图

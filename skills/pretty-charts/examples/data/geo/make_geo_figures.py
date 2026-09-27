@@ -6,13 +6,15 @@
   fig2.pdf  比例符号地图：研发支出总额（气泡面积 ∝ 数值，绝对量）
   fig3.pdf  小倍数地图：2015 vs 2020 两期对比，共享色标
 
-数据为演示用合成值；底图 geopandas 自带 naturalearth_lowres（离线）。
+数据为演示用合成值；底图用随仓库分发的 Natural Earth 1:110m 低分辨率国界
+（naturalearth_lowres.geojson，公有领域，离线可用），不依赖 geopandas 自带的
+数据集接口——geopandas 1.0 已移除 geopandas.datasets。
 用法：python make_geo_figures.py
 """
+import json
 from pathlib import Path
 
 import geopandas as gpd
-import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.cm import ScalarMappable
@@ -22,6 +24,11 @@ import cmcrameri.cm as cmc
 SKILL_ROOT = Path(__file__).resolve().parents[3]
 STYLE = SKILL_ROOT / "references" / "style" / "matplotlib"
 OUT = Path(__file__).resolve().parent
+
+# 取色唯一来源：references/style/palettes/academic.json（style-guide §3：禁止硬编码色值）
+PALETTE = json.loads(
+    (SKILL_ROOT / "references" / "style" / "palettes" / "academic.json").read_text(encoding="utf-8")
+)
 
 # ---- 演示用合成数据：ISO3 → (研发人员密度/百万, 支出总额 $B, 2015 密度, 2020 密度) ----
 DATA = {  # iso3: (density, spend, d2015, d2020)
@@ -42,18 +49,24 @@ DATA = {  # iso3: (density, spend, d2015, d2020)
     "RUS": (2100, 70, 1900, 2100), "IRL": (3200, 30, 2500, 3200),
 }
 
-# ---- 主题：T1 出版级 + gs 管线安全字体（可变字体 Noto Sans SC 经 gs 丢字形，见 tool-matplotlib 已知坑 5）----
+# ---- 主题：T1 出版级 + gs 管线安全字体（可变字体 Noto Sans SC 经 gs 丢字形，见 tool-matplotlib 已知坑 1）----
 plt.rcParams.update(plt.rcParamsDefault)
 plt.style.use(STYLE / "academic.mplstyle")
 sans = list(plt.rcParams["font.sans-serif"])
-sans.remove("Microsoft YaHei"); sans.insert(0, "Microsoft YaHei")
+if "Microsoft YaHei" in sans:
+    sans.remove("Microsoft YaHei")
+sans.insert(0, "Microsoft YaHei")
 plt.rcParams["font.sans-serif"] = sans
 
 # ---- 底图与世界数据 ----
-world = gpd.read_file(gpd.datasets.get_path("naturalearth_lowres"))
-# naturalearth 已知缺陷：法国/挪威等 iso_a3 为 -99，按名称修复
-world.loc[world["name"] == "France", "iso_a3"] = "FRA"
-world.loc[world["name"] == "Norway", "iso_a3"] = "NOR"
+WORLD_FILE = OUT / "naturalearth_lowres.geojson"
+if not WORLD_FILE.exists():
+    raise SystemExit(
+        f"缺少底图数据：{WORLD_FILE}\n"
+        "该文件随仓库分发（Natural Earth 1:110m，公有领域）。"
+        "如需重新获取，见 geo.md 的'底图来源'一节。"
+    )
+world = gpd.read_file(WORLD_FILE)   # iso_a3 已修正 FRA/NOR（原数据集为 -99）
 
 world["density"] = world["iso_a3"].map({k: v[0] for k, v in DATA.items()})
 world["spend"] = world["iso_a3"].map({k: v[1] for k, v in DATA.items()})
@@ -64,18 +77,20 @@ world["d2020"] = world["iso_a3"].map({k: v[3] for k, v in DATA.items()})
 CMAP = LinearSegmentedColormap.from_list(
     "batlow", cmc.batlow(np.linspace(0, 1, 256)))
 NORM = Normalize(vmin=0, vmax=11_000)
-MISSING = "#E8E8E8"          # 无数据地区：中性灰（≠ 色标最低色）
+MISSING = PALETTE["missing"]      # 无数据地区：中性灰（≠ 色标最低色）
+INK = PALETTE["text"]["label"]    # 气泡描边/参照圆：用文字墨色，避免引入色板外颜色
 LIMITS = dict(xlim=(-168, 190), ylim=(-57, 83))
 
 
 def draw_base(ax, column=None):
     """底图：无数据国家灰底 + 有数据国家按数值着色 + 白色国界。"""
-    world.plot(ax=ax, color=MISSING, edgecolor="white", linewidth=0.4)
+    world.plot(ax=ax, color=MISSING, edgecolor=PALETTE["background"], linewidth=0.4)
     if column is not None:
         sub = world.dropna(subset=[column])
         sub.plot(ax=ax, column=column, cmap=CMAP, norm=NORM,
-                 edgecolor="white", linewidth=0.4)
+                 edgecolor=PALETTE["background"], linewidth=0.4)
     ax.set_xlim(LIMITS["xlim"]); ax.set_ylim(LIMITS["ylim"])
+    # 非地图投影：等经纬（plate carrée）近似，按纬度拉伸 1.15 做粗略补偿；仅供示意
     ax.set_aspect(1.15)
     ax.set_axis_off()
 
@@ -99,13 +114,13 @@ sub = world.dropna(subset=["spend"]).copy()
 sub["pt"] = sub.geometry.representative_point()
 sub["x"] = sub["pt"].x; sub["y"] = sub["pt"].y
 ax.scatter(sub["x"], sub["y"], s=sub["spend"] * 1.9,             # 面积 ∝ 数值
-           color="#0072B2", alpha=0.55, linewidths=0.6, edgecolors="#1A4E75")
+           color=PALETTE["primary"], alpha=0.55, linewidths=0.6, edgecolors=INK)
 # 参照气泡定标（南太平洋空白区，面积 ∝ 数值，半径 ∝ 平方根）
 for v, xlon in [(200, -136), (50, -98)]:
     ax.scatter([xlon], [-34], s=v * 1.9, facecolors="none",
-               edgecolors="#333333", linewidths=0.6)
-    ax.text(xlon, -34, str(v), ha="center", va="center", fontsize=6)
-ax.text(-117, -58, "支出（10 亿美元）", ha="center", va="top", fontsize=6.5)
+               edgecolors=INK, linewidths=0.6)
+    ax.text(xlon, -34, str(v), ha="center", va="center", fontsize=7)
+ax.text(-117, -58, "支出（10 亿美元）", ha="center", va="top", fontsize=7)
 fig.savefig(OUT / "fig2.pdf")
 fig.savefig(OUT / "fig2_preview.png", dpi=200)
 plt.close(fig)

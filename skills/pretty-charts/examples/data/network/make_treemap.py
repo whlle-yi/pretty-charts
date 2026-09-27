@@ -5,19 +5,28 @@ network.md：树图适合"层级 + 数量构成"（预算、磁盘、销售）�
 层级 ≤3，标签放不下就留白。本例演示产品线两级构成的单层展开。
 用法：python make_treemap.py
 """
+import json
 from pathlib import Path
 
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import squarify
 
+SKILL_ROOT = Path(__file__).resolve().parents[3]
 OUT = Path(__file__).resolve().parent
 plt.rcParams.update(plt.rcParamsDefault)
-plt.style.use(Path(__file__).resolve().parents[3] /
-              "references" / "style" / "matplotlib" / "business.mplstyle")
+plt.style.use(SKILL_ROOT / "references" / "style" / "matplotlib" / "business.mplstyle")
 sans = list(plt.rcParams["font.sans-serif"])
-sans.remove("Microsoft YaHei"); sans.insert(0, "Microsoft YaHei")
+if "Microsoft YaHei" in sans:
+    sans.remove("Microsoft YaHei")
+sans.insert(0, "Microsoft YaHei")
 plt.rcParams["font.sans-serif"] = sans
+
+# 取色唯一来源：references/style/palettes/business.json（style-guide §3：禁止硬编码色值）
+PALETTE = json.loads(
+    (SKILL_ROOT / "references" / "style" / "palettes" / "business.json").read_text(encoding="utf-8")
+)
+palette = PALETTE["categorical"]
 
 # 产品线构成：面积 ∝ 销售额
 items = [
@@ -26,35 +35,42 @@ items = [
 ]
 sizes = [v for _, v in items]
 total = sum(sizes)
-palette = ["#4E79A7", "#76B7B2", "#59A14F", "#F28E2B",
-           "#B07AA1", "#EDC948", "#BAB0AC"]
+
+
+def text_color(hexcolor):
+    """按相对亮度自动选深/浅文字，保证对比度（不靠手工维护的色名白名单）。"""
+    r, g, b = (int(hexcolor[i:i + 2], 16) / 255 for i in (1, 3, 5))
+    luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b
+    return "#1A1A1A" if luminance > 0.5 else "white"
+
 
 fig, ax = plt.subplots(figsize=(7.0, 4.2))
-# 手动画矩形：布局只算一次，标签按块大小放，杜绝错位重叠
-norm_sizes = squarify.normalize_sizes(sizes, 100, 100)
-rects = squarify.squarify(norm_sizes, 0, 0, 100, 100)
+fig.canvas.draw()
+# squarify 追求"方块"，故必须传坐标区真实宽高比：画布非正方形时若仍按 100×100
+# 布局，方块会被拉成长条，树图的可读性随之丢失（面积仍 ∝ 数值，形状却失真）。
+box = ax.get_window_extent()
+W, H = 100.0, 100.0 * box.height / box.width
+norm_sizes = squarify.normalize_sizes(sizes, W, H)
+rects = squarify.squarify(norm_sizes, 0, 0, W, H)
+
 for (name, v), r, c in zip(items, rects, palette):
     ax.add_patch(mpl.patches.Rectangle((r["x"], r["y"]), r["dx"], r["dy"],
                  facecolor=c, edgecolor="white", linewidth=2))
     cx, cy = r["x"] + r["dx"] / 2, r["y"] + r["dy"] / 2
     share = f"{v} 亿（{v / total * 100:.0f}%）"
-    if r["dx"] > 18 and r["dy"] > 15:          # 大块：名称 + 数值
+    if r["dx"] > 0.18 * W and r["dy"] > 0.15 * H:     # 大块：名称 + 数值
         ax.text(cx, cy, f"{name}\n{share}", ha="center", va="center",
-                fontsize=10, color="white" if c in ("#4E79A7", "#59A14F", "#B07AA1") else "#1A1A1A")
-    elif r["dx"] > 8:                           # 中块：只放名称
-        ax.text(cx, cy, name, ha="center", va="center", fontsize=8, color="#1A1A1A")
-    # 小块：不放文字（README 图注与 hover 补足）
-ax.set_xlim(0, 100); ax.set_ylim(0, 100)   # add_patch 不会自动更新数据范围，必须显式设
-ax.set_xticks([]); ax.set_yticks([])
-for s in ax.spines.values():
-    s.set_visible(False)
-ax.set_title("2025 年产品线销售构成（合计 1 420 亿）", fontsize=12, fontweight="bold", pad=10)
-print("size in:", fig.get_size_inches(), "dpi:", fig.dpi, "savefig dpi:", fig.rcParamsNum if hasattr(fig,'rcParamsNum') else plt.rcParams["savefig.dpi"])
-print("bbox at savefig:", fig.bbox, "| dpi:", fig.dpi, "| size_in:", fig.get_size_inches())
-# 经 buffer 手动保存：绕开 savefig 在本机的异常渲染管线
-fig.set_dpi(200)
-fig.canvas.draw()
-from PIL import Image
-im = Image.frombuffer("RGBA", fig.canvas.get_width_height(), fig.canvas.buffer_rgba())
-im.convert("RGB").save(OUT / "treemap.png", optimize=True)
+                fontsize=10, color=text_color(c))
+    elif r["dx"] > 0.08 * W:                           # 中块：只放名称
+        ax.text(cx, cy, name, ha="center", va="center", fontsize=9, color="#1A1A1A")
+    # 小块：不放文字（图注与交互补足）
+
+ax.set_xlim(0, W)
+ax.set_ylim(0, H)
+ax.set_xticks([])
+ax.set_yticks([])
+for spine in ax.spines.values():
+    spine.set_visible(False)
+ax.set_title("2025 年产品线销售构成（合计 1 420 亿）", pad=10)  # 字号/字重取 business 主题
+fig.savefig(OUT / "treemap.png")
 print("treemap.png done")

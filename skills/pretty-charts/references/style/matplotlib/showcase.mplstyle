@@ -1,4 +1,4 @@
-# showcase.mplstyle —— T3 展示级默认主题（配合 assets/palettes/showcase.json 使用）
+# showcase.mplstyle —— T3 展示级默认主题（配合 references/style/palettes/showcase.json 使用）
 # 注意：mplstyle 文件中 "#" 会被解析为行内注释，颜色一律用 RGB 元组（0-1 浮点）书写，
 # 与色板 JSON 中十六进制的对应关系已在各行注释中标明（注释在行首，安全）。
 # 大字号、粗线条、高对比，远距离可读；适合 PPT 16:9 与海报
@@ -32,7 +32,7 @@ axes.linewidth: 1
 axes.edgecolor: 0.753, 0.753, 0.753
 axes.labelcolor: 0.2, 0.2, 0.2
 # 色板 categorical: 0077BB EE7733 009988 EE3377 33BBEE CC3311 BBBBBB
-axes.prop_cycle: cycler('color', [(0, 0.467, 0.733), (0.933, 0.467, 0.2), (0, 0.6, 0.533), (0.933, 0.2, 0.467), (0.2, 0.733, 0.933), (0.8, 0.2, 0.267), (0.733, 0.733, 0.733)])
+axes.prop_cycle: cycler('color', [(0, 0.467, 0.733), (0.933, 0.467, 0.2), (0, 0.6, 0.533), (0.933, 0.2, 0.467), (0.2, 0.733, 0.933), (0.8, 0.2, 0.067), (0.733, 0.733, 0.733)])
 axes.axisbelow: True
 xtick.color: 0.302, 0.302, 0.302
 ytick.color: 0.302, 0.302, 0.302

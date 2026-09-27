@@ -4,16 +4,18 @@
 
 ## 1. 定位
 
-- 本仓库**全部非数据图的交付级工具**：流程图、时序图、甘特图、思维导图、架构图、示意图均由 TikZ 输出（各图型预置样式见 references/style/tikz/）；
+- 本仓库**全部非数据图的交付级工具**：流程图、时序图、甘特图、思维导图、架构图、示意图均由 TikZ 输出。其中**流程图、时序图有预置样式文件**（`references/style/tikz/flowchart-styles.tex`、`sequence-styles.tex`）；甘特图用 pgfgantt、思维导图用 TikZ `mindmap` 库、架构图/示意图按本文件与对应方法论章手写；
 - 论文正文插图（字体必须与正文一致）；
 - 需要精确坐标、循环阵列、镜像对称的装置/结构图；
 - 需要与 pgfplots 数据图混排（示意元素 + 真实数据同图）。
 
 ## 2. 模板接入
 
+**路径基准**：本文所有 `\input` 均相对**当前 .tex 文件所在目录**。仓库示例位于 `examples/<类>/<图型>/`，距技能根 3 层，故写作 `../../../references/style/tikz/…`。若把片段搬进自己的项目，请把整个 `references/style/tikz/` 拷入项目，并按实际层级调整前缀。
+
 ```latex
-\documentclass{standalone}   % 单图输出；论文内嵌时去掉本行改 figure 环境
-\input{references/style/tikz/preamble.tex}  % 主题配色 pcBlue... 与轴风格
+\documentclass[border=6pt]{standalone}                % 单图输出（示例用）
+\input{../../../references/style/tikz/preamble.tex}   % 配色 pcBlue… 与轴风格
 \begin{document}
 \begin{tikzpicture}
   ...
@@ -21,16 +23,18 @@
 \end{document}
 ```
 
-编译：`xelatex -interaction=nonstopmode file.tex`。
+编译：`xelatex -interaction=nonstopmode file.tex`，**须在该文件所在目录执行**，否则 `\input` 解析不到。
+
+**论文内嵌**：不是"删掉 `\documentclass` 那一行"——那样会留下孤立的 `\begin{document}`。正确做法是删掉 `\documentclass[…]{standalone}` 与 `\begin{document}`、`\end{document}` 三行，把 `tikzpicture` 整体放进正文的 `figure` 环境，并把 `\input{…preamble.tex}` 移到正文导言区。
 
 ## 3. 流程图预置样式（references/style/tikz/flowchart-styles.tex）
 
 流程图**不要手写节点样式**，直接加载预置文件后选模式：
 
 ```latex
-\input{references/style/tikz/preamble.tex}
-\input{references/style/tikz/flowchart-styles.tex}
-\setmainfont{Times New Roman}\setCJKmainfont{SimSun} % 论文版字体；演示版用 Arial+黑体
+\input{../../../references/style/tikz/preamble.tex}
+\input{../../../references/style/tikz/flowchart-styles.tex}
+\setmainfont{Times New Roman}\setCJKmainfont{SimSun} % 论文版字体；演示版改 Arial + 黑体
 % \pcPPTMode  % 演示版开关（默认 \pcPaperMode）
 \begin{document}
 \begin{tikzpicture}[node distance=7mm and 9mm]
@@ -41,13 +45,14 @@
   \node[pc db, right=of k]        (d) {数据库};
   \node[pc io, right=of a]        (i) {输入输出};
   \draw[pc flow]      (s) -- (a);
-  \draw[pc flow back] (c.south) |- (n.east);   % 回流虚线
+  \draw[pc flow back] (k.west) -- ++(-1.0,0) |- (a.west);   % 回流虚线：绕主轴外侧
 \end{tikzpicture}
+\end{document}
 ```
 
 可用样式：`pc start`（圆角起止）/ `pc process`（处理）/ `pc key`（关键路径：论文版粗边框、演示版主色实心）/ `pc decision`（菱形判断）/ `pc io`（平行四边形）/ `pc db`（圆柱）/ `pc sub`+`pc sub label`（阶段虚线框）/ `pc flow`、`pc flow back`（回流虚线）/ `pc label`（分支标签白底）。
 
-两模式约定：**论文版无底色**（黑白印刷安全，中文宋体+西文 Times New Roman），**演示版 showcase 彩色**（中文黑体+西文 Arial）；同一结构只切模式与字体两行。完整示例见 `examples/diagram/flowchart/paper_flow.tex` 与 `ppt_flow.tex`。
+两模式约定：**论文版无底色**（黑白印刷安全，中文宋体 + 西文 Times New Roman），**演示版 showcase 彩色**（中文黑体 + 西文 Arial）。注意 `\pcPaperMode` / `\pcPPTMode` **只切换配色、线宽与字号，不含字体**——中英文字体由你文档里的 `\setmainfont` / `\setCJKmainfont` 自行决定；示例 `examples/diagram/flowchart/paper_flow.tex` 与 `ppt_flow.tex` 的结构完全相同，差异只有"模式行 1 行 + 字体 2 行"共 3 行。
 
 ## 4. 示意图常用技法（高质量的关键）
 
@@ -57,26 +62,26 @@
   module/.style={draw=pcBlue, fill=pcBlue!15, rounded corners=2pt,
                  minimum width=2.2cm, minimum height=0.8cm,
                  font=\small\sffamily, align=center},
-  data/.style={module, fill=pcGray!20, draw=pcGray},
+  data/.style={module, fill=pcNeutral!40, draw=pcNeutral},   % 中性/次要元素用 pcNeutral
   flow/.style={-{Stealth[length=2.5mm]}, thick, pcAxis},
 }
 % 箭头从指定锚点出入，防斜穿
 \draw[flow] (a.east) -- node[above, font=\footnotesize]{特征} (b.west);
 % 循环画阵列，不手摆
 \foreach \i in {0,...,3} \node[module] at (\i*2.8, 0) {模块\i};
-% scope 镜像对称
-\begin{scope}[xscale=-1, x=-8cm] ... \end{scope}
+% scope 镜像对称：以竖直轴 x=-8cm 镜像（映射 x -> -16cm - x）
+\begin{scope}[cm={-1,0,0,1,(-16cm,0cm)}] ... \end{scope}
 ```
 
-- 颜色只用 `pcBlue` 系（来自 academic 色板），强调用 `pcOrange`；黑白可辨靠线型/填充图案补充。
+- 颜色只用 `pcBlue` 系（来自 academic 色板），强调用 `pcOrange`，中性/次要元素用 `pcNeutral`；黑白可辨靠线型/填充图案补充。
 - 箭头样式全场统一（`Stealth` 一致尺寸）；线宽：主线 `thick`（0.8–1pt），辅助线 `thin`。
 - 文字节点 `align=center`，防长文本撑爆框。
 
 ## 5. 常见坑
 
 1. **Windows 的 Noto Sans SC 是可变字体，xdvipdfmx 无法嵌入**（报 `fatal: Invalid font`）→ TikZ 出 PDF 用 Microsoft YaHei 或静态版思源黑体；matplotlib/ECharts 不受影响。
-2. standalone 中文：文档类选项加 `varwidth` 或直接用 `standalone` + xeCJK（模板已含）。
-2. 节点距离用 `positioning` 库的 `right=of`，**不用 `at (x,y)` 手摆**（改一处全崩）。
-3. 箭头 `->` 与 `-{Stealth}` 混用会导致全场箭头不一致——统一在 tikzset 定义。
-4. pgfplots 混排时坐标系：示意图元素放 `axis description cs` 或画在 axis 外层 tikzpicture。
-5. 编译慢/循环深：`\usetikzlibrary{positioning, arrows.meta, calc, fit, backgrounds}` 按需加，别全量。
+2. standalone 的中文支持：模板 `preamble.tex` 已 `\usepackage{xeCJK}`，无需另加；`standalone` 默认紧贴内容，故示例统一用 `\documentclass[border=6pt]{standalone}` 留白，中文不会被裁切。`varwidth` 是"按内容宽度折行"的选项，与中文无关，不要为中文去加它。
+3. 节点距离用 `positioning` 库的 `below=of` / `right=of` 做**相对定位**；确需坐标定位时（如 `flowchart.md` 的"节点用坐标对齐车道"、并列终点同行）才用 `at (x,y)`，且同类节点必须共用同一套 x/y 基线，避免只为躲线而把图撑宽。
+4. 箭头 `->` 与 `-{Stealth}` 混用会导致全场箭头不一致——统一在 tikzset 定义。
+5. pgfplots 混排时坐标系：示意图元素放 `axis description cs` 或画在 axis 外层 tikzpicture。
+6. 编译慢/循环深：`\usetikzlibrary{positioning, arrows.meta, calc, fit, backgrounds}` 按需加，别全量。

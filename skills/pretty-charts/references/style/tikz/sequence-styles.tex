@@ -1,7 +1,9 @@
 % ============================================================
 % pretty-charts TikZ 时序图预置样式
 % 依赖：先 \input preamble.tex 与 flowchart-styles.tex（复用其 \pcPaperMode/\pcPPTMode 模式变量）
-% 论文版：白底黑框细线；演示版：彩色粗线（随模式自动切换）
+% 论文版：白底黑框细线；演示版：随模式切换为彩色粗线
+% 注意：本文件的线宽与颜色一律取自模式变量（\pcFlowWidth/\pcStealth/\pcArrow/\pcSubLine…），
+% 因此 \pcPaperMode / \pcPPTMode 会同时改变配色与粗细——不要再写死 black!xx 或 0.5pt。
 % ============================================================
 \usetikzlibrary{calc}
 
@@ -9,16 +11,17 @@
   % 参与者（顶部矩形；角色栏使用同一样式）
   seq participant/.style={draw=\pcNodeLine, fill=\pcNodeFill, minimum width=1.9cm,
                           minimum height=0.65cm, font=\pcNodeFont, text=\pcNodeText, align=center},
-  % 生命线：细虚线
-  seq lifeline/.style={draw=black!55, line width=0.4pt, dash pattern=on 2pt off 2pt},
-  % 消息（同步实线 / 返回虚线）
-  seq msg/.style={-{Stealth[length=2.2mm]}, line width=0.5pt, draw=\pcArrow},
+  % 生命线：细虚线（随模式换色）
+  seq lifeline/.style={draw=\pcSubLine, line width=0.4pt, dash pattern=on 2pt off 2pt},
+  % 消息（同步实线 / 返回虚线）：线宽与箭头尺寸随模式切换
+  seq msg/.style={-{Stealth[length=\pcStealth]}, line width=\pcFlowWidth, draw=\pcArrow},
   seq ret/.style={seq msg, dashed},
   % 消息文字与序号
   seq label/.style={font=\footnotesize, text=\pcNodeText, inner sep=2pt, fill=white},
-  seq num/.style={circle, fill=black!80, text=white, font=\tiny\bfseries, inner sep=1.2pt},
+  seq num/.style={circle, fill=\pcArrow, text=\pcNodeFill, font=\tiny\bfseries, inner sep=1.2pt},
   % 激活条（可选）
-  seq activation/.style={draw=black!60, fill=black!4, line width=0.4pt, rounded corners=1pt},
+  seq activation/.style={draw=\pcSubLine, fill=\pcNodeFill, line width=\pcFlowWidth,
+                         rounded corners=1pt},
   % alt/loop 片段框：复用流程图阶段容器
   seq frame/.style={pc sub},
   seq frame label/.style={pc sub label, anchor=north west},

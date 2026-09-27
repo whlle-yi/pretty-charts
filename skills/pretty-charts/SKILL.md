@@ -42,7 +42,7 @@ description: 高质量图表绘制技能。当用户需要绘制、美化或选�
 按图型加载：流程与时序（流程图、时序图、甘特图）、系统架构图、层级与逻辑（思维导图、组织架构）、概念示意/科研示意图、信息图。
 
 - 工具栈：`tool-tikz.md`（主力）、`tool-graphviz.md`（复杂自动布局备用）、`tool-svg.md`
-- **非数据图交付级一律 TikZ，不使用 mermaid**：流程图 `references/style/tikz/flowchart-styles.tex`、时序图 `references/style/tikz/sequence-styles.tex`，均双模式——`\pcPaperMode` 论文版（无底色，中文宋体+Times New Roman）/ `\pcPPTMode` 演示版（showcase 彩色，中文黑体+Arial）；甘特图用 pgfgantt、思维导图用 TikZ mindmap，同为论文风格。
+- **非数据图交付级一律 TikZ，不使用 mermaid**：流程图 `references/style/tikz/flowchart-styles.tex`、时序图 `references/style/tikz/sequence-styles.tex`，均双模式——`\pcPaperMode` 论文版（无底色）/ `\pcPPTMode` 演示版（showcase 彩色）。**模式宏只切配色/线宽/字号，字体要自己在文档里声明**（论文版建议中文宋体+Times New Roman，演示版建议中文黑体+Arial）；甘特图用 pgfgantt、思维导图用 TikZ mindmap（二者无预置样式），同为论文风格。
 
 ## 执行顺序契约（防跳步，强制）
 

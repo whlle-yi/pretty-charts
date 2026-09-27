@@ -37,4 +37,4 @@
 
 ## 示例
 
-第一批画廊未含本类（依赖地图数据），后续补充：`examples/data/geo/`
+`examples/data/geo/`：`make_geo_figures.py`（choropleth + 比例符号 + 小倍数三图）、`fig1–3.pdf` 与 `*_preview.png`、`paper_embedded_geo.tex`（论文内嵌）。底图用随仓库分发的 `naturalearth_lowres.geojson`（Natural Earth 1:110m，公有领域，离线可用），不依赖 `geopandas.datasets`（geopandas 1.0 已移除该模块）

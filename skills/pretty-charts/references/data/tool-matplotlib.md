@@ -8,7 +8,8 @@
 from pathlib import Path
 import matplotlib.pyplot as plt
 
-STYLE = Path(__file__).resolve().parents[2] / "assets" / "matplotlib"  # 按脚本层级调整
+SKILL_ROOT = Path(__file__).resolve().parents[3]   # examples/<类>/<图型>/x.py → 技能根，按脚本层级调整
+STYLE = SKILL_ROOT / "references" / "style" / "matplotlib"
 plt.style.use(STYLE / "academic.mplstyle")   # 或 business / showcase
 ```
 
@@ -58,7 +59,8 @@ fig.legend(handles, labels, loc="outside upper center", ncols=len(labels))
 
 ## 3. 布局与导出
 
-- 用 `fig.subplots_adjust`/`constrained_layout=True` 防标签裁切；保存一律 `bbox_inches="tight"`（主题已设）。
+- 用 `fig.subplots_adjust`/`constrained_layout=True` 防标签裁切；保存默认 `bbox_inches="tight"`（主题已设）。
+  **T1 投稿例外**：期刊要求精确栏宽时，`tight` 会裁掉留白、使成品宽度不再等于 `figsize`，投出去被缩放排版就会连带改变等效字号（可能跌破 7pt 下限）——此时显式 `savefig(..., bbox_inches=None)` 并用 `subplots_adjust` 留足边距。
 - 子图共享轴必须 `sharex/sharey=True`；比较类子图 y 轴范围必须一致。
 - 导出：`fig.savefig("name.pdf")` 矢量（T1 首选）、`fig.savefig("name.png")` 按 DPI 主题；**先 savefig 再 plt.close**。
 - 图内中文与负号已由主题处理（Noto Sans SC + `axes.unicode_minus: False`）。

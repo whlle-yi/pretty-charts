@@ -10,6 +10,18 @@ Thumbs.db
 .idea/
 .vscode/
 
-# 渲染中间产物（示例成图属于交付物，不忽略 output 下的最终 PNG/SVG/PDF）
+# LaTeX 编译中间产物（16 个 .tex 在各自目录就地编译）
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.nav
+*.snm
+*.vrb
+
+# 渲染中间产物（示例成图本身是交付物，不忽略最终 PNG/SVG/PDF）
 *.tmp
 temp/

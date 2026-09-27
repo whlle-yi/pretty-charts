@@ -38,6 +38,23 @@
 5. **色盲安全**：三套色板已校验。补充规则：不用红/绿单独编码关键信息（叠加形状/线型/标签冗余编码）；深浅差异要明显，别让相邻色深浅接近。
 6. **语义色**（仅 T2/T3）：正面/负面、达标/预警用语义色——success `#2E7D32`、warning `#ED6C02`、danger `#C62828`、info `#0288D1`；T1 出版级不用语义色（印刷可能失真，用色板色 + 文字标注）。
 
+### 3.3 色板字段（token）
+
+`palettes/*.json` 除 `categorical`/`sequential`/`diverging` 外，还提供下列**按角色**命名的 token。凡文档提到这些角色，都必须从对应 JSON 取值，不得在代码或样式文件里硬编码：
+
+| token | 用途 | academic | business | showcase |
+|---|---|---|---|---|
+| `primary` / `accent` | 主色 / 强调色 | `#0072B2` / `#D55E00` | `#4E79A7` / `#F28E2B` | `#0077BB` / `#EE7733` |
+| `neutral` | 中性参照、次要系列 | `#B3B3B3` | `#BAB0AC` | `#BBBBBB` |
+| `text.{title,label,tick}` | 图标题 / 轴标题 / 刻度文字 | `#1A1A1A` / `#333333` / `#4D4D4D` | 同左 | 同左 |
+| `grid` / `axis` | 网格线 / 轴线与边框 | `#CCCCCC` / `#333333` | `#D9D9D9` / `#D0D0D0` | `#D9D9D9` / `#C0C0C0` |
+| `subtext` | 副标题、脚注、次要文字 | `#666666` | `#666666` | `#666666` |
+| `missing` | 无数据区域填充（地图等），须与 `sequential` 最浅端可区分 | `#E8E8E8` | `#E8E8E8` | `#E8E8E8` |
+| `semantic` | success / warning / danger / info（**仅 T2/T3**） | 不提供 | `#2E7D32` / `#ED6C02` / `#C62828` / `#0288D1` | 同 business |
+| `background` | 画布底色 | `#FFFFFF` | `#FFFFFF` | `#FFFFFF` |
+
+注：`business` 与 `showcase` 的 `neutral` 与各自 `categorical` 末位同值（色板原生灰）；同一张图若同时用到最后一个类别色与中性参照，请把参照换成 `text.tick`。TikZ 侧同名颜色为 `pcNeutral`（= academic 的 neutral），`pcGray` 是 academic 的**第 7 个类别色**（`#999999`），不是中性灰。
+
 ## 4. 字体与文字
 
 **基本方案**：数据图中文思源黑体（Noto Sans SC）、西文与数字 Arial；TikZ 论文版中文宋体、西文 Times New Roman（与论文正文一致）。数学符号用 STIX（matplotlib `mathtext.fontset: stix`）。中西文分字体是常态，不要让中文字体顺便渲染西文（其西文字形间距偏宽、数字非等宽）。
@@ -54,7 +71,7 @@
 | 数据标注 | 8–9 | 10 | 11 |
 | 绝对下限 | 7（印刷可读） | 9 | 11（投影最后一排可读） |
 
-ECharts（屏幕 px）：T1≈14/12/11、T2≈16/13/12、T3≈20/15/14（标题/图例/刻度），已内置主题；TikZ 模板 label `\small`、tick `ootnotesize`。
+ECharts（屏幕 px）：T1≈14/12/11、T2≈16/13/12、T3≈20/15/14（标题/图例/刻度），已内置主题；TikZ 模板 label `\small`、tick `\footnotesize`。
 
 **强调**：图内强调用加粗（同字体 Bold/Medium 字重）或强调色，不用颜色堆砌与下划线；负号已由 `axes.unicode_minus: False` 处理（避免 U+2212 在中文字体缺字形）。
 
@@ -71,6 +88,8 @@ ECharts（屏幕 px）：T1≈14/12/11、T2≈16/13/12、T3≈20/15/14（标题/
 | Word 文档配图 | 版心宽度 ≈ 15–16cm | |
 | PPT 16:9 | 33.87×19.05cm，图按半页 15×8.4cm | T3 字号 |
 | 网页/ECharts | 容器自适应，最小 320px 移动端可读 | 矢量导出 |
+
+画廊示例用的 figsize（4.2–7.5in）是为屏幕观感选的，**不等于投稿尺寸**；真实 T1 交付必须按上表换算（3.54in / 7.48in）。示例中只有 `examples/data/paper/`、`examples/data/geo/` 用的是投稿尺寸。
 
 ### 5.2 导出规则
 
@@ -96,7 +115,7 @@ ECharts（屏幕 px）：T1≈14/12/11、T2≈16/13/12、T3≈20/15/14（标题/
 ### 7.1 T1 出版级
 - [ ] 图型与分析目的匹配（比较/分布/构成/趋势/关系），选型依据可陈述
 - [ ] 尺寸 = 目标期刊栏宽；字号 ≥7pt；线宽 ≥0.5pt
-- [ ] 配色全部来自 academic 色板；灰度打印仍可分辨（叠加线型/标记冗余编码）
+- [ ] 配色全部来自 academic 色板（TikZ 论文版 `\pcPaperMode` 为黑白灰单色，属合规特例）；灰度打印仍可分辨（叠加线型/标记冗余编码）
 - [ ] 误差棒/置信区间齐全，图注含 n、统计检验、显著性标注规范（* p<0.05, ** p<0.01, *** p<0.001）
 - [ ] 轴有单位；量级用科学记数或 SI 词头，不出现 1e6 这类裸记数
 - [ ] 图注（caption）自含：不看正文也能懂这张图

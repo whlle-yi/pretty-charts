@@ -8,14 +8,13 @@
 
 用法：python make_relationship_figures.py
 """
+import json
 from pathlib import Path
 
-import matplotlib as mpl
 import matplotlib.pyplot as plt
 import cmcrameri.cm as cmc
 import numpy as np
-from matplotlib.cm import ScalarMappable
-from matplotlib.colors import LinearSegmentedColormap, Normalize
+from matplotlib.colors import LinearSegmentedColormap
 from scipy import stats
 
 SKILL_ROOT = Path(__file__).resolve().parents[3]
@@ -23,11 +22,19 @@ STYLE = SKILL_ROOT / "references" / "style" / "matplotlib"
 OUT = Path(__file__).resolve().parent
 rng = np.random.default_rng(11)
 
+# 取色唯一来源：references/style/palettes/academic.json（style-guide §3：禁止硬编码色值）
+PALETTE = json.loads(
+    (SKILL_ROOT / "references" / "style" / "palettes" / "academic.json").read_text(encoding="utf-8"))
+CAT = PALETTE["categorical"]
+INK = PALETTE["text"]["label"]      # 描边/参照圆用文字墨色，不再引入色板外颜色
+
 # ---- 主题：T1 出版级 + gs 管线安全字体（可变字体 Noto Sans SC 经 gs 丢字形）----
 plt.rcParams.update(plt.rcParamsDefault)
 plt.style.use(STYLE / "academic.mplstyle")
 sans = list(plt.rcParams["font.sans-serif"])
-sans.remove("Microsoft YaHei"); sans.insert(0, "Microsoft YaHei")
+if "Microsoft YaHei" in sans:
+    sans.remove("Microsoft YaHei")
+sans.insert(0, "Microsoft YaHei")
 plt.rcParams["font.sans-serif"] = sans
 
 # Crameri Batlow 顺序色图（密度着色用）
@@ -39,8 +46,8 @@ fig, axes = plt.subplots(1, 3, figsize=(7.48, 2.65),
 
 # ================= (a) 分组散点 + 回归带 =================
 ax = axes[0]
-for name, slope, color, inter in [("线下渠道", 0.32, "#D55E00", 8),
-                                  ("线上渠道", 0.58, "#0072B2", 12)]:
+for name, slope, color, inter in [("线下渠道", 0.32, CAT[1], 8),      # 强调色 = 次要系列
+                                  ("线上渠道", 0.58, CAT[0], 12)]:    # 主色 = 重点系列
     n = 55
     ad = rng.uniform(10, 95, n)
     sales = inter + slope * ad + rng.normal(0, 6.5, n)
@@ -55,7 +62,7 @@ for name, slope, color, inter in [("线下渠道", 0.32, "#D55E00", 8),
     ax.fill_between(xs, yhat - conf, yhat + conf, color=color, alpha=0.18, lw=0)
     ax.annotate(f"{name}\n(r = {lr.rvalue:.2f})", (xs[-1], yhat[-1]),
                 xytext=(2, -6), textcoords="offset points",
-                fontsize=6.5, color=color, va="top")
+                fontsize=7, color=color, va="top")    # T1 字号下限 7pt
 ax.set_xlabel("广告投入（万元）")
 ax.set_ylabel("月销售额（万元）")
 ax.set_xlim(5, 100)
@@ -66,20 +73,20 @@ n = 6000
 mx = rng.normal(52, 15, n)
 my = 12 + 0.45 * mx + rng.normal(0, 11, n)
 hb = ax.hexbin(mx, my, gridsize=26, cmap=CMAP, mincnt=1,
-               linewidths=0.2, edgecolors="#333333")
+               linewidths=0.2, edgecolors=INK)
 ax.set_xlabel("用户活跃度（次/周）")
 ax.set_ylabel("留存天数")
 cb = fig.colorbar(hb, ax=ax, shrink=0.9, pad=0.02)
 cb.set_label("样本数", fontsize=7)
-cb.ax.tick_params(labelsize=6.5)
+cb.ax.tick_params(labelsize=7)
 
 # ================= (c) 气泡图：面积编码第三变量 =================
 ax = axes[2]
 techs = rng.uniform(2, 8.5, 14)
 growth = 4 + 2.2 * techs + rng.normal(0, 5, 14)
 revenue = rng.uniform(20, 320, 14)
-ax.scatter(techs, growth, s=revenue * 1.35, color="#009E73",
-           alpha=0.5, linewidths=0.6, edgecolors="#0B4F3A")
+ax.scatter(techs, growth, s=revenue * 1.35, color=CAT[2],
+           alpha=0.5, linewidths=0.6, edgecolors=INK)
 ax.set_xlabel("研发强度（%）")
 ax.set_ylabel("营收增速（%）")
 ax.set_xlim(1, 9.5)
@@ -87,9 +94,9 @@ ax.set_ylim(-12, 34)
 # 参照气泡定标（面积 ∝ 营收，半径 ∝ 平方根）
 for v, xref, yref in [(50, 2.0, -6.5), (200, 3.6, -6.5)]:
     ax.scatter([xref], [yref], s=v * 1.35, facecolors="none",
-               edgecolors="#333333", linewidths=0.6)
-    ax.text(xref, yref, str(v), ha="center", va="center", fontsize=6)
-ax.text(2.8, -9.6, "营收（百万元）", ha="center", fontsize=6.5)
+               edgecolors=INK, linewidths=0.6)
+    ax.text(xref, yref, str(v), ha="center", va="center", fontsize=7)
+ax.text(2.8, -9.6, "营收（百万元）", ha="center", fontsize=7)
 
 # ---- 面板标签：小写粗体，左上角外侧 ----
 for ax, lab in zip(axes, "abc"):

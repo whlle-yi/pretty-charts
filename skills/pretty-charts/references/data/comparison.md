@@ -31,4 +31,4 @@
 
 ## 示例
 
-`examples/data/comparison/sorted_bar.py`（排序条形 + 灰化强调）、`examples/data/comparison/grouped_bar.py`（分组柱）
+`examples/data/comparison/sorted_bar.py`（**哑铃图**：两时点 × 多类别，线长即变化量、端点直标；文件名为历史遗留）、`examples/data/comparison/grouped_bar.py`（分组柱）

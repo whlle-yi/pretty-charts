@@ -31,4 +31,4 @@
 
 ## 示例
 
-第一批画廊未含本类，后续补充：`examples/data/network/`（桑基、treemap）
+`examples/data/network/`：`make_treemap.py`（树图，面积 ∝ 数值）。桑基、弦图、力导向网络尚无示例，后续补充
