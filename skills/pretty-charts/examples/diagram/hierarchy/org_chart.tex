@@ -1,0 +1,44 @@
+% 组织架构图独立版（供 README 画廊展示）——内容与 paper_embedded_hierarchy.tex 图 3.1 一致
+% 编译：xelatex -interaction=nonstopmode org_chart.tex；转 PNG：rungs -sDEVICE=png16m -r200 ...
+\documentclass[border=6pt]{standalone}
+\input{../../../references/style/tikz/preamble.tex}
+\input{../../../references/style/tikz/flowchart-styles.tex}
+\setmainfont{Times New Roman}
+\setCJKmainfont{SimSun}
+\begin{document}
+\begin{tikzpicture}
+  \node[pc process] (board) at (0,1.7)    {董事会};
+  \node[pc process] (audit) at (4.6,1.7)  {审计委员会};
+  \node[pc key]     (ceo)   at (0,0)      {总经理};
+  \node[pc process] (rd)    at (-5.2,-1.9){研发中心};
+  \node[pc process] (mkt)   at (0.7,-1.9) {市场部};
+  \node[pc process] (hr)    at (4.2,-1.9) {人事部};
+  \node[pc process] (fin)   at (6.8,-1.9) {财务部};
+  \node[pc process] (fe)    at (-7.2,-3.9){前端组};
+  \node[pc process] (be)    at (-5.2,-3.9){后端组};
+  \node[pc process] (qa)    at (-3.2,-3.9){测试组};
+  \node[pc process] (dom)   at (-0.2,-3.9){国内部};
+  \node[pc process] (ovs)   at (1.6,-3.9) {海外部};
+  \node[pc process] (rec)   at (3.4,-3.9) {招聘组};
+  \node[pc process] (trn)   at (5.0,-3.9) {培训组};
+
+  \draw[pc flow] (board.south) -- (ceo.north);
+  \draw[pc flow back] (audit.west) -- node[pc label, above=1pt]{虚线汇报} (board.east);
+  \draw[pc flow] (ceo.south) -- (0,-0.95);
+  \draw[draw=black!80, line width=0.6pt] (-5.2,-0.95) -- (6.8,-0.95);
+  \foreach \x/\d in {-5.2/rd, 0.7/mkt, 4.2/hr, 6.8/fin}
+    \draw[pc flow] (\x,-0.95) -- (\d.north);
+  \draw (rd.south) -- (-5.2,-2.9);
+  \draw[draw=black!80, line width=0.6pt] (-7.2,-2.9) -- (-3.2,-2.9);
+  \foreach \x/\d in {-7.2/fe, -5.2/be, -3.2/qa}
+    \draw[pc flow] (\x,-2.9) -- (\d.north);
+  \draw (mkt.south) -- (0.7,-2.9);
+  \draw[draw=black!80, line width=0.6pt] (-0.2,-2.9) -- (1.6,-2.9);
+  \foreach \x/\d in {-0.2/dom, 1.6/ovs}
+    \draw[pc flow] (\x,-2.9) -- (\d.north);
+  \draw (hr.south) -- (4.2,-2.9);
+  \draw[draw=black!80, line width=0.6pt] (3.4,-2.9) -- (5.0,-2.9);
+  \foreach \x/\d in {3.4/rec, 5.0/trn}
+    \draw[pc flow] (\x,-2.9) -- (\d.north);
+\end{tikzpicture}
+\end{document}

@@ -19,29 +19,38 @@
 
 ## 示例
 
-全部成图由仓库内代码实际渲染，见 [examples/](skills/pretty-charts/examples/)。
+每个图型文件对应一种类型：这里为**每种类型展示一张代表成图**（类型名可点击跳转到对应方法论），全部成图由仓库内代码实际渲染。
 
-| 排序条形 | 分组柱状 | 直方图+KDE | 箱线+散点 |
-|:---:|:---:|:---:|:---:|
-| ![](skills/pretty-charts/examples/data/comparison/sorted_bar.png) | ![](skills/pretty-charts/examples/data/comparison/grouped_bar.png) | ![](skills/pretty-charts/examples/data/distribution/hist_kde.png) | ![](skills/pretty-charts/examples/data/distribution/box_violin.png) |
+### 数据图（9 类）
 
-| 堆叠柱 | 环图 | 折线 | 散点+置信带 |
-|:---:|:---:|:---:|:---:|
-| ![](skills/pretty-charts/examples/data/composition/stacked_bar.png) | ![](skills/pretty-charts/examples/data/composition/donut.png) | ![](skills/pretty-charts/examples/data/trend/line_direct_label.png) | ![](skills/pretty-charts/examples/data/relationship/scatter_trend.png) |
+| 比较 | 分布 | 构成 |
+|:---:|:---:|:---:|
+| **[比较](skills/pretty-charts/references/data/comparison.md)** | **[分布](skills/pretty-charts/references/data/distribution.md)** | **[构成](skills/pretty-charts/references/data/composition.md)** |
+| ![](skills/pretty-charts/examples/data/comparison/sorted_bar.png) | ![](skills/pretty-charts/examples/data/distribution/box_violin.png) | ![](skills/pretty-charts/examples/data/composition/donut.png) |
 
-| 相关矩阵 | 均值+95%CI |
+| 趋势 | 关系 | 层次网络 |
+|:---:|:---:|:---:|
+| **[趋势](skills/pretty-charts/references/data/trend.md)** | **[关系](skills/pretty-charts/references/data/relationship.md)** | **[层次网络](skills/pretty-charts/references/data/network.md)** |
+| ![](skills/pretty-charts/examples/data/trend/line_direct_label.png) | ![](skills/pretty-charts/examples/data/relationship/scatter_trend.png) | ![](skills/pretty-charts/examples/data/network/treemap.png) |
+
+| 地理 | 热图矩阵 | 统计推断 |
+|:---:|:---:|:---:|
+| **[地理](skills/pretty-charts/references/data/geo.md)** | **[热图矩阵](skills/pretty-charts/examples/../data/heatmap.md)** | **[统计推断](skills/pretty-charts/references/data/statistical.md)** |
+| ![](skills/pretty-charts/examples/data/geo/fig1_preview.png) | ![](skills/pretty-charts/examples/data/heatmap/corr_heatmap.png) | ![](skills/pretty-charts/examples/data/statistical/errorbar_ci.png) |
+
+### 非数据图（5 类）
+
+| 流程与时序 | 系统架构 | 层级与逻辑 |
+|:---:|:---:|:---:|
+| **[流程与时序](skills/pretty-charts/references/diagram/flowchart.md)** | **[系统架构](skills/pretty-charts/references/diagram/architecture.md)** | **[层级与逻辑](skills/pretty-charts/references/diagram/hierarchy.md)** |
+| ![](skills/pretty-charts/examples/diagram/flowchart/ppt_flow.png) | ![](skills/pretty-charts/examples/diagram/architecture/three_tier.png) | ![](skills/pretty-charts/examples/diagram/hierarchy/org_chart.png) |
+
+| 科研示意图 | 信息图 |
 |:---:|:---:|
-| ![](skills/pretty-charts/examples/data/heatmap/corr_heatmap.png) | ![](skills/pretty-charts/examples/data/statistical/errorbar_ci.png) |
+| **[科研示意图](skills/pretty-charts/references/diagram/schematic.md)** | **[信息图](skills/pretty-charts/references/diagram/infographic.md)** |
+| ![](skills/pretty-charts/examples/diagram/schematic/pipeline_schematic.png) | ![](skills/pretty-charts/examples/diagram/infographic/infographic.png) |
 
-| 时序图 | 甘特图 | 思维导图 | 三层架构图 |
-|:---:|:---:|:---:|:---:|
-| ![](skills/pretty-charts/examples/diagram/sequence/api_sequence.png) | ![](skills/pretty-charts/examples/diagram/gantt/project_gantt.png) | ![](skills/pretty-charts/examples/diagram/mindmap/product_mindmap.png) | ![](skills/pretty-charts/examples/diagram/architecture/three_tier.png) |
-
-| TikZ 流程图·论文版 | TikZ 流程图·演示版 |
-|:---:|:---:|
-| ![](skills/pretty-charts/examples/diagram/flowchart/paper_flow.png) | ![](skills/pretty-charts/examples/diagram/flowchart/ppt_flow.png) |
-
-论文内嵌效果：[简单版](skills/pretty-charts/examples/diagram/flowchart/paper_embedded.pdf) · [复杂版（阶段分组/回流）](skills/pretty-charts/examples/diagram/flowchart/paper_embedded_complex.pdf) · [管线示意图](skills/pretty-charts/examples/diagram/schematic/pipeline_schematic.pdf)
+更多论文内嵌效果：[流程图论文/演示双版](skills/pretty-charts/examples/diagram/flowchart/paper_flow.png) · [数据图内嵌](skills/pretty-charts/examples/data/paper/paper_embedded_data.pdf) · [地理图内嵌](skills/pretty-charts/examples/data/geo/paper_embedded_geo.pdf) · [关系图内嵌](skills/pretty-charts/examples/data/relationship/paper_embedded_relationship.pdf) · [层级图内嵌](skills/pretty-charts/examples/diagram/hierarchy/paper_embedded_hierarchy.pdf) · [管线示意图](skills/pretty-charts/examples/diagram/schematic/pipeline_schematic.pdf)
 
 ## 快速开始
 
@@ -115,11 +124,11 @@ pretty-charts/
 ## 路线图
 
 - [x] 风格基建（三套色盲友好主题 × 4 工具栈）
-- [x] 数据图方法论 + 首批画廊（10 图型）
-- [x] 非数据图方法论 + 首批画廊（TikZ 7 例：流程双版/时序/甘特/思维导/架构/管线示意）
+- [x] 数据图方法论 + 首批画廊（9 类全有代表成图）
+- [x] 非数据图方法论 + 首批画廊（TikZ 9 例，全部 5 类图型有成图）
 - [ ] 数据图第二批画廊：树图、桑基、山脊图、ECDF、哑铃图
-- [ ] 地理可视化示例（choropleth / 比例符号地图）
-- [ ] 信息图整页版式示例
+- [x] 地理可视化示例（choropleth / 比例符号 / 小倍数）
+- [x] 信息图整页版式示例（简版）
 - [ ] CI 自动渲染示例图
 - [ ] 双语 README
 
