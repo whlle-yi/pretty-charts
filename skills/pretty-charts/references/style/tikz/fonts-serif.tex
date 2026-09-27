@@ -1,13 +1,14 @@
 % ============================================================
 % pretty-charts 字体层：衬线搭配（宋体 + Times New Roman）
-% 适用：与论文正文一致的图（流程图论文版、示意图的衬线方案、内嵌论文的示例）
 % 用法：\input{.../references/style/tikz/fonts-serif.tex}
 %
-% 为什么要单独成文件：示例此前各自写 \setmainfont{Times New Roman}
-% + \setCJKmainfont{SimSun}，这两个字体只存在于 Windows，导致同一份示例在
-% Linux/macOS 上无法编译（CI 也就无从编译）。这里按"字体是否存在"自动回退：
-%   Windows → Times New Roman + SimSun（与原行为完全一致）
-%   其他平台 → TeX Gyre Termes + Noto Serif CJK SC（Linux 装 fonts-noto-cjk）
+% 为什么单独成文件：示例此前各自写 \setmainfont{Times New Roman}
+% + \setCJKmainfont{SimSun}，这两个字体只存在于 Windows，同一份示例在
+% Linux/macOS 上无法编译（CI 也就无从编译）。这里按"字体是否存在"逐级回退：
+%   Windows  → Times New Roman + SimSun（与原行为完全一致）
+%   Linux    → TeX Gyre Termes + Noto Serif CJK SC（apt install fonts-noto-cjk-extra）
+%   兜底     → TeX Gyre Termes + FandolSong（TeX Live 自带）
+%   再兜底   → 只发警告、不设字体，保证编译不因缺字体而失败（中文可能显示异常）
 % \IfFontExistsTF 由 fontspec 提供（preamble.tex 已加载 fontspec）。
 % ============================================================
 \IfFontExistsTF{Times New Roman}
@@ -16,5 +17,9 @@
 \IfFontExistsTF{SimSun}
   {\setCJKmainfont{SimSun}}                % 中文宋体（Windows）
   {\IfFontExistsTF{Noto Serif CJK SC}
-     {\setCJKmainfont{Noto Serif CJK SC}}   % Linux（apt install fonts-noto-cjk）
-     {\setCJKmainfont{FandolSong}}}         % 兜底：TeX Live 自带，无需系统字体包
+     {\setCJKmainfont{Noto Serif CJK SC}}   % Linux（fonts-noto-cjk-extra）
+     {\IfFontExistsTF{FandolSong}
+        {\setCJKmainfont{FandolSong}}        % 兜底：TeX Live 自带，无需系统字体包
+        {\PackageWarning{pretty-charts}{未找到中文衬线字体（已尝试 SimSun / %
+          Noto Serif CJK SC / FandolSong）；中文可能显示异常。%
+          请安装 fonts-noto-cjk-extra，或改用 fonts-sans.tex}}}}

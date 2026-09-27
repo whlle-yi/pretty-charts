@@ -15,7 +15,9 @@
   {\newCJKfontfamily\chartcjk{Microsoft YaHei}}% 静态字体，可嵌入 PDF
   {\IfFontExistsTF{Noto Sans CJK SC}
      {\newCJKfontfamily\chartcjk{Noto Sans CJK SC}}% Linux（fonts-noto-cjk）
-     {\newCJKfontfamily\chartcjk{FandolHei}}}% 兜底：TeX Live 自带
+     {\IfFontExistsTF{FandolHei}
+        {\newCJKfontfamily\chartcjk{FandolHei}}% 兜底：TeX Live 自带
+        {\PackageWarning{pretty-charts}{未找到中文黑体，图表文字可能显示异常}}}}
 \IfFontExistsTF{Arial}
   {\newcommand{\chartfont}[1]{{\chartcjk\fontspec{Arial}#1}}}
   {\newcommand{\chartfont}[1]{{\chartcjk\fontspec{TeX Gyre Heros}#1}}}

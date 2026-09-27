@@ -28,7 +28,7 @@ jobs:
         run: |
           python scripts/check_refs.py --write-index
           if ! git diff --quiet -- skills/pretty-charts/examples/INDEX.md; then
-            echo "::error::examples/INDEX.md 已过期，请本地运行 python scripts/check_refs.py --write-index 并提交"
+            echo "::error file=skills/pretty-charts/examples/INDEX.md::索引已过期，请本地运行 python scripts/check_refs.py --write-index 并提交"
             git diff --stat -- skills/pretty-charts/examples/INDEX.md
             exit 1
           fi
@@ -51,12 +51,20 @@ jobs:
           fail=0
           while IFS= read -r py; do
             echo "::group::$py"
-            ( cd "$(dirname "$py")" && python "$(basename "$py")" ) || fail=1
+            if ! ( cd "$(dirname "$py")" && python "$(basename "$py")" ); then
+              echo "::error file=$py::示例执行失败（退出码非 0）"
+              fail=1
+            fi
             echo "::endgroup::"
           done < <(find skills/pretty-charts/examples -name '*.py' | sort)
           exit $fail
       - name: 主题循环色必须等于色板 JSON（spec/color.md §1）
-        run: cd skills/pretty-charts/examples/style-demo && python demo_styles.py
+        run: |
+          cd skills/pretty-charts/examples/style-demo
+          python demo_styles.py || {
+            echo "::error file=skills/pretty-charts/examples/style-demo/demo_styles.py::主题循环色与 palettes/*.json 不一致"
+            exit 1
+          }
       - name: 复查五项自检（含产出存在性）
         run: python scripts/check_refs.py
 
@@ -72,27 +80,29 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
-            texlive-xetex texlive-latex-extra texlive-pictures \
-            texlive-fonts-recommended texlive-lang-chinese \
+            texlive-xetex texlive-latex-recommended texlive-latex-extra \
+            texlive-pictures texlive-fonts-recommended texlive-lang-chinese \
             fonts-noto-cjk fonts-noto-cjk-extra
-          # fonts-noto-cjk 只带 Noto Sans CJK；衬线回退（Noto Serif CJK）在 -extra 包里
+          # fonts-noto-cjk 只带 Noto Sans CJK；衬线回退（Noto Serif CJK SC）在 -extra 包里
       - name: 每个 .tex 都必须编译通过
         run: |
           fail=0
           while IFS= read -r tex; do
+            dir=$(dirname "$tex"); base=$(basename "$tex"); stem="${base%.tex}"
             echo "::group::$tex"
-            ( cd "$(dirname "$tex")" \
-              && xelatex -interaction=nonstopmode -halt-on-error "$(basename "$tex")" ) || fail=1
+            if ! ( cd "$dir" && xelatex -interaction=nonstopmode -halt-on-error "$base" ); then
+              # 把 .log 里的第一条错误带进注解，便于在 PR 界面与 API 直接看到原因
+              err=$(grep -m1 -A2 '^!' "$dir/$stem.log" 2>/dev/null | tr '\n' ' ' | cut -c1-500)
+              err=${err:-"xelatex 退出码非 0（未在 .log 中匹配到 ^! 行）"}
+              echo "::error file=$tex::xelatex 失败：$err"
+              fail=1
+            fi
             echo "::endgroup::"
           done < <(find skills/pretty-charts/examples -name '*.tex' | sort)
           exit $fail
       - name: 复查五项自检（含 .tex 同名 PDF 存在性）
         run: python scripts/check_refs.py
-      - name: 说明
-        run: |
-          echo "注意：本作业只验证「能编译出 PDF」，不比对 PDF 字节。"
-          echo "跨平台字体光栅化与 PDF 时间戳会使字节不同，故仓库内提交的成图不参与 CI 比对。"
 
   # 说明：本仓库的成图（PNG/PDF）是提交进仓库的交付物，但 CI 不做字节比对——
   # matplotlib 的字体光栅化与 xelatex 的 PDF ID/时间戳在不同平台必然不同，
-  # 做字节比对只会产生噪声失败。CI 验证的是"代码能跑通、能编译、结构自洽"。
+  # 做字节比对只会产生噪声失败。CI 验证的是“代码能跑通、能编译、结构自洽”。
