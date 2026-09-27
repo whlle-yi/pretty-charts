@@ -63,6 +63,19 @@ description: 高质量图表绘制技能。当用户需要绘制、美化或选�
 
 > 想找相近示例先改：`examples/INDEX.md` 列出全部生成脚本与成图。
 
+**图型 → 规范文件**（按你手上的图型名查；用户已指定图型时直接查这张表，不必读 `select.md`）
+
+| 你确定要画 | 读 |
+|---|---|
+| 条形 / 柱状 / 分组柱 / 堆叠 / 100% 堆叠 / 点图 / 哑铃 / 斜率 / 饼 / 环 / 瀑布 | `charts/compare.md` |
+| 折线 / 面积 / 堆叠面积 / 日历热图 | `charts/trend.md` |
+| 直方 / KDE / 箱线 / 小提琴 / ECDF / 山脊 | `charts/distribution.md` |
+| 散点 / 气泡 / 二维密度 / hexbin / 相关矩阵 / 热图 | `charts/relationship.md` |
+| 树图 / 桑基 / 弦图 / 力导向 / 河流图 | `charts/structure.md` |
+| choropleth / 比例符号 / 小倍数地图 | `charts/map.md` |
+| 误差棒 / 置信区间 / 显著性 / 森林图（**叠加**到上表任一族） | `charts/inference.md` |
+| 流程图 / 时序图 / 状态图 / 甘特图 / 架构图 / 思维导图 / 示意图 / 信息图 | `diagrams.md` |
+
 **工具选择**
 
 | 场景 | 工具文件 |
