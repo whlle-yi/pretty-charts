@@ -35,7 +35,7 @@
 
 | 地理 | 热图矩阵 | 统计推断 |
 |:---:|:---:|:---:|
-| **[地理](skills/pretty-charts/references/data/geo.md)** | **[热图矩阵](skills/pretty-charts/examples/../data/heatmap.md)** | **[统计推断](skills/pretty-charts/references/data/statistical.md)** |
+| **[地理](skills/pretty-charts/references/data/geo.md)** | **[热图矩阵](skills/pretty-charts/references/data/heatmap.md)** | **[统计推断](skills/pretty-charts/references/data/statistical.md)** |
 | ![](skills/pretty-charts/examples/data/geo/fig1_preview.png) | ![](skills/pretty-charts/examples/data/heatmap/corr_heatmap.png) | ![](skills/pretty-charts/examples/data/statistical/errorbar_ci.png) |
 
 ### 非数据图（5 类）
