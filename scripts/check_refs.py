@@ -74,15 +74,24 @@ def check_paths(problems):
 
 
 def check_reachable_docs(problems):
-    """references 下每个 .md 都必须被 SKILL.md 按名引用（杜绝孤儿方法论）。"""
-    entry_text = read(os.path.join(SKILL, "SKILL.md"))
+    """references 下每个 .md 都必须从 SKILL.md 出发一跳可达（杜绝孤儿方法论）。
+
+    一跳可达 = 被 SKILL.md 按名引用，或被「SKILL.md 直接引用的文件」按名引用。
+    这样 SKILL.md 只需点名它自己那一层（各家族入口），
+    select.md 再去点各 charts 文件，不必把 13 个文件名在 SKILL.md 里重复一遍。
+    """
+    entry = read(os.path.join(SKILL, "SKILL.md"))
+    pool = [entry]
+    for md in walk(REFS, ".md"):
+        if os.path.basename(md) in entry:
+            pool.append(read(md))
+    pool_text = "\n".join(pool)
     for md in walk(REFS, ".md"):
         rel = os.path.relpath(md, REFS).replace(os.sep, "/")
         if rel.startswith("assets/"):
             continue
-        if os.path.basename(rel) not in entry_text:
-            problems.append("孤儿方法论  references/%s 未被 SKILL.md 按名引用" % rel)
-
+        if os.path.basename(rel) not in pool_text:
+            problems.append("孤儿方法论  references/%s 从 SKILL.md 出发一跳不可达" % rel)
 
 def check_reachable_examples(problems):
     refs_text = "\n".join(read(md) for md in walk(REFS, ".md"))
