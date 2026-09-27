@@ -5,7 +5,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 
-STYLE = Path(__file__).resolve().parents[3] / "assets" / "matplotlib"
+STYLE = Path(__file__).resolve().parents[3] / "references" / "style" / "matplotlib"
 plt.style.use(STYLE / "academic.mplstyle")
 
 groups = ["产品 A", "产品 B", "产品 C", "产品 D"]

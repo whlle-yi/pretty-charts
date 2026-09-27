@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 SKILL_ROOT = Path(__file__).resolve().parents[2]
-STYLES = SKILL_ROOT / "assets" / "matplotlib"
+STYLES = SKILL_ROOT / "references" / "style" / "matplotlib"
 OUT = Path(__file__).resolve().parent / "output"
 OUT.mkdir(exist_ok=True)
 

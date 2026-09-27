@@ -29,7 +29,7 @@ description: 高质量图表绘制技能。当用户需要绘制、美化或选�
 
 **定档后先读 `references/scenarios.md` 对应节**——那里有该场景的精确阅读顺序（接下来看哪几个文件）与场景专属规则（期刊尺寸、论文流程图无底色、远距离可读等），再按其清单加载方法论文件。
 
-主题资产在 `assets/`：色板 `assets/palettes/*.json`、matplotlib `assets/matplotlib/*.mplstyle`、ECharts `assets/echarts/*.json`、TikZ `assets/tikz/`、字体方案 `assets/fonts.md`。
+主题资产在 `references/style/`：色板 `references/style/palettes/*.json`、matplotlib `references/style/matplotlib/*.mplstyle`、ECharts `references/style/echarts/*.json`、TikZ `references/style/tikz/`、字体方案 `references/style/fonts.md`。
 
 ## 第 3 步：加载对应参考文件后作图
 
@@ -45,7 +45,7 @@ description: 高质量图表绘制技能。当用户需要绘制、美化或选�
 按图型加载：流程与时序（流程图、时序图、甘特图）、系统架构图、层级与逻辑（思维导图、组织架构）、概念示意/科研示意图、信息图。
 
 - 工具栈：`tool-tikz.md`（主力）、`tool-graphviz.md`（复杂自动布局备用）、`tool-svg.md`
-- **非数据图交付级一律 TikZ，不使用 mermaid**：流程图 `assets/tikz/flowchart-styles.tex`、时序图 `assets/tikz/sequence-styles.tex`，均双模式——`\pcPaperMode` 论文版（无底色，中文宋体+Times New Roman）/ `\pcPPTMode` 演示版（showcase 彩色，中文黑体+Arial）；甘特图用 pgfgantt、思维导图用 TikZ mindmap，同为论文风格。
+- **非数据图交付级一律 TikZ，不使用 mermaid**：流程图 `references/style/tikz/flowchart-styles.tex`、时序图 `references/style/tikz/sequence-styles.tex`，均双模式——`\pcPaperMode` 论文版（无底色，中文宋体+Times New Roman）/ `\pcPPTMode` 演示版（showcase 彩色，中文黑体+Arial）；甘特图用 pgfgantt、思维导图用 TikZ mindmap，同为论文风格。
 
 ## 执行顺序契约（防跳步，强制）
 
@@ -64,7 +64,7 @@ description: 高质量图表绘制技能。当用户需要绘制、美化或选�
 
 1. **防误导优先于美观**：柱状图 y 轴必须从 0 开始；不滥用双轴；截断轴必须显式标注；不确定度（误差棒/置信区间）不能省略。详见 `references/style-guide.md` §6。
 2. **颜色只从色板取**：三套色板全部色盲友好，禁止临时凑色；类别数超过色板容量时做小倍数图或合并，不加色。
-3. **字体**：中文思源黑体（Noto Sans SC），西文/数字 Arial；最小字号按档位，见 `assets/fonts.md`。
+3. **字体**：中文思源黑体（Noto Sans SC），西文/数字 Arial；最小字号按档位，见 `references/style/fonts.md`。
 4. **导出**：矢量优先（PDF/SVG）；位图 DPI 按档位；尺寸按交付场景（期刊单栏 90mm/双栏 190mm、PPT 16:9、网页自适应）。
 5. **画完必自查**：对照第 2 步选定的检查清单逐项过，发现问题先修再看下一项。
 6. **示例画廊**：`examples/` 下每类图附可运行代码与成图，作图前可先找相近示例改。
@@ -79,7 +79,7 @@ references/
   ├── style-guide.md      ← 风格规范总纲（配色/字体/导出/防误导/三档清单）
   ├── data/               ← 数据图方法论（按分析目的 + 工具栈）
   └── diagram/            ← 非数据图方法论（按图型 + 工具栈）
-assets/
+references/style/
   ├── palettes/           ← 三套色板 JSON（唯一取色来源）
   ├── matplotlib/         ← 三个 .mplstyle
   ├── echarts/            ← 三个 ECharts 主题

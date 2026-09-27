@@ -8,7 +8,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 
-STYLE = Path(__file__).resolve().parents[3] / "assets" / "matplotlib"
+STYLE = Path(__file__).resolve().parents[3] / "references" / "style" / "matplotlib"
 plt.style.use(STYLE / "academic.mplstyle")
 
 quarters = ["一季度", "二季度", "三季度", "四季度"]

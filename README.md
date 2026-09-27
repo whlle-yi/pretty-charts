@@ -58,9 +58,9 @@ cp -r pretty-charts/skills/pretty-charts ~/.zcode/skills/
 
 | 工具 | 用法 |
 |---|---|
-| matplotlib | `plt.style.use("assets/matplotlib/academic.mplstyle")` |
-| ECharts | `echarts.registerTheme("pc", theme)` —— 主题 JSON 见 [assets/echarts/](skills/pretty-charts/assets/echarts/) |
-| TikZ | `\input{assets/tikz/preamble.tex}` + `\input{assets/tikz/flowchart-styles.tex}` |
+| matplotlib | `plt.style.use("references/style/matplotlib/academic.mplstyle")` |
+| ECharts | `echarts.registerTheme("pc", theme)` —— 主题 JSON 见 [references/style/echarts/](skills/pretty-charts/references/style/echarts/) |
+| TikZ | `\input{references/style/tikz/preamble.tex}` + `\input{references/style/tikz/flowchart-styles.tex}` |
 
 ## 质量分档
 
@@ -76,12 +76,12 @@ cp -r pretty-charts/skills/pretty-charts ~/.zcode/skills/
 
 | 时机 | 文件 |
 |---|---|
-| ① 被代码加载，不读 | `assets/matplotlib/*.mplstyle` · `assets/echarts/*.json` · `assets/tikz/*.tex` |
+| ① 被代码加载，不读 | `references/style/matplotlib/*.mplstyle` · `references/style/echarts/*.json` · `references/style/tikz/*.tex` |
 | ② AI 每次任务必读 | `SKILL.md`（定性 + 定档） |
 | ③ 定档后读一次 | [`references/scenarios.md`](skills/pretty-charts/references/scenarios.md)（对应档位一节） |
 | ④ 画什么读什么 | `references/data/`（9 类分析目的 + 选型）· `references/diagram/`（5 类图型 + 选型） |
 | ⑤ 按工具栈读 | `data/tool-{matplotlib,echarts}.md` · `diagram/tool-{tikz,graphviz,svg}.md` |
-| ⑥ 交付前查 | `references/style-guide.md` §7 对应清单 · `assets/fonts.md` |
+| ⑥ 交付前查 | `references/style-guide.md` §7 对应清单 · `references/style/fonts.md` |
 | ⑦ 参照模仿 | `examples/`（代码 + 成图） |
 
 ## 仓库结构
@@ -97,9 +97,8 @@ pretty-charts/
         │   ├── style-guide.md  # 风格总纲（配色/字体/导出/防误导/清单）
         │   ├── data/           # 数据图：选型 + 9 类目的 + 2 工具栈
         │   └── diagram/        # 非数据图：5 类图型 + 4 工具栈
-        ├── assets/             # palettes / matplotlib / echarts / tikz / fonts
+        │   └── style/          # 风格资产：palettes / matplotlib / echarts / tikz / fonts
         ├── examples/           # 示例画廊：代码 + 成图
-        └── scripts/            # 辅助脚本
 ```
 
 ## 文档
@@ -112,7 +111,7 @@ pretty-charts/
 | [style-guide.md](skills/pretty-charts/references/style-guide.md) | 配色 / 字体 / 导出 / 防误导红线 / 三档清单 |
 | [chart-selection.md](skills/pretty-charts/references/data/chart-selection.md) | 数据图选型决策树 |
 | [diagram-selection.md](skills/pretty-charts/references/diagram/diagram-selection.md) | 非数据图选型决策树 |
-| [fonts.md](skills/pretty-charts/assets/fonts.md) | 字体方案与回退链 |
+| [fonts.md](skills/pretty-charts/references/style/fonts.md) | 字体方案与回退链 |
 
 ## 路线图
 

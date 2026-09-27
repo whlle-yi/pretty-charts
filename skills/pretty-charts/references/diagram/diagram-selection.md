@@ -37,7 +37,7 @@
 | **Graphviz** | 自动布局的复杂有向图（节点多、边乱） | TikZ 手摆无法驾驭时（dot 引擎自动排布） |
 | **SVG 手绘** | 完全自定义的示意图、插画、信息图 | 以上都不够用时（最后手段，成本最高） |
 
-主题配置：TikZ 用 `assets/tikz/`（preamble + 各图型预置样式）；颜色从 `assets/palettes/` 取值。**非数据图同样禁止自造颜色。**
+主题配置：TikZ 用 `references/style/tikz/`（preamble + 各图型预置样式）；颜色从 `references/style/palettes/` 取值。**非数据图同样禁止自造颜色。**
 
 ## 3. 非数据图通用规范（任何图型都适用）
 

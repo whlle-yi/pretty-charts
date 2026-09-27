@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.stats import gaussian_kde
 
-STYLE = Path(__file__).resolve().parents[3] / "assets" / "matplotlib"
+STYLE = Path(__file__).resolve().parents[3] / "references" / "style" / "matplotlib"
 plt.style.use(STYLE / "academic.mplstyle")
 
 rng = np.random.default_rng(7)

@@ -38,7 +38,7 @@ Source Han Sans SC → Noto Sans SC → Microsoft YaHei → Arial → Helvetica 
 
 - ECharts（屏幕 px）：T1 ≈ 14/12/11，T2 ≈ 16/13/12，T3 ≈ 20/15/14（标题/图例/刻度），已在主题 JSON 内置
 - matplotlib 数值已在 `.mplstyle` 内置；单独标注时用 `ax.annotate(..., fontsize=<档位数据标注字号>)`
-- TikZ：模板 label `\small`、tick `ootnotesize`（见 `assets/tikz/preamble.tex`）
+- TikZ：模板 label `\small`、tick `ootnotesize`（见 `references/style/tikz/preamble.tex`）
 
 ## 强调规则
 

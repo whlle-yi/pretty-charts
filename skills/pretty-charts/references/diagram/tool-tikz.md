@@ -1,10 +1,10 @@
 # 工具栈：TikZ / pgfplots（tool-tikz）
 
-> T1 出版级示意图主力：矢量、字体与 LaTeX 正文一致、几何精确。编译 XeLaTeX。导言区与配色模板：`assets/tikz/preamble.tex`。
+> T1 出版级示意图主力：矢量、字体与 LaTeX 正文一致、几何精确。编译 XeLaTeX。导言区与配色模板：`references/style/tikz/preamble.tex`。
 
 ## 1. 定位
 
-- 本仓库**全部非数据图的交付级工具**：流程图、时序图、甘特图、思维导图、架构图、示意图均由 TikZ 输出（各图型预置样式见 assets/tikz/）；
+- 本仓库**全部非数据图的交付级工具**：流程图、时序图、甘特图、思维导图、架构图、示意图均由 TikZ 输出（各图型预置样式见 references/style/tikz/）；
 - 论文正文插图（字体必须与正文一致）；
 - 需要精确坐标、循环阵列、镜像对称的装置/结构图；
 - 需要与 pgfplots 数据图混排（示意元素 + 真实数据同图）。
@@ -13,7 +13,7 @@
 
 ```latex
 \documentclass{standalone}   % 单图输出；论文内嵌时去掉本行改 figure 环境
-\input{assets/tikz/preamble.tex}  % 主题配色 pcBlue... 与轴风格
+\input{references/style/tikz/preamble.tex}  % 主题配色 pcBlue... 与轴风格
 \begin{document}
 \begin{tikzpicture}
   ...
@@ -23,13 +23,13 @@
 
 编译：`xelatex -interaction=nonstopmode file.tex`。
 
-## 3. 流程图预置样式（assets/tikz/flowchart-styles.tex）
+## 3. 流程图预置样式（references/style/tikz/flowchart-styles.tex）
 
 流程图**不要手写节点样式**，直接加载预置文件后选模式：
 
 ```latex
-\input{assets/tikz/preamble.tex}
-\input{assets/tikz/flowchart-styles.tex}
+\input{references/style/tikz/preamble.tex}
+\input{references/style/tikz/flowchart-styles.tex}
 \setmainfont{Times New Roman}\setCJKmainfont{SimSun} % 论文版字体；演示版用 Arial+黑体
 % \pcPPTMode  % 演示版开关（默认 \pcPaperMode）
 \begin{document}

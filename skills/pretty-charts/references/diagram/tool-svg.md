@@ -15,7 +15,7 @@
 
 ## 3. 风格纪律（与其他主题对齐）
 
-1. 颜色从 `assets/palettes/*.json` 取值写进 `:root` CSS 变量，禁止散落硬编码：
+1. 颜色从 `references/style/palettes/*.json` 取值写进 `:root` CSS 变量，禁止散落硬编码：
    ```svg
    <style> :root { --primary:#0072B2; --text:#1A1A1A; --grid:#CCCCCC; } </style>
    ```

@@ -14,7 +14,7 @@
 
 ```js
 // academic.json / business.json / showcase.json 任选，fetch 后 echarts.registerTheme
-const resp = await fetch("assets/echarts/business.json");
+const resp = await fetch("references/style/echarts/business.json");
 const theme = await resp.json();
 echarts.registerTheme("pretty-charts", theme);
 const chart = echarts.init(dom, "pretty-charts", { renderer: "svg" });
@@ -60,4 +60,4 @@ tooltip: { trigger: "axis", axisPointer: { type: "shadow" } },
 2. **字体**：浏览器端主题 fontFamily 生效，但 canvas 渲染下中文回退链由 CSS 决定，页面 body 也要设置同链字体。
 3. **resize**：容器尺寸变化后必须 `chart.resize()`，否则图糊/裁切；用 `window.addEventListener("resize", ...)` 或 ResizeObserver。
 4. **数据集与编码**：`dataset.source` + `encode` 比逐系列 data 好，但注意 `dimensions` 顺序。
-5. D3 场景（需要完全自定义视觉）：配色仍从 `assets/palettes/*.json` 取值，禁止自造色；比例尺与轴参考 observable 标准写法。
+5. D3 场景（需要完全自定义视觉）：配色仍从 `references/style/palettes/*.json` 取值，禁止自造色；比例尺与轴参考 observable 标准写法。

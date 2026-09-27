@@ -10,7 +10,7 @@
 
 **阅读顺序**：
 1. `style-guide.md` §2（三档定义）、§5.1（期刊尺寸）、§7.1（T1 自查清单）
-2. `assets/fonts.md`（字号下限与中西文规则）
+2. `references/style/fonts.md`（字号下限与中西文规则）
 3. 数据图 → `references/data/` 对应分析目的文件 + `tool-matplotlib.md`
 4. 流程图 → `references/diagram/flowchart.md` + `tool-tikz.md`；示意图 → `schematic.md`
 5. 示例：`examples/data/`（academic 主题）、`examples/diagram/flowchart/paper_embedded*.tex`（论文内嵌写法）

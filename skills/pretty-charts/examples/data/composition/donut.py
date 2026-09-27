@@ -5,7 +5,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 
-STYLE = Path(__file__).resolve().parents[3] / "assets" / "matplotlib"
+STYLE = Path(__file__).resolve().parents[3] / "references" / "style" / "matplotlib"
 plt.style.use(STYLE / "academic.mplstyle")
 
 data = {"华东": 386, "华南": 254, "华北": 190, "西部": 120, "东北": 85}

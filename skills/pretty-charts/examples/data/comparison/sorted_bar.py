@@ -4,7 +4,7 @@ from pathlib import Path
 
 import matplotlib.pyplot as plt
 
-STYLE = Path(__file__).resolve().parents[3] / "assets" / "matplotlib"
+STYLE = Path(__file__).resolve().parents[3] / "references" / "style" / "matplotlib"
 plt.style.use(STYLE / "academic.mplstyle")
 
 data = {"武汉": 1280, "成都": 1160, "杭州": 990, "南京": 870, "西安": 760, "沈阳": 540}
