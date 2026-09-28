@@ -144,21 +144,16 @@ Agent 一次任务的标准读取量 **4–5 个文件**：SKILL.md + common.md 
 
 | 文件 | 角色 |
 |---|---|
-| [requirements.txt](requirements.txt) | 人读的版本区间：下限按代码用到的 API 推出，上限挡大版本破坏 |
-| [requirements-lock.txt](requirements-lock.txt) | uv 编译的精确锁（22 个版本，含传递依赖，跨 Windows/Linux，Python 锚定 CI 的 3.12），CI 从锁安装 |
+| [requirements.txt](requirements.txt) | 版本区间（人读） |
+| [requirements-lock.txt](requirements-lock.txt) | 精确锁（uv 编译），CI 从此安装 |
 
 改区间后重编译：`uv pip compile requirements.txt --universal --python-version 3.12 -o requirements-lock.txt`
 
 ## 贡献
 
-1. `python scripts/check_refs.py` 退出码 0（八项校验，CI 会重复执行）。
-2. 新示例按名写进对应方法论文件的「示例」节（否则判孤儿示例），改完示例重跑 `python scripts/check_refs.py --write-index`。
-3. **公共规则单一来源**：红线 / 取色 / 字体 / 尺寸只进 `references/common.md`；图型与工具文件只引用不复述。
-4. 新增图型先加 `charts/<族>.md` 的「图型清单」，再回填 `select.md` §1（select 是入口不是全集）。
-5. 成图提交前重新渲染；图注里的统计量必须由脚本真实计算。
-6. 脚本与成图同目录，输出路径用 `Path(__file__)` 推导，中间产物不入库。
+提交前 `python scripts/check_refs.py` 退出码 0（八项校验，CI 复跑；孤儿示例、索引过期、硬编码颜色都会被自动拦下），动了示例就重跑 `--write-index`。其余规范不写在本页：由 [SKILL.md](skills/pretty-charts/SKILL.md) 与 [common.md](skills/pretty-charts/references/common.md) 在流程中强制。
 
-提交信息用 `类型: 摘要`（`fix:` / `feat:` / `docs:` / `refactor:`）。
+提交信息用 `类型: 摘要`。
 
 ## 路线图
 
