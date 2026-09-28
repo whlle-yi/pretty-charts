@@ -14,7 +14,7 @@
 
 *English — a charting skill for AI agents: methodology for 40+ chart types, three quality tiers, machine-readable style assets.*
 
-[安装](#安装) · [示例](#示例) · [三档体系](#三档体系) · [文档结构](#文档结构) · [质量保障](#质量保障) · [贡献](#贡献)
+[安装](#安装) · [示例](#示例) · [三档体系](#三档体系) · [文档结构](#文档结构) · [贡献](#贡献)
 
 </div>
 
@@ -118,17 +118,11 @@ Agent 一次任务的标准读取量 **4–5 个文件**：SKILL.md + common.md 
 
 完整判定表见 [SKILL.md](skills/pretty-charts/SKILL.md) 第 2 步；各档差异参数在 [common.md](skills/pretty-charts/references/common.md) 各表与资产文件内。
 
-## 质量保障
+## 已知限制
 
-| 检查 | 结果 |
-|---|---|
-| Python 示例 | 16/16 exit 0（CI 从 requirements-lock.txt 安装） |
-| LaTeX 示例 | 16/16 xelatex 编译通过（含 Windows 原生字体 → Noto CJK → Fandol 跨平台回退） |
-| 八项自检 `scripts/check_refs.py` | 引用完整 · 无死链 · 无孤儿方法论 / 示例 · 无硬编码颜色 · 产出齐备 |
-| 主题 ↔ 色板一致性 | demo_styles.py 逐色断言等于 palettes/*.json |
-| CI | 三作业：结构与引用自检 · Python 示例 · LaTeX 编译 |
-
-**已知限制**：TikZ 只有论文 / 演示两种模式（business 模式待做）；CI 不做成图字节比对（字体光栅化与 PDF 时间戳跨平台必然不同）；PDF→PNG 的 Ghostscript 管线未本机实测。
+- TikZ 只有论文 / 演示两种模式（business 模式待做）；
+- CI 不做成图字节比对——字体光栅化与 PDF 时间戳跨平台必然不同；
+- PDF→PNG 的 Ghostscript 管线未本机实测。
 
 ## 依赖
 
