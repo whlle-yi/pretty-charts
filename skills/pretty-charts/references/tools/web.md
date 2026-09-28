@@ -4,7 +4,7 @@
 
 
 > 适用 T2/T3 网页交付：交互报告、dashboard、大屏。T1 出版级不用本栈。
-> **横切规范只在本技能 `references/spec.md` 定义一次**（红线 [`../spec.md`](../spec.md)、取色 [`../spec.md`](../spec.md)、字体 [`../spec.md`](../spec.md)、尺寸与落盘 [`../spec.md`](../spec.md)）；本文件**只讲本工具栈的用法与坑**，不复述上述内容。
+> **横切规范只在本技能 `references/common.md` 定义一次**（红线 [`../common.md`](../common.md)、取色 [`../common.md`](../common.md)、字体 [`../common.md`](../common.md)、尺寸与落盘 [`../common.md`](../common.md)）；本文件**只讲本工具栈的用法与坑**，不复述上述内容。
 
 ### 0. 何时选本栈
 

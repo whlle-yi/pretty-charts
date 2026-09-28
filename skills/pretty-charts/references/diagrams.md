@@ -1,10 +1,35 @@
 # diagrams
 
+## 通用布局（所有非数据图共用）
+
+> 非数据图的质量核心不是"防误导"（那是 `common.md`「红线与诚实原则」），而是**布局清晰、对齐、视觉动线**。本节适用于本文件全部五类。
+
+### 1. 六条通用规范
+
+1. **对齐即秩序**：同类节点对齐同一网格（水平/垂直居中）；连线只用正交线或平滑曲线，**两者不混用**。
+2. **流向一致**：全图只有一条主轴（从左到右，或从上到下）；回流/反馈线用虚线并绕外侧，不横穿其他节点。
+3. **节点文字极短**：框内 ≤10 字，细节放图注；动词 + 名词（"审核订单"），不写整句。
+4. **分支显式标注**：判断分支必须标条件（是/否、达标/未达标），不留无标签箭头。
+5. **克制着色**：默认单色系（主题蓝），颜色只用于区分**类别**或强调**关键路径**；流程/时序/架构/示意类**不超过 3 种颜色**，分类树（见下文「层级与逻辑」）按一级分支数取色，上限为色板容量（见 `common.md`「取色与配色」§4）。跨图交付时符号约定保持一致（菱形 = 判断、圆柱 = 数据库、平行四边形 = 输入输出）。
+6. **画完逐项过**：斜线、交叉线、无标签箭头、节点文字溢出、子图嵌套层级混乱。
+
+### 2. 工具与尺寸
+
+- 工具选择见 `../SKILL.md` §第 3 步；交付级非数据图一律 TikZ（**不使用 mermaid**）。
+- 尺寸、字号下限、矢量导出、落盘命名统一遵守 `common.md`「画布、尺寸、导出与落盘」；着色统一遵守 `common.md`「取色与配色」。
+- TikZ 出单图用 `\documentclass[border=6pt]{standalone}`；论文内嵌时把 `tikzpicture` 整体放进正文的 `figure` 环境，并删掉 `\documentclass`、`egin{document}`、`\end{document}` **三行**（只删 `\documentclass` 会留下孤立的 `egin{document}`），`\input{preamble.tex}` 移到正文导言区。
+- `\input` 路径基准是**当前 .tex 文件所在目录**；仓库示例位于 `examples/<类>/<图型>/`，距技能根 3 层，故写作 `../../../references/assets/tikz/…`。 <!-- check-refs: skip -->
+
+### 3. 图注与符号
+
+- 非标准符号必须在图注说明（菱形、圆柱、T 形汇流点、虚线 = 异步/回流）。
+- 术语在整份交付物内统一：不要同一份报告里"泳道 / 车道 / 阶段虚线框"混用。
+
 ## 流程与时序
 
 
 > 覆盖：流程图、时序图、甘特图、状态图。**交付级一律 TikZ**：流程图用预置样式 `references/assets/tikz/flowchart-styles.tex`，时序图用 `sequence-styles.tex`（两者都要先 `\input` `preamble.tex`，且 sequence 复用 flowchart 的模式变量），甘特图用 pgfgantt——流程图/时序图为论文/演示双模式，甘特图与状态图无预置样式。复杂有向图退到 Graphviz。**禁止使用 mermaid**：本文件的示例语法一律是 TikZ/pgfgantt 写法。
-> **横切规范只在本技能 `references/spec.md` 定义一次**：红线九条见 [`spec.md`](spec.md)，取色见 [`spec.md`](spec.md)，字体字号见 [`spec.md`](spec.md)，尺寸导出与落盘见 [`spec.md`](spec.md)。本文件**只列本图型特有规范**，不复述上述任何内容；非数据图通用布局见 [`spec.md`](spec.md)。
+> **横切规范只在本技能 `references/common.md` 定义一次**：红线九条见 [`common.md`](common.md)，取色见 [`common.md`](common.md)，字体字号见 [`common.md`](common.md)，尺寸导出与落盘见 [`common.md`](common.md)。本文件**只列本图型特有规范**，不复述上述任何内容；非数据图通用布局见本文件开篇「通用布局」。
 
 ### 0. 流程图工具策略：TikZ 双模式
 
@@ -68,7 +93,7 @@
 
 
 > 表达系统组成：分层、模块、部署拓扑、数据流。工具：**TikZ 为主**（复用 `flowchart-styles.tex` 双模式与 `pc sub`/`pc db` 样式）；Graphviz 仅在节点极多需要自动布局时备用。
-> **横切规范只在本技能 `references/spec.md` 定义一次**：红线九条见 [`spec.md`](spec.md)，取色见 [`spec.md`](spec.md)，字体字号见 [`spec.md`](spec.md)，尺寸导出与落盘见 [`spec.md`](spec.md)。本文件**只列本图型特有规范**，不复述上述任何内容；非数据图通用布局见 [`spec.md`](spec.md)。
+> **横切规范只在本技能 `references/common.md` 定义一次**：红线九条见 [`common.md`](common.md)，取色见 [`common.md`](common.md)，字体字号见 [`common.md`](common.md)，尺寸导出与落盘见 [`common.md`](common.md)。本文件**只列本图型特有规范**，不复述上述任何内容；非数据图通用布局见本文件开篇「通用布局」。
 
 ### 图型清单
 
@@ -106,7 +131,7 @@
 
 
 > 表达归类、从属、分解：思维导图、组织架构、概念图。主力工具 TikZ mindmap（单色墨泡、论文可用），逻辑结构复杂时用 Graphviz。
-> **横切规范只在本技能 `references/spec.md` 定义一次**：红线九条见 [`spec.md`](spec.md)，取色见 [`spec.md`](spec.md)，字体字号见 [`spec.md`](spec.md)，尺寸导出与落盘见 [`spec.md`](spec.md)。本文件**只列本图型特有规范**，不复述上述任何内容；非数据图通用布局见 [`spec.md`](spec.md)。
+> **横切规范只在本技能 `references/common.md` 定义一次**：红线九条见 [`common.md`](common.md)，取色见 [`common.md`](common.md)，字体字号见 [`common.md`](common.md)，尺寸导出与落盘见 [`common.md`](common.md)。本文件**只列本图型特有规范**，不复述上述任何内容；非数据图通用布局见本文件开篇「通用布局」。
 
 ### 图型清单
 
@@ -143,7 +168,7 @@
 
 
 > 机制示意图、装置图、实验流程、管线图。特征：**形状与空间关系本身承载含义**，需要精确几何控制。主力工具 TikZ（T1 出版级首选，见 `tools/tex.md`），复杂插画用 SVG（`tools/tex.md`）。
-> **横切规范只在本技能 `references/spec.md` 定义一次**：红线九条见 [`spec.md`](spec.md)，取色见 [`spec.md`](spec.md)，字体字号见 [`spec.md`](spec.md)，尺寸导出与落盘见 [`spec.md`](spec.md)。本文件**只列本图型特有规范**，不复述上述任何内容；非数据图通用布局见 [`spec.md`](spec.md)。
+> **横切规范只在本技能 `references/common.md` 定义一次**：红线九条见 [`common.md`](common.md)，取色见 [`common.md`](common.md)，字体字号见 [`common.md`](common.md)，尺寸导出与落盘见 [`common.md`](common.md)。本文件**只列本图型特有规范**，不复述上述任何内容；非数据图通用布局见本文件开篇「通用布局」。
 
 ### 图型清单
 
@@ -182,7 +207,7 @@
 
 
 > 一张图讲一个完整故事：数据 + 结构 + 文字的混合排版。归类的铁律：**按最终交付形态归这里，且两套规范（数据图防误导 + 非数据图布局）都要遵守。** 工具：整页排版可用 SVG 手绘、ECharts 页面或 PPT；**仓库内的示例 `make_infographic.py` 是用 matplotlib 画的**（便于复用数据图资产），页面若需交互再转 ECharts。
-> **横切规范只在本技能 `references/spec.md` 定义一次**：红线九条见 [`spec.md`](spec.md)，取色见 [`spec.md`](spec.md)，字体字号见 [`spec.md`](spec.md)，尺寸导出与落盘见 [`spec.md`](spec.md)。本文件**只列本图型特有规范**，不复述上述任何内容；非数据图通用布局见 [`spec.md`](spec.md)。
+> **横切规范只在本技能 `references/common.md` 定义一次**：红线九条见 [`common.md`](common.md)，取色见 [`common.md`](common.md)，字体字号见 [`common.md`](common.md)，尺寸导出与落盘见 [`common.md`](common.md)。本文件**只列本图型特有规范**，不复述上述任何内容；非数据图通用布局见本文件开篇「通用布局」。
 
 ### 结构三段式
 
@@ -197,7 +222,7 @@
 3. **配色从主题色板取**：主色 + 强调色 + 中性灰三色叙事；底色浅色（或统一深色），正文字色对比度 ≥4.5:1。
 4. **图标风格统一**：线性/面性二选一，同页不混；图标含义与文字相邻，不用悬停解释（静态交付）。
 5. 防误导红线全部生效：百分比标注基数、柱状零起点、地图色标必备——**信息图的流量越大越不能歪**。
-6. 尺寸按渠道：公众号长图宽 900px、高度按内容（不设固定比例）；PPT 16:9；海报 A2/A1 按 200dpi 导出（与 `spec.md`「画布、尺寸、导出与落盘」§2 的 T3=200dpi 一致）。
+6. 尺寸按渠道：公众号长图宽 900px、高度按内容（不设固定比例）；PPT 16:9；海报 A2/A1 按 200dpi 导出（与 `common.md`「画布、尺寸、导出与落盘」§2 的 T3=200dpi 一致）。
 7. 文案层级 ≤4 级；中文字重用思源黑体 Medium/Bold 区分层级，不换字体家族。
 
 ### 常见错误

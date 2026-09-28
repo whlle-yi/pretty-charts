@@ -20,7 +20,7 @@ OUT = Path(__file__).resolve().parent
 plt.rcParams.update(plt.rcParamsDefault)
 plt.style.use(STYLE / "showcase.mplstyle")   # T3 展示级主题（含字体回退链与负号处理）
 
-# 取色唯一来源：references/assets/palettes/showcase.json（references/spec.md「取色与配色」§1：禁止硬编码色值）
+# 取色唯一来源：references/assets/palettes/showcase.json（references/common.md「取色与配色」§1：禁止硬编码色值）
 PALETTE = json.loads(
     (SKILL_ROOT / "references" / "assets" / "palettes" / "showcase.json").read_text(encoding="utf-8"))
 
@@ -86,7 +86,7 @@ ax.text(4, 3.5, "数据来源：示例数据（仅为版式演示） · 制图�
         fontsize=11, color=GREY)
 
 # 整页版式要的是固定画布尺寸：把主题默认的 tight bbox 关掉。
-# 注意 savefig(bbox_inches=None) 是“沿用 rcParams”，关不掉，必须置 rcParam（references/spec.md「画布、尺寸、导出与落盘」§2 第 5 条）
+# 注意 savefig(bbox_inches=None) 是“沿用 rcParams”，关不掉，必须置 rcParam（references/common.md「画布、尺寸、导出与落盘」§2 第 5 条）
 plt.rcParams["savefig.bbox"] = None
 fig.savefig(OUT / "infographic.png", dpi=100)
 print("infographic.png done")

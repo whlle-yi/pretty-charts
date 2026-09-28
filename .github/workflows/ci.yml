@@ -42,10 +42,10 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
-      - name: 安装依赖
+      - name: 安装依赖（从锁文件，保证可复现）
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r requirements-lock.txt
       - name: 每个示例都必须退出码 0
         run: |
           fail=0
@@ -58,7 +58,7 @@ jobs:
             echo "::endgroup::"
           done < <(find skills/pretty-charts/examples -name '*.py' | sort)
           exit $fail
-      - name: 主题循环色必须等于色板 JSON（references/spec.md「取色与配色」§1）
+      - name: 主题循环色必须等于色板 JSON（references/common.md「取色与配色」§1）
         run: |
           cd skills/pretty-charts/examples/style-demo
           python demo_styles.py || {

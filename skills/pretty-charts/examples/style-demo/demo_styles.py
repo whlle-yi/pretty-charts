@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """pretty-charts 风格验证样张：三个主题各渲染一张图，并**校验主题循环色 = 色板 JSON**。
 
-为什么要把"校验"放进来：`references/spec.md`「取色与配色」§1 规定色板 JSON 是唯一取色来源，主题文件只是它的投影。
+为什么要把"校验"放进来：`references/common.md`「取色与配色」§1 规定色板 JSON 是唯一取色来源，主题文件只是它的投影。
 主题与色板一旦漂移（历史上出现过 showcase 循环色写成 `#CC3344`、色板是 `#CC3311` 这类问题），
 本脚本会立即失败——因此它既是样张，也是 CI 里的色板一致性测试。
 
@@ -33,7 +33,7 @@ bars = rng.uniform(30, 90, (3, 4))
 
 
 def load_palette(theme):
-    """取色唯一来源：references/assets/palettes/<theme>.json（references/spec.md「取色与配色」§1）。"""
+    """取色唯一来源：references/assets/palettes/<theme>.json（references/common.md「取色与配色」§1）。"""
     return json.loads((PALETTES / f"{theme}.json").read_text(encoding="utf-8"))
 
 
@@ -44,7 +44,7 @@ def assert_cycle_matches_palette(theme):
     actual = [to_hex(c).lower() for c in plt.rcParams["axes.prop_cycle"].by_key()["color"]]
     if actual != expected:
         raise SystemExit(
-            "%s.mplstyle 的循环色与色板 JSON 不一致（references/spec.md「取色与配色」§1 要求二者同源）\n"
+            "%s.mplstyle 的循环色与色板 JSON 不一致（references/common.md「取色与配色」§1 要求二者同源）\n"
             "  主题: %s\n  色板: %s" % (theme, actual, expected))
     return palette
 

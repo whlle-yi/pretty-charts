@@ -4,7 +4,7 @@
 
 
 > T1 出版级示意图主力：矢量、字体与 LaTeX 正文一致、几何精确。编译 XeLaTeX。导言区与配色模板：`references/assets/tikz/preamble.tex`。
-> **横切规范只在本技能 `references/spec.md` 定义一次**（红线 [`../spec.md`](../spec.md)、取色 [`../spec.md`](../spec.md)、字体 [`../spec.md`](../spec.md)、尺寸与落盘 [`../spec.md`](../spec.md)）；本文件**只讲本工具栈的用法与坑**，不复述上述内容。
+> **横切规范只在本技能 `references/common.md` 定义一次**（红线 [`../common.md`](../common.md)、取色 [`../common.md`](../common.md)、字体 [`../common.md`](../common.md)、尺寸与落盘 [`../common.md`](../common.md)）；本文件**只讲本工具栈的用法与坑**，不复述上述内容。
 
 ### 1. 定位
 
@@ -98,7 +98,7 @@ TikZ 侧只有两种模式，**没有 business 模式**，资产也不按档位�
 
 
 > TikZ 手摆无法驾驭时的退路：模块多、边乱、需要自动最小化交叉的**有向图**。引擎 dot（分层，架构图）、neato/fdp（力导向，网络）、circo（环状）。本机未安装 dot，本文件样式未经实测，使用前先验证。
-> **横切规范只在本技能 `references/spec.md` 定义一次**（红线 [`../spec.md`](../spec.md)、取色 [`../spec.md`](../spec.md)、字体 [`../spec.md`](../spec.md)、尺寸与落盘 [`../spec.md`](../spec.md)）；本文件**只讲本工具栈的用法与坑**，不复述上述内容。
+> **横切规范只在本技能 `references/common.md` 定义一次**（红线 [`../common.md`](../common.md)、取色 [`../common.md`](../common.md)、字体 [`../common.md`](../common.md)、尺寸与落盘 [`../common.md`](../common.md)）；本文件**只讲本工具栈的用法与坑**，不复述上述内容。
 
 ### 1. 基本用法
 
@@ -145,7 +145,7 @@ digraph G {
 
 
 > 最后手段：信息图、海报、复杂插画、需要完全自定义视觉时。成本最高，先确认 TikZ/Graphviz 真不够用。
-> **横切规范只在本技能 `references/spec.md` 定义一次**（红线 [`../spec.md`](../spec.md)、取色 [`../spec.md`](../spec.md)、字体 [`../spec.md`](../spec.md)、尺寸与落盘 [`../spec.md`](../spec.md)）；本文件**只讲本工具栈的用法与坑**，不复述上述内容。
+> **横切规范只在本技能 `references/common.md` 定义一次**（红线 [`../common.md`](../common.md)、取色 [`../common.md`](../common.md)、字体 [`../common.md`](../common.md)、尺寸与落盘 [`../common.md`](../common.md)）；本文件**只讲本工具栈的用法与坑**，不复述上述内容。
 
 ### 1. 何时用 SVG
 

@@ -12,7 +12,7 @@ STYLE = SKILL_ROOT / "references" / "assets" / "matplotlib"
 plt.rcParams.update(plt.rcParamsDefault)
 plt.style.use(STYLE / "academic.mplstyle")
 
-# 取色唯一来源：references/assets/palettes/academic.json（references/spec.md「取色与配色」§1：禁止硬编码色值）
+# 取色唯一来源：references/assets/palettes/academic.json（references/common.md「取色与配色」§1：禁止硬编码色值）
 PALETTE = json.loads(
     (SKILL_ROOT / "references" / "assets" / "palettes" / "academic.json").read_text(encoding="utf-8"))
 

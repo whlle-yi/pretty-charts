@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""论文数据图实战（references/spec.md「T1 期刊规格」指导）：期刊规格 + SciencePlots 叠加 + Crameri 色图。
+"""论文数据图实战（references/common.md「T1 期刊规格」指导）：期刊规格 + SciencePlots 叠加 + Crameri 色图。
 
 产出两个矢量 PDF（供 paper_embedded_data.tex 引用）：
   fig1.pdf  单栏 90mm 折线图：均值±95%CI + 线端直标，无图内标题（caption 在论文里）
@@ -24,7 +24,7 @@ STYLE = SKILL_ROOT / "references" / "assets" / "matplotlib"
 OUT = Path(__file__).resolve().parent
 rng = np.random.default_rng(7)
 
-# 取色唯一来源：references/assets/palettes/academic.json（references/spec.md「取色与配色」§1：禁止硬编码色值）
+# 取色唯一来源：references/assets/palettes/academic.json（references/common.md「取色与配色」§1：禁止硬编码色值）
 PALETTE = json.loads(
     (SKILL_ROOT / "references" / "assets" / "palettes" / "academic.json").read_text(encoding="utf-8"))
 CAT = PALETTE["categorical"]

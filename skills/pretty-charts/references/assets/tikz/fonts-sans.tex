@@ -8,7 +8,7 @@
 %   兜底     → TeX Gyre Heros + FandolHei（TeX Live 自带）
 %   再兜底   → 只发警告、不设字体，保证编译不因缺字体而失败
 % 注意：Microsoft YaHei 是静态字体，可安全嵌入 PDF；Noto Sans SC 在 Windows 上多为
-% 可变字体，xdvipdfmx 无法嵌入（见 spec/type.md §3），故这里不做该回退。
+% 可变字体，xdvipdfmx 无法嵌入（见 references/common.md「字体与文字」§3），故这里不做该回退。
 % ============================================================
 \IfFontExistsTF{Arial}
   {\setmainfont{Arial}}                    % Windows / macOS

@@ -2,59 +2,76 @@
 
 # 📊 pretty-charts
 
-**高质量绘图技能库 —— AI Agent 与人类共用的统一图表风格体系**
+**AI Agent 与人类共用的图表风格体系**
+
+数据图与非数据图的完整方法论 · 三档质量标准 · 三套色盲友好主题的机器可读资产
 
 [![CI](https://github.com/whlle-yi/pretty-charts/actions/workflows/ci.yml/badge.svg)](https://github.com/whlle-yi/pretty-charts/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-0072B2.svg)](LICENSE)
-[![Python](https://img.shields.io/badge/Python-%E2%89%A53.9-4E79A7.svg)](#依赖与环境)
-[![Platform](https://img.shields.io/badge/Platform-ZCode%20%2F%20Claude%20Code-4E79A7.svg)](#1-作为-ai-skill-安装)
-[![Charts](https://img.shields.io/badge/%E5%9B%BE%E5%9E%8B%E6%96%B9%E6%B3%95%E8%AE%BA-14%20%E7%B1%BB-009E73.svg)](#示例)
-[![Verified](https://img.shields.io/badge/%E5%AE%9E%E6%B5%8B-2026--09%20%C2%B7%20Win%20%C2%B7%20TeXLive%202026-2E7D32.svg)](#质量保障)
-[![Status](https://img.shields.io/badge/%E7%8A%B6%E6%80%81-%E6%8C%81%E7%BB%AD%E5%AE%8C%E5%96%84-F28E2B.svg)](#路线图)
+[![Python](https://img.shields.io/badge/Python-%E2%89%A53.9-4E79A7.svg)](#依赖)
+[![Platform](https://img.shields.io/badge/Platform-ZCode%20%2F%20Claude%20Code-4E79A7.svg)](#安装)
+[![Charts](https://img.shields.io/badge/%E5%9B%BE%E5%9E%8B-40%2B-009E73.svg)](#示例)
 
-[简介](#简介) · [特性](#特性) · [示例](#示例) · [快速开始](#快速开始) · [验证](#验证与依赖) · [文档](#文档索引) · [贡献](#贡献) · [路线图](#路线图)
+*English — a charting skill for AI agents: methodology for 40+ chart types, three quality tiers, machine-readable style assets.*
+
+[安装](#安装) · [示例](#示例) · [三档体系](#三档体系) · [文档结构](#文档结构) · [质量保障](#质量保障) · [贡献](#贡献)
 
 </div>
 
----
+## 这是什么
 
-> **English abstract** — `pretty-charts` is a charting skill for AI agents (ZCode / Claude Code skills) plus a set of reusable, tool-agnostic style assets. It covers data charts and diagrams across three quality tiers (print / report / presentation), ships three colour-blind-safe themes as machine-readable assets (matplotlib, ECharts, TikZ), and enforces a self-checking documentation structure. Every example is runnable code with its rendered output committed.
-> Install: `cp -r pretty-charts/skills/pretty-charts ~/.zcode/skills/` (or `~/.claude/skills/`).
+一个自包含的绘图 Skill。装好后对 Agent 说「画一张论文用的训练流程图」，它按**五步契约**执行：
 
-## 简介
+**定性**（先看数据、过防误导判断）→ **定档**（按输出介质选 T1/T2/T3，产出 chart-plan 决定记录）→ **作图**（按图型与工具规范、加载对应资产）→ **目检**（渲染成图逐项检查）→ **交付**（逐项过清单）。
 
-给 AI Agent 用的图表规范，通常有两个失败模式：**规范写在散文里，Agent 读不完也记不住**；以及**同一个事实被复述在十几个文件里，改一处漏三处**。本项目针对这两点设计：
+人类不用 Agent 也能直接取用风格资产与示例代码（见下）。
 
-1. **规格单一来源**。红线、取色、字体、尺寸、非数据图布局只在 [`references/spec.md`](skills/pretty-charts/references/spec.md) 定义一次；14 份图型文件与 6 份工具文件只**引用**，不复述。
-2. **参数化落到机器可读资产**。三档质量差异（色板、字号、线宽、DPI、画布）全部落在 `.mplstyle` / ECharts 主题 JSON / TikZ 模式宏里——散文不再重复描述它们，因此也不会与实现对不上。
-3. **结构可机器校验**。[`scripts/check_refs.py`](scripts/check_refs.py) 校验引用完整性（Markdown 链接 / 行内代码相对路径 / 裸资产路径三种形态）、孤儿方法论、孤儿示例、硬编码颜色、产出存在性；示例索引 [`examples/INDEX.md`](skills/pretty-charts/examples/INDEX.md) 由脚本生成，杜绝"文档说画廊里没有、其实早做完了"这类漂移。
-
-人类也可以直接取用风格资产（见 [快速开始 §2](#2-只用风格资产)），不必走 Agent 流程。
-
-## 特性
-
-| | 能力 |
+| 能力 | 说明 |
 |---|---|
-| **三档质量标准** | T1 出版级 / T2 报告级 / T3 展示级，**按输出介质判定**（印刷 / 屏幕文档 / 投影），而非"学术 vs 商务"这类社交标签 |
-| **三套色盲友好主题** | academic（Okabe-Ito）· business（Tableau 10）· showcase（Paul Tol Vibrant），各自落成 matplotlib `.mplstyle`、ECharts 主题 JSON、TikZ 配色/模式宏 |
-| **图型方法论** | 数据图按 **7 个编码家族**组织（覆盖比较 / 构成 / 趋势 / 分布 / 关系 / 结构 / 地理共 20+ 种形式）+ 非数据图 5 类（流程与时序 / 架构 / 层级 / 示意 / 信息图）；误差与显著性作为**可叠加**规范单列 |
-| **防误导红线** | 九条硬规则（柱状零起点、不确定度不省略、气泡面积编码、样本归一…）+ 诚实原则：**图注里的 n、置信区间、p 值必须由脚本真实计算，不得编造** |
-| **示例可跑** | 16 个 Python 脚本 + 16 个 LaTeX 源文件，成图全部由仓库内代码实际渲染并提交 |
-| **可校验结构** | 八项自检脚本（引用完整性 / Markdown 死链 / 行内相对路径 / 相对资产路径 / 孤儿方法论 / 孤儿示例 / 硬编码颜色 / 产出存在性） + 生成式示例索引 + GitHub Actions CI |
-| **跨平台** | LaTeX 字体层按字体存在性自动回退（Windows 宋体/雅黑 → Noto CJK → TeX Live 自带 Fandol），同一份示例在 Windows 与 Linux 均可编译 |
-| **降级路径** | 无 XeLaTeX、缺中文字体、只能出位图时怎么办，写在 [`SKILL.md`](skills/pretty-charts/SKILL.md)「环境缺失」一节，不允许"默默出一张不合规的图" |
+| 三档质量标准 | T1 出版级 / T2 报告级 / T3 展示级，按**输出介质**判定，不是"学术 vs 商务" |
+| 三套色盲友好主题 | Okabe-Ito / Tableau 10 / Paul Tol Vibrant，落成 matplotlib、ECharts、TikZ 资产，取色单一来源 |
+| 图型方法论 | 数据图 7 族 40+ 图型（含 Q-Q、平行坐标、桑基、UpSet 等进阶类型）+ 非数据图 5 类 |
+| 防误导红线 | 九条硬规则；图注中的 n、置信区间、p 值必须由脚本真实计算，不得编造 |
+| 决定记录 | 每次交付写 chart-plan.md：选型、档位、语义→颜色映射一次分配全局复用，防遗忘、防跳步、防漂移 |
+| 可机器校验 | 八项自检脚本（引用 / 死链 / 孤儿 / 硬编码颜色 / 产出）+ GitHub Actions CI 三作业 |
+
+## 安装
+
+```bash
+git clone https://github.com/whlle-yi/pretty-charts.git
+
+# ZCode
+cp -r pretty-charts/skills/pretty-charts ~/.zcode/skills/
+
+# Claude Code（目录结构相同）
+cp -r pretty-charts/skills/pretty-charts ~/.claude/skills/
+```
+
+Skill 本体无运行时依赖，拷走即用。装好后直接对 Agent 说话即可，例如：
+
+> 画一张论文用的训练流程图
+> 这张季度销售数据该怎么展示？给我三种方案
+
+## 只用风格资产
+
+| 工具 | 用法 |
+|---|---|
+| matplotlib | `plt.style.use("<技能根>/references/assets/matplotlib/academic.mplstyle")`（academic / business / showcase 三选一） |
+| ECharts | `echarts.registerTheme("pc", theme)` —— 主题 JSON 见 [references/assets/echarts/](skills/pretty-charts/references/assets/echarts/) |
+| TikZ | `\input{.../preamble.tex}` + 模式宏 `\pcPaperMode` / `\pcPPTMode`，详见 [references/tools/tex.md](skills/pretty-charts/references/tools/tex.md) |
+| 色板（任意工具） | [references/assets/palettes/](skills/pretty-charts/references/assets/palettes/) 三份 JSON：`categorical` / `sequential` / `diverging` / `neutral` / `missing` / `semantic` 等 token |
 
 ## 示例
 
-每个图型文件对应一种类型：这里是**每种类型的一张代表成图**（类型名可点击跳转到对应方法论），全部成图由仓库内代码实际渲染。完整对照见 [examples/INDEX.md](skills/pretty-charts/examples/INDEX.md)。
+每个示例都是可运行脚本，成图由仓库内代码实际渲染并提交；脚本 ↔ 成图 ↔ 方法论的完整对照见 [examples/INDEX.md](skills/pretty-charts/examples/INDEX.md)。
 
-### 数据图（9 类）
+### 数据图（7 族代表）
 
 | | | |
 |:---:|:---:|:---:|
 | **[比较](skills/pretty-charts/references/charts/compare.md)** | **[分布](skills/pretty-charts/references/charts/distribution.md)** | **[构成](skills/pretty-charts/references/charts/compare.md)** |
 | ![](skills/pretty-charts/examples/data/comparison/sorted_bar.png) | ![](skills/pretty-charts/examples/data/distribution/box_violin.png) | ![](skills/pretty-charts/examples/data/composition/donut.png) |
-| **[趋势](skills/pretty-charts/references/charts/trend.md)** | **[关系](skills/pretty-charts/references/charts/relationship.md)** | **[层次与网络](skills/pretty-charts/references/charts/structure.md)** |
+| **[趋势](skills/pretty-charts/references/charts/trend.md)** | **[关系](skills/pretty-charts/references/charts/relationship.md)** | **[结构](skills/pretty-charts/references/charts/structure.md)** |
 | ![](skills/pretty-charts/examples/data/trend/line_direct_label.png) | ![](skills/pretty-charts/examples/data/relationship/fig1_preview.png) | ![](skills/pretty-charts/examples/data/network/treemap.png) |
 | **[地理](skills/pretty-charts/references/charts/map.md)** | **[热图矩阵](skills/pretty-charts/references/charts/relationship.md)** | **[统计推断](skills/pretty-charts/references/charts/inference.md)** |
 | ![](skills/pretty-charts/examples/data/geo/fig1_preview.png) | ![](skills/pretty-charts/examples/data/heatmap/corr_heatmap.png) | ![](skills/pretty-charts/examples/data/statistical/errorbar_ci.png) |
@@ -70,180 +87,95 @@
 | **[信息图](skills/pretty-charts/references/diagrams.md)** | |
 | ![](skills/pretty-charts/examples/diagram/infographic/infographic.png) | |
 
-**三套主题的观感对照**——同一份数据在三个档位下的渲染差异（由 [demo_styles.py](skills/pretty-charts/examples/style-demo/demo_styles.py) 生成）：
+### 三档观感对照
+
+同一份数据在三个档位下的渲染差异，由 [demo_styles.py](skills/pretty-charts/examples/style-demo/demo_styles.py) 生成——它兼作主题 ↔ 色板一致性的断言：
 
 | academic（T1 出版级） | business（T2 报告级） | showcase（T3 展示级） |
 |:---:|:---:|:---:|
 | ![](skills/pretty-charts/examples/style-demo/output/academic.png) | ![](skills/pretty-charts/examples/style-demo/output/business.png) | ![](skills/pretty-charts/examples/style-demo/output/showcase.png) |
 
-更多论文内嵌效果：[科研流程图](skills/pretty-charts/examples/diagram/flowchart/research_flow.pdf) · [流程图演示版](skills/pretty-charts/examples/diagram/flowchart/ppt_flow.png) · [流程图论文版](skills/pretty-charts/examples/diagram/flowchart/paper_flow.png) · [数据图内嵌](skills/pretty-charts/examples/data/paper/paper_embedded_data.pdf) · [地理图内嵌](skills/pretty-charts/examples/data/geo/paper_embedded_geo.pdf) · [关系图内嵌](skills/pretty-charts/examples/data/relationship/paper_embedded_relationship.pdf) · [层级图内嵌](skills/pretty-charts/examples/diagram/hierarchy/paper_embedded_hierarchy.pdf) · [管线示意图](skills/pretty-charts/examples/diagram/schematic/pipeline_schematic.pdf)
+论文内嵌效果：[科研流程图](skills/pretty-charts/examples/diagram/flowchart/research_flow.pdf) · [数据图内嵌](skills/pretty-charts/examples/data/paper/paper_embedded_data.pdf) · [地理图内嵌](skills/pretty-charts/examples/data/geo/paper_embedded_geo.pdf) · [层级图内嵌](skills/pretty-charts/examples/diagram/hierarchy/paper_embedded_hierarchy.pdf)
 
-## 快速开始
+## 文档结构
 
-### 1. 作为 AI Skill 安装
-
-```bash
-git clone https://github.com/whlle-yi/pretty-charts.git
-
-# ZCode
-cp -r pretty-charts/skills/pretty-charts ~/.zcode/skills/
-
-# Claude Code（skills 目录结构相同）
-cp -r pretty-charts/skills/pretty-charts ~/.claude/skills/
+```tree
+pretty-charts/
+├── README.md / LICENSE / requirements.txt / requirements-lock.txt
+├── .github/workflows/ci.yml    # CI：八项自检 · Python 示例（从锁安装） · LaTeX 编译
+├── scripts/check_refs.py       # 八项自检 + 生成示例索引（仓库维护工具，不属于 skill 本体）
+└── skills/pretty-charts/       # Skill 本体：自包含，拷走即用
+    ├── SKILL.md                # 唯一入口：五步契约 + 两张路由表
+    ├── references/
+    │   ├── common.md           # 公共规则唯一定义处：红线 / 取色 / 字体 / 尺寸落盘
+    │   ├── select.md           # 选型（图型未定时读）
+    │   ├── charts/  ×7         # 数据图方法论
+    │   ├── diagrams.md         # 非数据图 5 类 + 通用布局
+    │   ├── tools/   ×3         # python / web / tex
+    │   └── assets/             # 机器可读资产：palettes / matplotlib / echarts / tikz
+    └── examples/               # 16 个 Python 脚本 + 16 个 LaTeX 源 + 成图
 ```
 
-装好后直接对 Agent 说话即可，例如：
+Agent 一次任务的标准读取量 **4–5 个文件**：SKILL.md + common.md + 一份图型方法论 + 一份工具文件。
 
-> 画一张论文用的训练流程图
-> 这张季度销售数据该怎么展示？给我三种方案
+## 三档体系
 
-Agent 会按 [`SKILL.md`](skills/pretty-charts/SKILL.md) 的四步契约执行：**定性（画什么图）→ 定档（按输出介质）→ 按 `SKILL.md` 第 3 步加载对应方法论 → 交付前过清单自查**，并在交付说明里给出所用档位、导出规格与清单结论。
+| 档位 | 介质 | 主题 | 关键约束 |
+|---|---|---|---|
+| T1 出版级 | 印刷（期刊 / 学位论文） | academic | 灰度打印可辨、误差与显著性规范、矢量导出、精确栏宽 |
+| T2 报告级 | 屏幕文档 | business | 标题即结论、关键数值直标 |
+| T3 展示级 | 投影 / 远距离 | showcase | 一图一结论、最后一排可读 |
 
-### 2. 只用风格资产
+完整判定表见 [SKILL.md](skills/pretty-charts/SKILL.md) 第 2 步；各档差异参数在 [common.md](skills/pretty-charts/references/common.md) 各表与资产文件内。
 
-不装 skill 也能直接复用主题资产：
-
-| 工具 | 用法 |
-|---|---|
-| matplotlib | `plt.style.use("<技能根>/references/assets/matplotlib/academic.mplstyle")`（`academic` / `business` / `showcase` 三选一） |
-| ECharts | `echarts.registerTheme("pc", theme)` —— 主题 JSON 见 [references/assets/echarts/](skills/pretty-charts/references/assets/echarts/) |
-| TikZ | `\input{references/assets/tikz/preamble.tex}` + `\input{references/assets/tikz/flowchart-styles.tex}`（模式宏 `\pcPaperMode` / `\pcPPTMode`） |
-| 色板（任意工具） | [references/assets/palettes/](skills/pretty-charts/references/assets/palettes/) 三份 JSON：`categorical` / `sequential` / `diverging` / `neutral` / `missing` / `semantic` 等 token |
-
-### 3. 跑示例与自检
-
-```bash
-pip install -r requirements.txt        # 见下方"依赖与环境"
-python scripts/check_refs.py           # 校验引用完整性、孤儿方法论、孤儿示例
-python scripts/check_refs.py --write-index   # 重新生成 examples/INDEX.md
-```
-
-## 验证与依赖
-
-### 依赖
-
-示例只依赖下列第三方库（**无 pandas / seaborn 依赖**）：
-
-| 库 | 版本（实测） | 用于 |
-|---|---|---|
-| matplotlib | 3.11.2（要求 ≥3.6） | 全部数据图；`legend(ncols=)`、`set_xticks(ticks, labels)` 需 3.5/3.6+ |
-| numpy | 2.5.3 | 数据生成与统计 |
-| scipy | 1.18.1 | `t` 分布置信区间、线性回归、KDE、t 检验 |
-| geopandas | 0.14.4 | 地理图；底层 shapely/fiona（不依赖已移除的 `geopandas.datasets`） |
-| squarify | — | 树图布局 |
-| cmcrameri | 1.8 | 感知均匀色图（batlow / vik） |
-| scienceplots | — | 期刊尺寸与细节（T1 深化） |
-
-LaTeX 示例需要 **XeLaTeX**（TeX Live 2026 实测），宏包：`pgfplots`、`pgf`、`xeCJK`、`fontspec`、`standalone`、`pgfgantt`，TikZ 库：`shapes.geometric`、`arrows.meta`、`positioning`、`fit`、`backgrounds`、`calc`、`mindmap`。
-
-`~/.zcode/skills/` 与 `~/.claude/skills/` 的 skill 本体**无运行时依赖**，可单独拷贝分发。
-
-### 质量保障
+## 质量保障
 
 | 检查 | 结果 |
 |---|---|
-| 16 个 Python 示例执行 | 16/16 通过（exit 0） |
-| 16 个 LaTeX 源文件编译 | 16/16 `xelatex` 通过 |
-| 八项自检 `scripts/check_refs.py` | 通过：无悬空引用 · 无死链 · 无失效的行内相对路径 · 无缺失 references/ 前缀的资产路径 · 无孤儿方法论 · 无孤儿示例 · 无硬编码颜色 · 产出齐备 |
-| 主题 ↔ 色板一致性 | [`demo_styles.py`](skills/pretty-charts/examples/style-demo/demo_styles.py) 断言三套主题的循环色逐色等于 `palettes/*.json` |
-| 规格单一来源 | 横切事实仅存在于 `references/spec.md`；14 份图型文件与 6 份工具文件只引用不复述 |
-| **CI** | GitHub Actions 三个作业：结构与引用自检 · Python 示例 · LaTeX 编译（[.github/workflows/ci.yml](.github/workflows/ci.yml)） |
+| Python 示例 | 16/16 exit 0（CI 从 requirements-lock.txt 安装） |
+| LaTeX 示例 | 16/16 xelatex 编译通过（含 Windows 原生字体 → Noto CJK → Fandol 跨平台回退） |
+| 八项自检 `scripts/check_refs.py` | 引用完整 · 无死链 · 无孤儿方法论 / 示例 · 无硬编码颜色 · 产出齐备 |
+| 主题 ↔ 色板一致性 | demo_styles.py 逐色断言等于 palettes/*.json |
+| CI | 三作业：结构与引用自检 · Python 示例 · LaTeX 编译 |
 
-**已知限制（不隐瞒）**：
+**已知限制**：TikZ 只有论文 / 演示两种模式（business 模式待做）；CI 不做成图字节比对（字体光栅化与 PDF 时间戳跨平台必然不同）；PDF→PNG 的 Ghostscript 管线未本机实测。
 
-- TikZ 侧目前只实现了 **academic（论文版）** 与 PPT 两种模式，**没有 business 模式**；[`SKILL.md`](skills/pretty-charts/SKILL.md) 与 [`references/spec.md`](skills/pretty-charts/references/spec.md) 已如实标注。
-- CI 只验证"能跑通、能编译、结构自洽"，**不做成图字节比对**——matplotlib 的字体光栅化与 xelatex 的 PDF ID/时间戳跨平台必然不同，字节比对只会产生噪声失败。
-- Windows 原生的宋体/雅黑与 Times New Roman/Arial 在 Linux 上不存在，字体由 [`fonts-serif.tex`](skills/pretty-charts/references/assets/tikz/fonts-serif.tex) / [`fonts-sans.tex`](skills/pretty-charts/references/assets/tikz/fonts-sans.tex) 逐级回退（Windows 原生 → Noto CJK → Fandol → 最后只发警告不报错，故缺字体不会中断编译）。该回退链**已由 CI（Ubuntu + TeX Live）实测通过**，Linux 前置包为 `fonts-noto-cjk fonts-noto-cjk-extra fonts-texgyre`——其中 `fonts-texgyre` 容易漏，漏了会报 `The font "TeX Gyre Termes" cannot be found`（TeX Live 自带的那份对 fontconfig 不可见）。
-- PNG 转换命令（Ghostscript）未在本机实测——环境未安装 `gs`；PDF 产物本身已验证。
+## 依赖
 
-## 质量分档
-
-| 档位 | 介质 / 场景 | 主题（色板来源） | 关键约束 |
-|:---:|---|:---:|---|
-| T1 出版级 | 印刷：期刊 / 学位论文 | academic（Okabe-Ito） | 流程图无底色、黑白可辨、误差与显著性规范、矢量导出 |
-| T2 报告级 | 屏幕文档：咨询 / 商务文档 | business（Tableau 10） | 标题即结论、关键数值直标、语义色可用 |
-| T3 展示级 | 投影 / 远距离：PPT / 海报 / 大屏 | showcase（Tol Vibrant） | 一图一结论、系列 ≤3、远距离可读 |
-
-**档位由输出介质判定**（印刷 / 屏幕文档 / 投影），不是"学术 vs 商务"这类社交标签——完整判定表与参数差异见 [`SKILL.md`](skills/pretty-charts/SKILL.md) 第 2 步。档位是**场景标准而非质量排名**，质量以 `SKILL.md` 第 4 步对应清单衡量。
-
-## 目录结构
-
-```
-pretty-charts/
-├── README.md / LICENSE / .gitignore / requirements.txt
-├── .github/workflows/ci.yml    # CI：结构与引用自检 · Python 示例 · LaTeX 编译
-├── scripts/check_refs.py       # 仓库维护工具（不属于 skill 本体）：八项自检 + 生成示例索引
-└── skills/
-    └── pretty-charts/          # skill 本体：自包含，拷走即用
-        ├── SKILL.md            # 唯一入口：哲学 + 四步契约（选型 / 档位 / 清单 / 降级）
-        ├── references/
-        │   ├── spec.md         # 横切规范（唯一定义处）：红线 · 取色 · 字体 · 画布与导出 · T1 期刊规格 · 非数据图布局
-        │   ├── charts/         # 数据图图型专属 × 7：compare / trend / distribution / relationship / structure / map / inference
-        │   ├── diagrams.md     # 非数据图 5 类合一
-        │   ├── tools/          # 工具栈专属 × 3：python / web / tex
-        │   └── assets/         # 机器可读资产：palettes / matplotlib / echarts / tikz
-        └── examples/           # 示例画廊：INDEX.md + 代码 + 成图
-```
-
-## 文档索引
-
-**按需读取（Agent 视角）**
-
-| 时机 | 文件 |
+| 文件 | 角色 |
 |---|---|
-| ① 每次任务必读 | [`SKILL.md`](skills/pretty-charts/SKILL.md)（哲学 + 四步契约 + 选型 + 档位 + 清单 + 降级） |
-| ② 横切规范（一次读完） | [`references/spec.md`](skills/pretty-charts/references/spec.md) |
-| ③ 图型专属（读一份） | `references/charts/<家族>.md`（数据图，7 选 1）或 [`references/diagrams.md`](skills/pretty-charts/references/diagrams.md)（非数据图） |
-| ④ 需要叠加时 | 追加 `references/charts/inference.md`（误差 / CI / 显著性） |
-| ⑤ 工具专属（读一份） | `references/tools/{python,web,tex}.md` |
-| ⑥ 参照模仿 | [`examples/INDEX.md`](skills/pretty-charts/examples/INDEX.md)（脚本 ↔ 成图） |
-| ⑦ 被代码加载，不必通读 | `references/assets/`（palettes / matplotlib / echarts / tikz） |
+| [requirements.txt](requirements.txt) | 人读的版本区间：下限按代码用到的 API 推出，上限挡大版本破坏 |
+| [requirements-lock.txt](requirements-lock.txt) | uv 编译的精确锁（22 个版本，含传递依赖，跨 Windows/Linux，Python 锚定 CI 的 3.12），CI 从锁安装 |
 
-一次任务的标准读取量是 **4–5 个文件**：SKILL.md + spec.md + 一份图型文件 + 一份工具文件（叠加时再加一份）。
-
-**核心文档**
-
-| 文档 | 内容 |
-|---|---|
-| [SKILL.md](skills/pretty-charts/SKILL.md) | 唯一入口：设计哲学 · 四步契约 · 选型决策树 · 档位判定 · 三档清单 · 降级路径 |
-| [spec.md](skills/pretty-charts/references/spec.md) | 横切规范唯一定义处：防误导九条红线 · 取色与配色 · 字体与文字 · 画布尺寸导出落盘 · T1 期刊规格与退稿清单 · 非数据图通用布局 |
-| [charts/](skills/pretty-charts/references/charts/) | 数据图图型专属 × 7：compare（比较/构成）· trend（趋势）· distribution（分布）· relationship（关系/热图）· structure（结构/网络）· map（地理）· inference（误差与显著性，叠加） |
-| [diagrams.md](skills/pretty-charts/references/diagrams.md) | 非数据图 5 类：流程与时序 · 系统架构 · 层级与逻辑 · 科研示意 · 信息图 |
-| [tools/](skills/pretty-charts/references/tools/) | 工具栈专属 × 3：python（matplotlib / seaborn / plotly）· web（ECharts / D3）· tex（TikZ / pgfplots / Graphviz / SVG） |
-| [examples/INDEX.md](skills/pretty-charts/examples/INDEX.md) | 示例索引：脚本 ↔ 成图（脚本自动生成） |
+改区间后重编译：`uv pip compile requirements.txt --universal --python-version 3.12 -o requirements-lock.txt`
 
 ## 贡献
 
-欢迎提交图型、示例与规范改进。提交前请确保：
+1. `python scripts/check_refs.py` 退出码 0（八项校验，CI 会重复执行）。
+2. 新示例按名写进对应方法论文件的「示例」节（否则判孤儿示例），改完示例重跑 `python scripts/check_refs.py --write-index`。
+3. **公共规则单一来源**：红线 / 取色 / 字体 / 尺寸只进 `references/common.md`；图型与工具文件只引用不复述。
+4. 新增图型先加 `charts/<族>.md` 的「图型清单」，再回填 `select.md` §1（select 是入口不是全集）。
+5. 成图提交前重新渲染；图注里的统计量必须由脚本真实计算。
+6. 脚本与成图同目录，输出路径用 `Path(__file__)` 推导，中间产物不入库。
 
-1. **自检通过**：`python scripts/check_refs.py` 退出码为 0（八项校验，CI 会重复执行）。
-2. **新增示例必须被引用**：新脚本要在对应图型方法论文件的「示例」节里**按名**出现，否则自检会判定为孤儿示例。
-3. **改完示例重跑索引**：`python scripts/check_refs.py --write-index`。
-4. **遵守规格单一来源**：字体/配色/尺寸/红线只在 `references/spec.md` 定义；图型与工具文件**引用而不复述**。新增横切事实请加进 `references/spec.md`；交付清单在 `SKILL.md` 第 4 步，一并更新。
-5. **示例必须真跑**：成图提交前重新渲染；图注里出现的统计量必须由脚本真实计算（见 `references/spec.md` §3）。
-6. **文件组织**：脚本与成图同目录；输出路径用 `Path(__file__)` 推导，不依赖当前工作目录；中间产物不入库。
-
-提交信息建议采用 `类型: 摘要` 的形式（如 `fix:`、`docs:`、`refactor:`、`feat:`）。
+提交信息用 `类型: 摘要`（`fix:` / `feat:` / `docs:` / `refactor:`）。
 
 ## 路线图
 
-- [x] 风格基建：三套色盲友好主题 + matplotlib / ECharts / TikZ 资产（TikZ 目前只有 academic 模式）
-- [x] 数据图方法论 + 画廊：9 类全部有代表成图
-- [x] 非数据图方法论 + 画廊：13 个 `.tex` 源文件，5 类图型全部有成图
-- [x] 地理可视化、信息图整页版式、树图、哑铃图
-- [x] 文档结构重构：横切规范单一来源 + 唯一路由 + 生成式示例索引 + 引用自检
-- [x] 取色单一来源收尾：16 个示例全部从 palette JSON 读色；`demo_styles.py` 兼作主题↔色板一致性校验
-- [x] CI：结构与引用自检 + Python 示例执行 + `.tex` 编译（GitHub Actions 三作业）
-- [x] LaTeX 字体层跨平台回退（Windows 原生字体 → Noto CJK → Fandol）
+- [x] 风格基建：三套色盲友好主题 + matplotlib / ECharts / TikZ 资产
+- [x] 数据图方法论 + 画廊：7 族全部有代表成图；非数据图 5 类全 TikZ 化
+- [x] 五步契约 + chart-plan 决定记录 + 渲染目检回路
+- [x] 文档重构：公共规则单一来源（common.md）+ 唯一路由 + 生成式示例索引
+- [x] 依赖锁定：版本区间 + uv 编译的锁文件，CI 从锁安装
+- [x] CI：三作业（自检 / Python / LaTeX）+ LaTeX 字体跨平台回退
 - [ ] TikZ business / showcase 模式
-- [ ] 插件清单（`.zcode-plugin/` / `.claude-plugin/`），安装从手动拷贝变为一条命令
-- [ ] 数据图第二批画廊：桑基、山脊图、ECDF、日历热图
+- [ ] 插件清单（`.zcode-plugin/` / `.claude-plugin/`），安装一条命令
+- [ ] 数据图第二批画廊：桑基、山脊图、ECDF、日历热图，及 Q-Q、平行坐标、散点矩阵、凹凸图、UpSet、漏斗
 - [ ] 双语 README（英文全量版）
-- [ ] `requirements.txt` 锁定版本区间
 
 ## 致谢
 
-配色基于 [Okabe-Ito](https://jfly.uni-koeln.de/color/)、[Tableau 10](https://www.tableau.com/) 与 [Paul Tol](https://personal.sron.nl/~pault/) 色板，顺序/发散色图取自 [ColorBrewer](https://colorbrewer2.org/) 与 [Crameri Scientific Colour Maps](https://www.fabiocrameri.ch/colourmaps/)；非数据图渲染依赖 [TikZ/pgfplots](https://ctan.org/pkg/pgfplots)、[pgfgantt](https://ctan.org/pkg/pgfgantt)；底图数据来自 [Natural Earth](https://www.naturalearthdata.com/)（公有领域）；期刊适配依赖 [SciencePlots](https://github.com/garrettj403/SciencePlots)。
+配色基于 [Okabe-Ito](https://jfly.uni-koeln.de/color/)、[Tableau 10](https://www.tableau.com/) 与 [Paul Tol](https://personal.sron.nl/~pault/) 色板，顺序 / 发散色图取自 [ColorBrewer](https://colorbrewer2.org/) 与 [Crameri Scientific Colour Maps](https://www.fabiocrameri.ch/colourmaps/)（使用需引用 Crameri, Shephard & Heron, 2020, *Nature Communications*）；非数据图渲染依赖 [TikZ/pgfplots](https://ctan.org/pkg/pgfplots)、[pgfgantt](https://ctan.org/pkg/pgfgantt)；底图数据来自 [Natural Earth](https://www.naturalearthdata.com/)（公有领域）；期刊适配依赖 [SciencePlots](https://github.com/garrettj403/SciencePlots)。
 
 ## 许可
 

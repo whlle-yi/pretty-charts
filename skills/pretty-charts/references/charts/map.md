@@ -4,7 +4,7 @@
 
 
 > 核心问题："空间上哪里强哪里弱、怎么流动"。本质 = 地图底座 + 数据编码。
-> **横切规范只在本技能 `references/spec.md` 定义一次**：红线九条见 [`../spec.md`](../spec.md)，取色见 [`../spec.md`](../spec.md)，字体字号见 [`../spec.md`](../spec.md)，尺寸导出与落盘见 [`../spec.md`](../spec.md)。本文件**只列本图型特有规范**，不复述上述任何内容。
+> **横切规范只在本技能 `references/common.md` 定义一次**：红线九条见 [`../common.md`](../common.md)，取色见 [`../common.md`](../common.md)，字体字号见 [`../common.md`](../common.md)，尺寸导出与落盘见 [`../common.md`](../common.md)。本文件**只列本图型特有规范**，不复述上述任何内容。
 
 ### 图型清单
 

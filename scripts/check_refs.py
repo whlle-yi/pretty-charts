@@ -90,7 +90,7 @@ def check_md_links(problems):
     """Markdown 链接目标必须存在——按该 .md 自身所在目录解析相对路径。
 
     A 项只认带 references/ 或 examples/ 前缀的裸文本，兄弟相对链接（如
-    `references/diagrams.md` 里写 `../spec.md`）与 `[[text]](target)` 的链接
+    `references/diagrams.md` 里写 `../common.md`）与 `[[text]](target)` 的链接
     结构都漏检；这里按真正的链接语法再查一遍。
     """
     for md in walk(REPO, ".md"):
@@ -117,7 +117,7 @@ def check_inline_rel_paths(problems):
     """行内代码里的相对路径必须可解析（按文档自身目录）。
 
     这一类对 A、F 两项都是盲区：A 只认带 references/ 或 examples/ 前缀的写法，
-    F 只解析 `[text](target)` 的链接语法。曾漏掉 `../spec.md`、`../charts/trend.md`
+    F 只解析 `[text](target)` 的链接语法。曾漏掉 `../common.md`、`../charts/trend.md`
     （所在目录已在 references/ 根下）与 tools/web.md 的 `../SKILL.md`（差一层）。
     """
     for md in walk(REPO, ".md"):
@@ -137,7 +137,7 @@ def check_bare_asset_paths(problems):
 
     SKILL.md 曾把 `references/assets/matplotlib/…` 写成 `assets/matplotlib/…`，
     而 A 项的 PATH_RE 只认带 references/ 前缀的写法，漏检。这里专查裸写形式，
-    按文档自身目录解析——`references/spec.md` 里写 `assets/tikz/x.tex` 是合法的。
+    按文档自身目录解析——`references/common.md` 里写 `assets/tikz/x.tex` 是合法的。
     """
     for md in walk(REPO, ".md"):
         for lineno, line in enumerate(read(md).splitlines(), 1):
@@ -239,14 +239,14 @@ HEX_OR_NAMED = re.compile(r"""["'](?:#[0-9A-Fa-f]{6}|white|black|gray|grey)["']"
 
 
 def check_no_hardcoded_colors(problems):
-    """示例脚本里的颜色必须来自 palette JSON（references/spec.md「取色与配色」§1：禁止硬编码色值）。"""
+    """示例脚本里的颜色必须来自 palette JSON（references/common.md「取色与配色」§1：禁止硬编码色值）。"""
     for py in walk(EXAMPLES, ".py"):
         for lineno, line in enumerate(read(py).splitlines(), 1):
             if line.lstrip().startswith("#"):
                 continue
             for m in HEX_OR_NAMED.finditer(line):
                 problems.append(
-                    "硬编码颜色  %s:%d  ->  %s（改为从 palette JSON 取色，见 references/spec.md「取色与配色」§1）"
+                    "硬编码颜色  %s:%d  ->  %s（改为从 palette JSON 取色，见 references/common.md「取色与配色」§1）"
                     % (os.path.relpath(py, REPO), lineno, m.group(0)))
 
 
