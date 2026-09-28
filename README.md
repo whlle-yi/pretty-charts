@@ -22,18 +22,9 @@
 
 一个自包含的绘图 Skill。装好后对 Agent 说「画一张论文用的训练流程图」，它按**五步契约**执行：
 
-**定性**（先看数据、过防误导判断）→ **定档**（按输出介质选 T1/T2/T3，产出 chart-plan 决定记录）→ **作图**（按图型与工具规范、加载对应资产）→ **目检**（渲染成图逐项检查）→ **交付**（逐项过清单）。
+**定性**（先看数据、过防误导判断）→ **定档**（按输出介质选 T1/T2/T3）→ **作图**（加载对应资产，按图型与工具规范执行）→ **目检**（渲染成图逐项检查）→ **交付**（写 chart-plan 决定记录、逐项过清单）。
 
-人类不用 Agent 也能直接取用风格资产与示例代码（见下）。
-
-| 能力 | 说明 |
-|---|---|
-| 三档质量标准 | T1 出版级 / T2 报告级 / T3 展示级，按**输出介质**判定，不是"学术 vs 商务" |
-| 三套色盲友好主题 | Okabe-Ito / Tableau 10 / Paul Tol Vibrant，落成 matplotlib、ECharts、TikZ 资产，取色单一来源 |
-| 图型方法论 | 数据图 7 族 40+ 图型（含 Q-Q、平行坐标、桑基、UpSet 等进阶类型）+ 非数据图 5 类 |
-| 防误导红线 | 九条硬规则；图注中的 n、置信区间、p 值必须由脚本真实计算，不得编造 |
-| 决定记录 | 每次交付写 chart-plan.md：选型、档位、语义→颜色映射一次分配全局复用，防遗忘、防跳步、防漂移 |
-| 可机器校验 | 八项自检脚本（引用 / 死链 / 孤儿 / 硬编码颜色 / 产出）+ GitHub Actions CI 三作业 |
+防误导九条红线全程有效：图注里的 n、置信区间、p 值必须由脚本真实计算；语义 → 颜色映射一次分配、全交付物复用。人类不用 Agent 也能直接取用风格资产与示例代码（见下）。
 
 ## 安装
 
@@ -52,7 +43,7 @@ Skill 本体无运行时依赖，拷走即用。装好后直接对 Agent 说话�
 > 画一张论文用的训练流程图
 > 这张季度销售数据该怎么展示？给我三种方案
 
-## 只用风格资产
+### 不装 Skill，只用风格资产
 
 | 工具 | 用法 |
 |---|---|
@@ -89,13 +80,12 @@ Skill 本体无运行时依赖，拷走即用。装好后直接对 Agent 说话�
 
 ### 三档观感对照
 
-同一份数据在三个档位下的渲染差异，由 [demo_styles.py](skills/pretty-charts/examples/style-demo/demo_styles.py) 生成——它兼作主题 ↔ 色板一致性的断言：
+同一份数据在三个档位下的渲染差异（[demo_styles.py](skills/pretty-charts/examples/style-demo/demo_styles.py) 生成）：
 
 | academic（T1 出版级） | business（T2 报告级） | showcase（T3 展示级） |
 |:---:|:---:|:---:|
 | ![](skills/pretty-charts/examples/style-demo/output/academic.png) | ![](skills/pretty-charts/examples/style-demo/output/business.png) | ![](skills/pretty-charts/examples/style-demo/output/showcase.png) |
 
-论文内嵌效果：[科研流程图](skills/pretty-charts/examples/diagram/flowchart/research_flow.pdf) · [数据图内嵌](skills/pretty-charts/examples/data/paper/paper_embedded_data.pdf) · [地理图内嵌](skills/pretty-charts/examples/data/geo/paper_embedded_geo.pdf) · [层级图内嵌](skills/pretty-charts/examples/diagram/hierarchy/paper_embedded_hierarchy.pdf)
 
 ## 文档结构
 
@@ -157,12 +147,6 @@ Agent 一次任务的标准读取量 **4–5 个文件**：SKILL.md + common.md 
 
 ## 路线图
 
-- [x] 风格基建：三套色盲友好主题 + matplotlib / ECharts / TikZ 资产
-- [x] 数据图方法论 + 画廊：7 族全部有代表成图；非数据图 5 类全 TikZ 化
-- [x] 五步契约 + chart-plan 决定记录 + 渲染目检回路
-- [x] 文档重构：公共规则单一来源（common.md）+ 唯一路由 + 生成式示例索引
-- [x] 依赖锁定：版本区间 + uv 编译的锁文件，CI 从锁安装
-- [x] CI：三作业（自检 / Python / LaTeX）+ LaTeX 字体跨平台回退
 - [ ] TikZ business / showcase 模式
 - [ ] 插件清单（`.zcode-plugin/` / `.claude-plugin/`），安装一条命令
 - [ ] 数据图第二批画廊：桑基、山脊图、ECDF、日历热图，及 Q-Q、平行坐标、散点矩阵、凹凸图、UpSet、漏斗
