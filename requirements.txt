@@ -1,26 +1,32 @@
 # pretty-charts 示例依赖
 #
-# 版本下限是按代码实际用到的 API 推出来的保守值；实测通过的版本见 README「验证与依赖」一节：
-#   Python 3.13.15 / matplotlib 3.11.2 / numpy 2.5.3 / scipy 1.18.1 / geopandas 0.14.4 / cmcrameri 1.8
+# 两份文件的分工（改完本文件必须重新编译锁文件，CI 从锁文件安装）：
+#   requirements.txt       本文件：人读的版本区间——下限按代码实际用到的 API 推出，上限挡大版本破坏
+#   requirements-lock.txt  机器锁：由本文件解析出的全量精确版本（含传递依赖），CI 与可复现安装用
+#   重新编译：uv pip compile requirements.txt --universal --python-version 3.12 -o requirements-lock.txt
+#   （--universal 跨 Windows/Linux 平台；Python 版本锚定 CI 的 3.12，其他版本按本文件区间自行安装）
+#
+# 实测通过的版本（详见 README「验证与依赖」）：
+#   Python 3.13.15 / matplotlib 3.11.2 / numpy 2.5.3 / scipy 1.18.1 / geopandas 1.1.4 / cmcrameri 1.10
 #
 # 说明：示例不依赖 pandas 与 seaborn；Pillow 自树图示例改用 fig.savefig 后也不再需要。
 # 只跑部分示例时，按下面各组注释安装对应子集即可。
 
 # 全部数据图都需要
-matplotlib>=3.6
-numpy>=1.20
+matplotlib>=3.6,<4
+numpy>=1.20,<3
 
 # 仅 statistical / distribution / relationship / paper 示例：t 分布置信区间、线性回归、KDE、t 检验
-scipy>=1.7
+scipy>=1.7,<2
 
 # 仅 examples/data/geo：读取内置 GeoJSON（不使用已移除的 geopandas.datasets）
-geopandas>=0.10
+geopandas>=0.10,<2
 
 # 仅 examples/data/network：树图布局
 squarify>=0.4
 
 # 仅 geo / relationship / paper 示例：感知均匀色图 batlow、vik
-cmcrameri>=1.8
+cmcrameri>=1.8,<2
 
 # 仅 examples/data/paper：期刊尺寸与细节（science / no-latex 样式名）
-scienceplots>=2.0
+scienceplots>=2.0,<3
