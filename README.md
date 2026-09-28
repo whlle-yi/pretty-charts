@@ -65,9 +65,9 @@ Agent 按**五步契约**执行：**定性**（先看数据、过防误导判断
 | **[构成](skills/pretty-charts/references/charts/compare.md)** | **[趋势](skills/pretty-charts/references/charts/trend.md)** |
 | ![](skills/pretty-charts/examples/data/composition/donut.png) | ![](skills/pretty-charts/examples/data/trend/line_direct_label.png) |
 | **[关系](skills/pretty-charts/references/charts/relationship.md)** | **[结构](skills/pretty-charts/references/charts/structure.md)** |
-| ![](skills/pretty-charts/examples/data/relationship/fig1_preview.png) | ![](skills/pretty-charts/examples/data/network/treemap.png) |
+| ![](skills/pretty-charts/examples/data/relationship/fig1_preview.svg) | ![](skills/pretty-charts/examples/data/network/treemap.png) |
 | **[地理](skills/pretty-charts/references/charts/map.md)** | **[热图矩阵](skills/pretty-charts/references/charts/relationship.md)** |
-| ![](skills/pretty-charts/examples/data/geo/fig1_preview.png) | ![](skills/pretty-charts/examples/data/heatmap/corr_heatmap.png) |
+| ![](skills/pretty-charts/examples/data/geo/fig1_preview.svg) | ![](skills/pretty-charts/examples/data/heatmap/corr_heatmap.png) |
 | **[统计推断](skills/pretty-charts/references/charts/inference.md)** | |
 | ![](skills/pretty-charts/examples/data/statistical/errorbar_ci.png) | |
 
@@ -76,9 +76,9 @@ Agent 按**五步契约**执行：**定性**（先看数据、过防误导判断
 | | |
 |:---:|:---:|
 | **[流程与时序](skills/pretty-charts/references/diagrams.md)** | **[系统架构](skills/pretty-charts/references/diagrams.md)** |
-| ![](skills/pretty-charts/examples/diagram/flowchart/research_flow.png) | ![](skills/pretty-charts/examples/diagram/architecture/three_tier.png) |
+| ![](skills/pretty-charts/examples/diagram/flowchart/research_flow.svg) | ![](skills/pretty-charts/examples/diagram/architecture/three_tier.svg) |
 | **[层级与逻辑](skills/pretty-charts/references/diagrams.md)** | **[科研示意图](skills/pretty-charts/references/diagrams.md)** |
-| ![](skills/pretty-charts/examples/diagram/hierarchy/org_chart.png) | ![](skills/pretty-charts/examples/diagram/schematic/signaling_schematic.png) |
+| ![](skills/pretty-charts/examples/diagram/hierarchy/org_chart.svg) | ![](skills/pretty-charts/examples/diagram/schematic/signaling_schematic.svg) |
 | **[信息图](skills/pretty-charts/references/diagrams.md)** | |
 | ![](skills/pretty-charts/examples/diagram/infographic/infographic.png) | |
 

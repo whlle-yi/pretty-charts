@@ -104,6 +104,6 @@ for ax, lab in zip(axes, "abc"):
             fontsize=11, fontweight="bold", va="bottom")
 
 fig.savefig(OUT / "fig1.pdf")
-fig.savefig(OUT / "fig1_preview.png", dpi=200)
+fig.savefig(OUT / "fig1_preview.svg", dpi=200)
 plt.close(fig)
 print("fig1.pdf + preview done")
