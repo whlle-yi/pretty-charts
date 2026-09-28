@@ -14,19 +14,15 @@
 
 *English — a charting skill for AI agents: methodology for 40+ chart types, three quality tiers, machine-readable style assets.*
 
-[安装](#安装) · [示例](#示例) · [三档体系](#三档体系) · [文档结构](#文档结构) · [贡献](#贡献)
+[使用](#使用) · [效果展示](#效果展示) · [文件组织](#文件组织)
 
 </div>
 
-## 这是什么
+## 使用
 
-一个自包含的绘图 Skill。装好后对 Agent 说「画一张论文用的训练流程图」，它按**五步契约**执行：
+### 装 Skill
 
-**定性**（先看数据、过防误导判断）→ **定档**（按输出介质选 T1/T2/T3）→ **作图**（加载对应资产，按图型与工具规范执行）→ **目检**（渲染成图逐项检查）→ **交付**（写 chart-plan 决定记录、逐项过清单）。
-
-防误导九条红线全程有效：图注里的 n、置信区间、p 值必须由脚本真实计算；语义 → 颜色映射一次分配、全交付物复用。人类不用 Agent 也能直接取用风格资产与示例代码（见下）。
-
-## 安装
+一个自包含的绘图 Skill，无运行时依赖，拷走即用：
 
 ```bash
 git clone https://github.com/whlle-yi/pretty-charts.git
@@ -38,10 +34,14 @@ cp -r pretty-charts/skills/pretty-charts ~/.zcode/skills/
 cp -r pretty-charts/skills/pretty-charts ~/.claude/skills/
 ```
 
-Skill 本体无运行时依赖，拷走即用。装好后直接对 Agent 说话即可，例如：
+装好后直接对 Agent 说话即可：
 
 > 画一张论文用的训练流程图
 > 这张季度销售数据该怎么展示？给我三种方案
+
+Agent 按**五步契约**执行：**定性**（先看数据、过防误导判断）→ **定档**（按输出介质选 T1/T2/T3，判定表见 SKILL.md 第 2 步）→ **作图**（加载对应资产、按图型与工具规范执行）→ **目检**（渲染成图逐项检查）→ **交付**（写 chart-plan 决定记录、逐项过清单）。
+
+防误导九条红线全程有效：图注里的 n、置信区间、p 值必须由脚本真实计算；语义 → 颜色映射一次分配、全交付物复用。
 
 ### 不装 Skill，只用风格资产
 
@@ -52,7 +52,7 @@ Skill 本体无运行时依赖，拷走即用。装好后直接对 Agent 说话�
 | TikZ | `\input{.../preamble.tex}` + 模式宏 `\pcPaperMode` / `\pcPPTMode`，详见 [references/tools/tex.md](skills/pretty-charts/references/tools/tex.md) |
 | 色板（任意工具） | [references/assets/palettes/](skills/pretty-charts/references/assets/palettes/) 三份 JSON：`categorical` / `sequential` / `diverging` / `neutral` / `missing` / `semantic` 等 token |
 
-## 示例
+## 效果展示
 
 每个示例都是可运行脚本，成图由仓库内代码实际渲染并提交；脚本 ↔ 成图 ↔ 方法论的完整对照见 [examples/INDEX.md](skills/pretty-charts/examples/INDEX.md)。
 
@@ -87,7 +87,7 @@ Skill 本体无运行时依赖，拷走即用。装好后直接对 Agent 说话�
 | ![](skills/pretty-charts/examples/style-demo/output/academic.png) | ![](skills/pretty-charts/examples/style-demo/output/business.png) | ![](skills/pretty-charts/examples/style-demo/output/showcase.png) |
 
 
-## 文档结构
+## 文件组织
 
 ```tree
 pretty-charts/
@@ -106,45 +106,13 @@ pretty-charts/
     └── examples/               # 16 个 Python 脚本 + 16 个 LaTeX 源 + 成图
 ```
 
-Agent 一次任务的标准读取量 **4–5 个文件**：SKILL.md + common.md + 一份图型方法论 + 一份工具文件。
-
-## 三档体系
-
-| 档位 | 介质 | 主题 | 关键约束 |
-|---|---|---|---|
-| T1 出版级 | 印刷（期刊 / 学位论文） | academic | 灰度打印可辨、误差与显著性规范、矢量导出、精确栏宽 |
-| T2 报告级 | 屏幕文档 | business | 标题即结论、关键数值直标 |
-| T3 展示级 | 投影 / 远距离 | showcase | 一图一结论、最后一排可读 |
-
-完整判定表见 [SKILL.md](skills/pretty-charts/SKILL.md) 第 2 步；各档差异参数在 [common.md](skills/pretty-charts/references/common.md) 各表与资产文件内。
+Agent 一次任务的标准读取量 **4–5 个文件**：SKILL.md + common.md + 一份图型方法论 + 一份工具文件。依赖分两层（区间 + 锁），见根目录两个 requirements 文件与 CI 配置。
 
 ## 已知限制
 
 - TikZ 只有论文 / 演示两种模式（business 模式待做）；
 - CI 不做成图字节比对——字体光栅化与 PDF 时间戳跨平台必然不同；
 - PDF→PNG 的 Ghostscript 管线未本机实测。
-
-## 依赖
-
-| 文件 | 角色 |
-|---|---|
-| [requirements.txt](requirements.txt) | 版本区间（人读） |
-| [requirements-lock.txt](requirements-lock.txt) | 精确锁（uv 编译），CI 从此安装 |
-
-改区间后重编译：`uv pip compile requirements.txt --universal --python-version 3.12 -o requirements-lock.txt`
-
-## 贡献
-
-提交前 `python scripts/check_refs.py` 退出码 0（八项校验，CI 复跑；孤儿示例、索引过期、硬编码颜色都会被自动拦下），动了示例就重跑 `--write-index`。其余规范不写在本页：由 [SKILL.md](skills/pretty-charts/SKILL.md) 与 [common.md](skills/pretty-charts/references/common.md) 在流程中强制。
-
-提交信息用 `类型: 摘要`。
-
-## 路线图
-
-- [ ] TikZ business / showcase 模式
-- [ ] 插件清单（`.zcode-plugin/` / `.claude-plugin/`），安装一条命令
-- [ ] 数据图第二批画廊：桑基、山脊图、ECDF、日历热图，及 Q-Q、平行坐标、散点矩阵、凹凸图、UpSet、漏斗
-- [ ] 双语 README（英文全量版）
 
 ## 致谢
 
