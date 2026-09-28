@@ -58,14 +58,18 @@ Agent 按**五步契约**执行：**定性**（先看数据、过防误导判断
 
 ### 数据图（7 族代表）
 
-| | | |
-|:---:|:---:|:---:|
-| **[比较](skills/pretty-charts/references/charts/compare.md)** | **[分布](skills/pretty-charts/references/charts/distribution.md)** | **[构成](skills/pretty-charts/references/charts/compare.md)** |
-| ![](skills/pretty-charts/examples/data/comparison/sorted_bar.png) | ![](skills/pretty-charts/examples/data/distribution/box_violin.png) | ![](skills/pretty-charts/examples/data/composition/donut.png) |
-| **[趋势](skills/pretty-charts/references/charts/trend.md)** | **[关系](skills/pretty-charts/references/charts/relationship.md)** | **[结构](skills/pretty-charts/references/charts/structure.md)** |
-| ![](skills/pretty-charts/examples/data/trend/line_direct_label.png) | ![](skills/pretty-charts/examples/data/relationship/fig1_preview.png) | ![](skills/pretty-charts/examples/data/network/treemap.png) |
-| **[地理](skills/pretty-charts/references/charts/map.md)** | **[热图矩阵](skills/pretty-charts/references/charts/relationship.md)** | **[统计推断](skills/pretty-charts/references/charts/inference.md)** |
-| ![](skills/pretty-charts/examples/data/geo/fig1_preview.png) | ![](skills/pretty-charts/examples/data/heatmap/corr_heatmap.png) | ![](skills/pretty-charts/examples/data/statistical/errorbar_ci.png) |
+| | |
+|:---:|:---:|
+| **[比较](skills/pretty-charts/references/charts/compare.md)** | **[分布](skills/pretty-charts/references/charts/distribution.md)** |
+| ![](skills/pretty-charts/examples/data/comparison/sorted_bar.png) | ![](skills/pretty-charts/examples/data/distribution/box_violin.png) |
+| **[构成](skills/pretty-charts/references/charts/compare.md)** | **[趋势](skills/pretty-charts/references/charts/trend.md)** |
+| ![](skills/pretty-charts/examples/data/composition/donut.png) | ![](skills/pretty-charts/examples/data/trend/line_direct_label.png) |
+| **[关系](skills/pretty-charts/references/charts/relationship.md)** | **[结构](skills/pretty-charts/references/charts/structure.md)** |
+| ![](skills/pretty-charts/examples/data/relationship/fig1_preview.png) | ![](skills/pretty-charts/examples/data/network/treemap.png) |
+| **[地理](skills/pretty-charts/references/charts/map.md)** | **[热图矩阵](skills/pretty-charts/references/charts/relationship.md)** |
+| ![](skills/pretty-charts/examples/data/geo/fig1_preview.png) | ![](skills/pretty-charts/examples/data/heatmap/corr_heatmap.png) |
+| **[统计推断](skills/pretty-charts/references/charts/inference.md)** | |
+| ![](skills/pretty-charts/examples/data/statistical/errorbar_ci.png) | |
 
 ### 非数据图（5 类）
 
@@ -82,9 +86,12 @@ Agent 按**五步契约**执行：**定性**（先看数据、过防误导判断
 
 同一份数据在三个档位下的渲染差异（[demo_styles.py](skills/pretty-charts/examples/style-demo/demo_styles.py) 生成）：
 
-| academic（T1 出版级） | business（T2 报告级） | showcase（T3 展示级） |
-|:---:|:---:|:---:|
-| ![](skills/pretty-charts/examples/style-demo/output/academic.png) | ![](skills/pretty-charts/examples/style-demo/output/business.png) | ![](skills/pretty-charts/examples/style-demo/output/showcase.png) |
+| | |
+|:---:|:---:|
+| academic（T1 出版级） | business（T2 报告级） |
+| ![](skills/pretty-charts/examples/style-demo/output/academic.png) | ![](skills/pretty-charts/examples/style-demo/output/business.png) |
+| showcase（T3 展示级） | |
+| ![](skills/pretty-charts/examples/style-demo/output/showcase.png) | |
 
 
 ## 文件组织

@@ -104,7 +104,7 @@ cb.set_label("人/百万人", fontsize=8)
 cb.ax.tick_params(labelsize=7)
 fig.subplots_adjust(right=0.85)
 fig.savefig(OUT / "fig1.pdf")
-fig.savefig(OUT / "fig1_preview.png", dpi=200)
+fig.savefig(OUT / "fig1_preview.png", dpi=600)
 plt.close(fig)
 
 # ---- 图 2：比例符号地图（绝对量，90mm 单栏）----
@@ -122,7 +122,7 @@ for v, xlon in [(200, -136), (50, -98)]:
     ax.text(xlon, -34, str(v), ha="center", va="center", fontsize=7)
 ax.text(-117, -58, "支出（10 亿美元）", ha="center", va="top", fontsize=7)
 fig.savefig(OUT / "fig2.pdf")
-fig.savefig(OUT / "fig2_preview.png", dpi=200)
+fig.savefig(OUT / "fig2_preview.png", dpi=600)
 plt.close(fig)
 
 # ---- 图 3：小倍数地图（两期对比，190mm 双栏，共享色标）----
@@ -136,6 +136,6 @@ cb.set_label("人/百万人", fontsize=8)
 cb.ax.tick_params(labelsize=7)
 fig.subplots_adjust(wspace=0.05, right=0.86)
 fig.savefig(OUT / "fig3.pdf")
-fig.savefig(OUT / "fig3_preview.png", dpi=200)
+fig.savefig(OUT / "fig3_preview.png", dpi=600)
 plt.close(fig)
 print("fig1/2/3 pdf + preview done")
