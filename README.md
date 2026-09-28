@@ -73,16 +73,18 @@ Agent 按**五步契约**执行：**定性**（先看数据、过防误导判断
 
 ### 非数据图（5 类）
 
-TikZ 矢量成品以 PDF 展示（GitHub 不内嵌预览 PDF，点击查看）：
+TikZ 图为 tex + pdf + png 三件套：pdf 是矢量原件，png 供本页展示。
 
-| 类别 | 成品 |
-|---|---|
-| 流程与时序 | [科研流程图](skills/pretty-charts/examples/diagram/flowchart/research_flow.pdf) · [论文版](skills/pretty-charts/examples/diagram/flowchart/paper_flow.pdf) · [演示版](skills/pretty-charts/examples/diagram/flowchart/ppt_flow.pdf) |
-| 系统架构 | [三层架构图](skills/pretty-charts/examples/diagram/architecture/three_tier.pdf) |
-| 层级与逻辑 | [组织架构图](skills/pretty-charts/examples/diagram/hierarchy/org_chart.pdf) |
-| 科研示意图 | [信号通路图](skills/pretty-charts/examples/diagram/schematic/signaling_schematic.pdf) |
-| 信息图 | ![](skills/pretty-charts/examples/diagram/infographic/infographic.png) |
-| | （[matplotlib 源码](skills/pretty-charts/examples/diagram/infographic/make_infographic.py)） |
+| | |
+|:---:|:---:|
+| **[流程与时序](skills/pretty-charts/references/diagrams.md)** | **[系统架构](skills/pretty-charts/references/diagrams.md)** |
+| ![](skills/pretty-charts/examples/diagram/flowchart/research_flow.png) | ![](skills/pretty-charts/examples/diagram/architecture/three_tier.png) |
+| **[层级与逻辑](skills/pretty-charts/references/diagrams.md)** | **[科研示意图](skills/pretty-charts/references/diagrams.md)** |
+| ![](skills/pretty-charts/examples/diagram/hierarchy/org_chart.png) | ![](skills/pretty-charts/examples/diagram/schematic/signaling_schematic.png) |
+| **[信息图](skills/pretty-charts/references/diagrams.md)** | |
+| ![](skills/pretty-charts/examples/diagram/infographic/infographic.png) | |
+
+论文版 / 演示版 / 内嵌示范的 PDF：[paper_flow](skills/pretty-charts/examples/diagram/flowchart/paper_flow.pdf) · [ppt_flow](skills/pretty-charts/examples/diagram/flowchart/ppt_flow.pdf) · [paper_embedded](skills/pretty-charts/examples/diagram/flowchart/paper_embedded.pdf)
 
 ### 三档观感对照
 
