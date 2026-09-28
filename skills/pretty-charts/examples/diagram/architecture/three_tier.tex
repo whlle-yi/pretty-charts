@@ -1,36 +1,65 @@
-% 论文版三层架构图：分层容器 + 形状语义 + 依赖方向单一（paper 模式）
+% 论文版四层架构图：分层容器 + 形状语义 + 依赖方向单一（paper 模式）
 % 编译：xelatex -interaction=nonstopmode three_tier.tex
+% 转 PNG：rungs -dBATCH -dNOPAUSE -sDEVICE=png16m -r300 -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -sOutputFile=three_tier.png three_tier.pdf
 \documentclass[border=6pt]{standalone}
 \input{../../../references/assets/tikz/preamble.tex}
 \input{../../../references/assets/tikz/flowchart-styles.tex}
 \input{../../../references/assets/tikz/fonts-serif.tex}
 \begin{document}
 \begin{tikzpicture}
-  % ---- 节点：四层，主轴 x=0，车道对称 ----
-  \node[pc process] (web) at (-1.7,0)    {Web 前端};
-  \node[pc process] (app) at (1.7,0)     {App};
-  \node[pc process] (gw)  at (0,-2.3)    {API 网关};
-  \node[pc key]     (ord) at (0,-4.7)    {订单服务};
-  \node[pc process] (pay) at (2.8,-4.7)  {支付服务};
-  \node[pc process] (inv) at (-2.8,-4.7) {库存服务};
-  \node[pc db]      (db)  at (0,-7.1)    {主库};
-  \node[pc db]      (cache)at (2.8,-7.1) {缓存};
-  \node[pc process] (mq)  at (-2.8,-7.1) {消息队列};
+  % ---- 客户端层 ----
+  \node[pc process] (web)  at (-3.0,0)    {Web 前端};
+  \node[pc process] (app)  at (0,0)       {App};
+  \node[pc process] (mini) at (3.0,0)     {小程序};
+  % ---- 接入层 ----
+  \node[pc process] (lb)   at (-1.5,-2.6) {负载均衡};
+  \node[pc key]     (gw)   at (1.8,-2.6)  {API 网关};
+  % ---- 服务层 ----
+  \node[pc process] (user) at (-4.5,-5.2) {用户服务};
+  \node[pc process] (inv)  at (-1.5,-5.2) {库存服务};
+  \node[pc key]     (ord)  at (1.5,-5.2)  {订单服务};
+  \node[pc process] (pay)  at (4.5,-5.2)  {支付服务};
+  % ---- 数据层 ----
+  \node[pc db]      (cache)at (-4.5,-7.8) {缓存};
+  \node[pc process] (mq)   at (-1.5,-7.8) {消息队列};
+  \node[pc db]      (db)   at (1.5,-7.8)  {主库};
+  \node[pc db]      (slave)at (4.5,-7.8)  {只读从库};
+  % ---- 横切关注点（右侧立柱，无依赖箭头）----
+  \node[pc process] (auth) at (8.6,-1.2) {认证鉴权};
+  \node[pc process] (log)  at (8.6,-3.9) {日志审计};
+  \node[pc process] (mon)  at (8.6,-6.6) {监控告警};
 
   % ---- 阶段容器（虚线，无填充）----
-  \node[pc sub, fit=(web)(app),      inner sep=9pt, label={[pc sub label]above:客户端层}] {};
-  \node[pc sub, fit=(gw),            inner sep=9pt, label={[pc sub label]above:接入层}] {};
-  \node[pc sub, fit=(inv)(ord)(pay), inner sep=9pt, label={[pc sub label]above:服务层}] {};
-  \node[pc sub, fit=(mq)(db)(cache), inner sep=9pt, label={[pc sub label]above:数据层}] {};
+  \node[pc sub, fit=(web)(app)(mini), inner sep=9pt,
+        label={[pc sub label]above:客户端层}] {};
+  \node[pc sub, fit=(lb)(gw), inner sep=9pt,
+        label={[pc sub label]above:接入层}] {};
+  \node[pc sub, fit=(user)(inv)(ord)(pay), inner sep=9pt,
+        label={[pc sub label]above:服务层}] {};
+  \node[pc sub, fit=(cache)(mq)(db)(slave), inner sep=9pt,
+        label={[pc sub label]above:数据层}] {};
+  \node[pc sub, fit=(auth)(log)(mon), inner sep=9pt,
+        label={[pc sub label]above:横切关注点}] {};
 
   % ---- 依赖箭头：方向统一（自上而下），全部直线或单次拐弯 ----
-  \draw[pc flow] (web.south) |- (gw.west);
-  \draw[pc flow] (app.south) |- (gw.east);
-  \draw[pc flow] (gw.south) -- (ord.north);
-  \draw[pc flow] (ord.west) -- node[pc label, above=1pt]{扣减} (inv.east);
-  \draw[pc flow] (ord.east) -- node[pc label, above=1pt]{创建} (pay.west);
-  \draw[pc flow] (ord.south) -- node[pc label, right=3pt]{读写} (db.north);
-  \draw[pc flow] (db.east) -- node[pc label, above=1pt]{同步} (cache.west);
-  \draw[pc flow back] (mq.west) -- ++(-0.55,0) |- node[pc label, above=1pt, pos=0.75]{异步更新} (inv.west);
+  % 客户端 → 接入：多路汇入，从不同侧面进入
+  \draw[pc flow] (web.south)  |- (lb.west);
+  \draw[pc flow] (app.south)  |- (lb.north);
+  \draw[pc flow] (mini.south) |- (gw.east);
+  \draw[pc flow] (lb.east) -- node[pc label, above=1pt]{转发} (gw.west);
+  % 网关 → 服务层：干线 + 横轨 + 四路下落
+  \draw[pc flow] (gw.south) -- (1.8,-4.0);
+  \draw[draw=black!80, line width=0.6pt] (-4.5,-4.0) -- (4.5,-4.0);
+  \draw[pc flow] (-4.5,-4.0) -- (user.north);
+  \draw[pc flow] (-1.5,-4.0) -- (inv.north);
+  \draw[pc flow] (1.5,-4.0) -- (ord.north);
+  \draw[pc flow] (4.5,-4.0) -- (pay.north);
+  % 服务层内部与下行依赖
+  \draw[pc flow] (ord.west)  -- node[pc label, above=1pt]{扣减} (inv.east);
+  \draw[pc flow] (ord.east)  -- node[pc label, above=1pt]{创建} (pay.west);
+  \draw[pc flow] (user.south) -- node[pc label, right=2pt]{读写} (cache.north);
+  \draw[pc flow] (inv.south)  -- node[pc label, right=2pt]{事件} (mq.north);
+  \draw[pc flow] (ord.south)  -- node[pc label, right=2pt]{读写} (db.north);
+  \draw[pc flow] (db.east)    -- node[pc label, above=1pt]{同步} (slave.west);
 \end{tikzpicture}
 \end{document}

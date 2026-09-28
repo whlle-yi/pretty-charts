@@ -28,7 +28,7 @@
 
 | 生成脚本 | 成图 |
 |---|---|
-| `make_geo_figures.py` | `fig1.pdf`、`fig1_preview.png`、`fig2.pdf`、`fig2_preview.png`、`fig3.pdf`、`fig3_preview.png` |
+| `make_geo_figures.py` | `fig1.pdf`、`fig1_preview.png`、`fig2.pdf`、`fig3.pdf` |
 
 ## data/heatmap
 
