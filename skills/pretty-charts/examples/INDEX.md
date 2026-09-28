@@ -28,7 +28,7 @@
 
 | 生成脚本 | 成图 |
 |---|---|
-| `make_geo_figures.py` | `fig1.pdf`、`fig1_preview.svg`、`fig2.pdf`、`fig2_preview.png`、`fig3.pdf`、`fig3_preview.png` |
+| `make_geo_figures.py` | `fig1.pdf`、`fig1_preview.png`、`fig2.pdf`、`fig2_preview.png`、`fig3.pdf`、`fig3_preview.png` |
 
 ## data/heatmap
 
@@ -52,7 +52,7 @@
 
 | 生成脚本 | 成图 |
 |---|---|
-| `make_relationship_figures.py` | `fig1.pdf`、`fig1_preview.svg` |
+| `make_relationship_figures.py` | `fig1.pdf`、`fig1_preview.png` |
 | `scatter_trend.py` | `scatter_trend.png` |
 
 ## data/statistical

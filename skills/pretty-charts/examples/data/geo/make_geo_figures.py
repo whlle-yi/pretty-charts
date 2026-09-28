@@ -104,7 +104,7 @@ cb.set_label("人/百万人", fontsize=8)
 cb.ax.tick_params(labelsize=7)
 fig.subplots_adjust(right=0.85)
 fig.savefig(OUT / "fig1.pdf")
-fig.savefig(OUT / "fig1_preview.svg", dpi=600)
+fig.savefig(OUT / "fig1_preview.png", dpi=600)
 plt.close(fig)
 
 # ---- 图 2：比例符号地图（绝对量，90mm 单栏）----

@@ -65,22 +65,24 @@ Agent 按**五步契约**执行：**定性**（先看数据、过防误导判断
 | **[构成](skills/pretty-charts/references/charts/compare.md)** | **[趋势](skills/pretty-charts/references/charts/trend.md)** |
 | ![](skills/pretty-charts/examples/data/composition/donut.png) | ![](skills/pretty-charts/examples/data/trend/line_direct_label.png) |
 | **[关系](skills/pretty-charts/references/charts/relationship.md)** | **[结构](skills/pretty-charts/references/charts/structure.md)** |
-| ![](skills/pretty-charts/examples/data/relationship/fig1_preview.svg) | ![](skills/pretty-charts/examples/data/network/treemap.png) |
+| ![](skills/pretty-charts/examples/data/relationship/fig1_preview.png) | ![](skills/pretty-charts/examples/data/network/treemap.png) |
 | **[地理](skills/pretty-charts/references/charts/map.md)** | **[热图矩阵](skills/pretty-charts/references/charts/relationship.md)** |
-| ![](skills/pretty-charts/examples/data/geo/fig1_preview.svg) | ![](skills/pretty-charts/examples/data/heatmap/corr_heatmap.png) |
+| ![](skills/pretty-charts/examples/data/geo/fig1_preview.png) | ![](skills/pretty-charts/examples/data/heatmap/corr_heatmap.png) |
 | **[统计推断](skills/pretty-charts/references/charts/inference.md)** | |
 | ![](skills/pretty-charts/examples/data/statistical/errorbar_ci.png) | |
 
 ### 非数据图（5 类）
 
-| | |
-|:---:|:---:|
-| **[流程与时序](skills/pretty-charts/references/diagrams.md)** | **[系统架构](skills/pretty-charts/references/diagrams.md)** |
-| ![](skills/pretty-charts/examples/diagram/flowchart/research_flow.svg) | ![](skills/pretty-charts/examples/diagram/architecture/three_tier.svg) |
-| **[层级与逻辑](skills/pretty-charts/references/diagrams.md)** | **[科研示意图](skills/pretty-charts/references/diagrams.md)** |
-| ![](skills/pretty-charts/examples/diagram/hierarchy/org_chart.svg) | ![](skills/pretty-charts/examples/diagram/schematic/signaling_schematic.svg) |
-| **[信息图](skills/pretty-charts/references/diagrams.md)** | |
-| ![](skills/pretty-charts/examples/diagram/infographic/infographic.png) | |
+TikZ 矢量成品以 PDF 展示（GitHub 不内嵌预览 PDF，点击查看）：
+
+| 类别 | 成品 |
+|---|---|
+| 流程与时序 | [科研流程图](skills/pretty-charts/examples/diagram/flowchart/research_flow.pdf) · [论文版](skills/pretty-charts/examples/diagram/flowchart/paper_flow.pdf) · [演示版](skills/pretty-charts/examples/diagram/flowchart/ppt_flow.pdf) |
+| 系统架构 | [三层架构图](skills/pretty-charts/examples/diagram/architecture/three_tier.pdf) |
+| 层级与逻辑 | [组织架构图](skills/pretty-charts/examples/diagram/hierarchy/org_chart.pdf) |
+| 科研示意图 | [信号通路图](skills/pretty-charts/examples/diagram/schematic/signaling_schematic.pdf) |
+| 信息图 | ![](skills/pretty-charts/examples/diagram/infographic/infographic.png) |
+| | （[matplotlib 源码](skills/pretty-charts/examples/diagram/infographic/make_infographic.py)） |
 
 ### 三档观感对照
 
