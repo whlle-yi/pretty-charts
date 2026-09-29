@@ -65,8 +65,6 @@ ax.legend(loc="upper center", ncols=2)
 
 ### 必守规范
 
-1. **排序**### 必守规范
-
 1. **排序**：条形/柱状默认按数值排序（时间序列除外）。字母序/乱序是最常见的错误。
 2. **强调用色**：最重要的系列用主题主色，其余用 `neutral` 灰；"万绿丛中一点红"比十个颜色更醒目。
 3. **直接标注数值**：T2/T3 档在柱顶标数值（千分位、去尾零）；T1 档如标注则字号 ≥7pt。
@@ -148,9 +146,27 @@ ax.text(0, -0.16, "单位说明", ha="center", fontsize=8, color=PAL["subtext"])
 ```
 身份元素：中心总量、块外侧直标、缺口宽度 0.4 上下。按数据调整：相邻块占比差 <3 个百分点时拉开色深。
 
-### 必守规范
+#### 雷达图（替代方案都被否后，确需多维画像对比再用）
 
-- **堆叠图的分量比较陷阱**### 必守规范
+```python
+cats = ["可靠性", "成本", "易用性", "性能", "扩展性"]     # 轴 ≤8
+N = len(cats)
+angles = np.linspace(0, 2 * np.pi, N, endpoint=False)
+angles = np.concatenate([angles, angles[:1]])            # 多边形闭合：重复第一个点（最经典的坑，不闭合图会缺口）
+fig, ax = plt.subplots(figsize=(4.2, 4.2), subplot_kw={"polar": True})
+for name, vals, color in series:                         # 系列 ≤2
+    v = np.concatenate([vals, vals[:1]])                 # 数据同样闭合
+    ax.plot(angles, v, color=color, lw=1.6, label=name)
+    ax.fill(angles, v, color=color, alpha=0.15)          # 填充透明，防互相遮挡
+ax.set_xticks(angles[:-1], cats, fontsize=9)             # 类别名在轴端，过长换行防重叠
+ax.set_ylim(0, 100)                                      # 各系列共用同一刻度
+ax.grid(alpha=0.4)
+ax.spines["polar"].set_visible(False)
+ax.legend(loc="lower right", ncols=2, fontsize=8)
+```
+身份元素：多边形闭合（首点重复）、统一 0–100 刻度、系列 ≤2 且填充透明。按数据调整：T1 印刷场景雷达图灰度后几乎必然难辨——这正是它被标慎用的原因，动笔前再确认一次。
+
+### 必守规范
 
 - **堆叠图的分量比较陷阱**：堆叠柱中只有最底下的块能直接比大小（上方块底部不齐）。要比较上方分量：改小倍数图或换主题色标线。
 - **占比与绝对量分开表达**：既有关总量又有构成 → 堆叠柱（绝对）+ 旁边或标签给百分比；只有百分比 → 100% 堆叠。
