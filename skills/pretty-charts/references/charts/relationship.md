@@ -20,7 +20,39 @@
 | 散点矩阵（SPLOM） | 3–6 个数值变量两两关系总览 | 对角线放单变量分布；只画上/下三角一半；变量 ≤6，超了拆图 |
 | 平行坐标图 | 变量 ≥4 的个体对比与聚类形态 | 轴按语义排序（不放字母序）；先标准化量纲；线半透明防过绘；系列 ≤4 |
 
+### 画法骨架
+
+#### 散点 + 回归线 + 置信带
+
+```python
+xs = np.linspace(x.min(), x.max(), 100)                  # 拟合线只画在数据范围内
+ax.fill_between(xs, yhat - conf, yhat + conf, color=PAL["primary"],
+                alpha=0.18, lw=0, label="95% 置信带")     # 先画带，再画点，线在最上
+ax.scatter(x, y, s=18, color=PAL["primary"], alpha=0.55, linewidths=0)
+ax.plot(xs, yhat, color=PAL["accent"], lw=1.8, label="线性拟合")
+ax.set_title(f"广告投入与销售额正相关（r = {r:.2f}，p < 0.001，n = {n}）")  # 标题带统计量
+ax.legend(loc="upper left")
+```
+身份元素：置信带先画、拟合线后画、标题携带 r / p / n。按数据调整：n 大时散点 alpha 降或改六边形密度；非线性关系换多项式并注明阶数。
+
+#### 相关矩阵热图
+
+```python
+im = ax.imshow(corr, cmap="RdBu_r", vmin=-1, vmax=1)     # 发散色板 + 对称区间
+ax.grid(False)                                           # 关网格，防格线透过色块
+ax.set_xticks(range(k), labels, rotation=30, ha="right") # 长标签斜排 30°，不转 90°
+ax.set_yticks(range(k), labels)
+for i in range(k):                                       # 格内标 r 值（k ≤20 时）
+    for j in range(k):
+        ax.text(j, i, f"{corr[i, j]:.2f}", ha="center", va="center",
+                fontsize=8, color=深底白字/浅底深字)
+fig.colorbar(im, ax=ax, shrink=0.8)                      # 色标必备
+```
+身份元素：RdBu_r + [-1, 1] 对称色标、格内数值、色标必备。按数据调整：格子 >20×20 去掉格内数值；行/列按聚类或语义排序，不用字母序。
+
 ### 必守规范
+
+1. **相关 ≠ 因果**### 必守规范
 
 1. **相关 ≠ 因果**：图标题/图注禁止因果表述，除非研究设计支持（RCT）。
 2. 趋势线必须带置信带；多项式/样条拟合注明阶数与理由，防过拟合曲线。

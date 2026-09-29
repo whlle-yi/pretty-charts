@@ -19,7 +19,35 @@
 | ECDF 累积分布 | T1 论文推荐：无 bin 依赖、可读分位数 | 多组比较尤佳 |
 | 山脊图（ridgeline） | 多组密度纵排（时间×分布） | 重叠留白足够，色渐变按序取 sequential |
 
+### 画法骨架
+
+#### 直方图 + KDE
+
+```python
+ax.hist(data, bins="auto", density=True, color=PAL["primary"], alpha=0.55,
+        edgecolor=PAL["background"])                     # 白描边防块间粘连
+xs = np.linspace(data.min(), data.max(), 200)
+ax.plot(xs, gaussian_kde(data)(xs), color=PAL["accent"], lw=1.5, label="KDE")
+ax.set_title("主峰与次峰的洞见写进标题", fontsize=10)      # 标题说分布形态
+ax.legend(loc="upper left")
+```
+身份元素：直方 + KDE 叠加、density=True、标题说形态。按数据调整：bins 用 "auto" 或 Freedman–Diaconis 后人工复核多峰；偏态数据改报分位数。
+
+#### 小提琴 + 箱线 + 个体散点
+
+```python
+ax.violinplot(data, positions=range(k), widths=0.82, showextrema=False)   # 外形
+ax.boxplot(data, positions=range(k), widths=0.16, showfliers=False)       # 中位/四分位
+for i, vals in enumerate(data):                          # 个体抖动散点：n 可见
+    ax.scatter(rng.uniform(i - 0.09, i + 0.09, len(vals)), vals, s=7,
+               color=PAL["primary"], alpha=0.55, linewidths=0, zorder=3)
+ax.set_xticks(range(k), groups)
+```
+身份元素：小提琴外形 + 窄箱线 + 抖动散点三层叠加。按数据调整：n <20 改纯蜂群；每组必须共享同一 y 轴。
+
 ### 必守规范
+
+1. **直方图 bin 宽决定一切**### 必守规范
 
 1. **直方图 bin 宽决定一切**：bin 太粗掩盖双峰，太细噪声主导。默认 `bins='auto'` 或 Freedman–Diaconis；报告 bin 宽。
 2. **个体可见**：任何箱线/小提琴都要能看到原始数据（叠加抖动散点，透明度 0.4–0.6），T1 尤其如此。

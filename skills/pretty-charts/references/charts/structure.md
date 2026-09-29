@@ -18,7 +18,31 @@
 | 上下游/依赖图 | 有向依赖 + 量 | 分层布局（hierarchical），防环路交叉 |
 | UpSet 图 / 韦恩图 | 集合交集的规模 | >3 个集合必须用 UpSet（按交集大小排序）；韦恩仅限 ≤3 集合，且面积不编码数值 |
 
+### 画法骨架
+
+#### 树图（squarify）
+
+```python
+fig, ax = plt.subplots(figsize=(7.0, 4.2))
+fig.canvas.draw()                                        # 先取坐标区真实宽高比
+box = ax.get_window_extent()
+W, H = 100.0, 100.0 * box.height / box.width             # 方块才不会被拉成长条
+rects = squarify.squarify(squarify.normalize_sizes(sizes, W, H), 0, 0, W, H)
+for (name, v), r, c in zip(items, rects, palette):       # 面积 ∝ 数值
+    ax.add_patch(Rectangle((r["x"], r["y"]), r["dx"], r["dy"]),
+                 facecolor=c, edgecolor=PAL["background"], linewidth=2)
+    if r["dx"] > 0.18 * W and r["dy"] > 0.15 * H:        # 大块：名称 + 数值
+        ax.text(cx, cy, f"{name}
+{v / total * 100:.0f}%", ha="center", color=块内文字色)
+    elif r["dx"] > 0.08 * W:                             # 中块：只放名称；小块留白
+        ax.text(cx, cy, name, ha="center", fontsize=9)
+ax.set_xticks([]); ax.set_yticks([])                     # spines 全关
+```
+身份元素：面积 ∝ 数值、按块大小分级标注、块间背景色描边。按数据调整：块内文字色按底色亮度自动选深/浅；层级 ≤3。
+
 ### 必守规范
+
+1. **布局交给算法### 必守规范
 
 1. **布局交给算法，不许手工摆点**：treemap 用 squarify，网络用 force/FR 布局，桑基自动排节点；手工摆放必然失真。
 2. **数量编码一致**：节点大小、边宽都 ∝ 数值，且同一张图内只用一种比例规则，图注说明。

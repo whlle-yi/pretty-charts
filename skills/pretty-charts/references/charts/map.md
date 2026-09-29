@@ -17,7 +17,25 @@
 | 小倍数地图 | 多指标/多时期空间对比 | 共享色标（统一 legend 范围），否则不可比 |
 | 密度热力图 | 点事件密度（POI、事故） | sequential；底图去饱和不抢数据 |
 
+### 画法骨架
+
+#### 分级统计地图（choropleth）
+
+```python
+fig, ax = plt.subplots(figsize=(3.54, 2.75))             # 90mm 单栏
+gdf.plot(column="ratio", cmap=CMAP, norm=NORM, ax=ax,
+         missing_kwds={"color": PAL["missing"]},         # 无数据区灰，勿用色板浅端
+         edgecolor="white", linewidth=0.4)               # 白色细界线防区块粘连
+cb = fig.colorbar(ScalarMappable(norm=NORM, cmap=CMAP), ax=ax,
+                  fraction=0.032, pad=0.01)              # 色标必备
+cb.set_label("人/百万人", fontsize=8)
+ax.set_axis_off()
+```
+身份元素：比率指标 + 顺序色图 + 色标 + 灰底缺失区。按数据调整：分级数 5–7 并注明分级方法；中国地图用标准投影并声明。
+
 ### 必守规范
+
+1. **choropleth 用比率不用绝对数**### 必守规范
 
 1. **choropleth 用比率不用绝对数**：绝对数上色 = 把"面积大"画成"数值大"（人口地图变成面积地图）。绝对量用比例符号。
 2. **色标必须连续可见**：无图例的地图不可用；分级地图分级数 5–7，分级方法注明（等间距/分位数/自然断点 Jenks）。

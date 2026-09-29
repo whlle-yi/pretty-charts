@@ -17,7 +17,55 @@
 | 点图（dot plot） | 数值跨度大、或要看区间 | 从 0 起点约束消失，可用截断轴但须标注 |
 | 雷达图 | 多维综合评分，**慎用** | 轴 ≤8、系列 ≤2、刻度统一；能不用就不用 |
 
+### 画法骨架
+
+骨架省略公共三件套：`plt.rcParams.update(plt.rcParamsDefault)` → `plt.style.use(<技能根>/references/assets/matplotlib/<档位>.mplstyle)` → 色值一律从 `palettes/<档位>.json` 读。完整可运行版见本节末尾的示例脚本。
+
+#### 排序条形图
+
+```python
+order = sorted(zip(cats, vals), key=lambda kv: kv[1])   # y 轴自下而上 → 升序排
+cats, vals = [c for c, _ in order], [v for _, v in order]
+fig, ax = plt.subplots(figsize=(4.8, 0.55 * len(cats) + 1.0))
+bars = ax.barh(cats, vals, height=0.62, color=PAL["primary"])
+bars[vals.index(max(vals))].set_color(PAL["accent"])     # 最突出一项换强调色，其余保持主色
+for y, v in enumerate(vals):                             # 条端直标数值，x 轴刻度整体删去
+    ax.text(v + max(vals) * 0.02, y, f"{v:,.0f}",
+            va="center", fontsize=9, color=PAL["text"]["tick"])
+ax.set_xlim(0, max(vals) * 1.15)                         # 留出标注空间
+ax.set_xticks([])
+```
+身份元素：按值排序、条端直标 + 隐藏 x 轴、强调色只给最突出一项。按数据调整：figsize 高度随类别数伸缩；标注格式随数据域加单位；出现负值时零基线画实线加粗。
+
+#### 哑铃图
+
+```python
+for i, (a, b) in enumerate(zip(v24, v25)):               # 一行 = 一类别
+    color = PAL["accent"] if i == star else PAL["primary"]
+    ax.plot([a, b], [i, i], color=color, lw=2.2, solid_capstyle="round", zorder=2)
+    ax.scatter(a, i, s=42, facecolor=PAL["background"],
+               edgecolor=PAL["text"]["tick"], linewidth=1.1, zorder=3)   # 旧值空心
+    ax.scatter(b, i, s=52, color=color, zorder=3)                          # 新值实心
+    ax.text(b + 22, i, f"+{b - a}", va="center", fontsize=8, color=color)  # 增量直标
+ax.set_yticks(range(len(names)), names)
+```
+身份元素：线连两时点、旧空心/新实心、增量直标在端点旁。按数据调整：xlim 两端各留标注空间；增量最大项用强调色。
+
+#### 分组柱状图
+
+```python
+x = np.arange(len(groups)); width = 0.36
+b1 = ax.bar(x - width / 2, y2024, width, label="2024", color=PAL["neutral"])  # 对照年份灰
+b2 = ax.bar(x + width / 2, y2025, width, label="2025", color=PAL["primary"])
+ax.bar_label(b2, fmt="%d", padding=2)                    # 只标关键系列，防拥挤
+ax.set_ylim(0, max(y2025) * 1.22)                        # 柱状从 0 起 + 标注余量
+ax.legend(loc="upper center", ncols=2)
+```
+身份元素：对照系列 neutral 灰、关键系列主色、只标关键系列数值。按数据调整：width 随系列数反比；系列 >3 拆小倍数。
+
 ### 必守规范
+
+1. **排序**### 必守规范
 
 1. **排序**：条形/柱状默认按数值排序（时间序列除外）。字母序/乱序是最常见的错误。
 2. **强调用色**：最重要的系列用主题主色，其余用 `neutral` 灰；"万绿丛中一点红"比十个颜色更醒目。
@@ -66,7 +114,43 @@
 5. 禁止 3D、阴影、爆炸效果（透视扭曲角度）。
 6. 有负值或合计 ≠100% 时禁用饼图。
 
+### 画法骨架（构成类）
+
+#### 堆叠柱状图
+
+```python
+bottom = np.zeros(len(quarters))
+for (name, vals), c in zip(parts.items(), palette):      # 底块最易比较 → 主色，越往上越次要
+    ax.bar(quarters, vals, bottom=bottom, label=name, color=c, width=0.55)
+    for i, (v, b) in enumerate(zip(vals, bottom)):
+        if v / totals[i] * 100 >= 8:                     # <8% 的块不放文字，防溢出
+            ax.text(i, b + v / 2, f"{v / totals[i] * 100:.0f}%",
+                    ha="center", va="center", fontsize=8, color=块内文字色)
+    bottom += vals
+for i, t in enumerate(totals):                           # 柱顶标总量
+    ax.annotate(f"{t:,.0f}", (i, t), xytext=(0, 3), textcoords="offset points",
+                ha="center", fontsize=9, fontweight="bold")
+```
+身份元素：块内占比直标（<8% 略去）、柱顶总量、底块用主色。按数据调整：块内文字色按底色亮度自动选深/浅；系列 ≤5。
+
+#### 环图
+
+```python
+wedges, _ = ax.pie(vals, startangle=90, counterclock=False,     # 12 点起、顺时针、按值降序
+                   colors=[PAL["primary"], *PAL["categorical"][1:4]],
+                   wedgeprops={"width": 0.42, "edgecolor": PAL["background"], "linewidth": 2})
+for w, name, v in zip(wedges, names, vals):              # 每块外侧直标：名称 + 占比
+    ang = (w.theta1 + w.theta2) / 2
+    x, y = np.cos(np.deg2rad(ang)) * 1.1, np.sin(np.deg2rad(ang)) * 1.1
+    ax.annotate(f"{name} {v / total * 100:.0f}%", (x, y), ha="center", fontsize=9)
+ax.text(0, 0.06, f"{total:,.0f}", ha="center", fontsize=15, fontweight="bold")   # 中心放总量
+ax.text(0, -0.16, "单位说明", ha="center", fontsize=8, color=PAL["subtext"])
+```
+身份元素：中心总量、块外侧直标、缺口宽度 0.4 上下。按数据调整：相邻块占比差 <3 个百分点时拉开色深。
+
 ### 必守规范
+
+- **堆叠图的分量比较陷阱**### 必守规范
 
 - **堆叠图的分量比较陷阱**：堆叠柱中只有最底下的块能直接比大小（上方块底部不齐）。要比较上方分量：改小倍数图或换主题色标线。
 - **占比与绝对量分开表达**：既有关总量又有构成 → 堆叠柱（绝对）+ 旁边或标签给百分比；只有百分比 → 100% 堆叠。
