@@ -79,7 +79,7 @@ description: 高质量图表绘制技能。用户要画图、美化图、选图�
 
 | 要画的图型 | 规范文件 |
 |---|---|
-| 条形 / 柱状 / 分组柱 / 堆叠 / 100% 堆叠 / 点图 / 哑铃 / 斜率 / 饼 / 环 / 瀑布 | `charts/compare.md` |
+| 条形 / 柱状 / 分组柱 / 堆叠 / 100% 堆叠 / 点图 / 哑铃 / 斜率 / 饼 / 环 / 瀑布 / 雷达（慎用） | `charts/compare.md` |
 | 折线 / 面积 / 堆叠面积 / 日历热图 | `charts/trend.md` |
 | 直方 / KDE / 箱线 / 小提琴 / ECDF / 山脊 | `charts/distribution.md` |
 | 散点 / 气泡 / 二维密度 / hexbin / 相关矩阵 / 热图 | `charts/relationship.md` |
