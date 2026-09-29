@@ -69,7 +69,7 @@ jobs:
         run: python scripts/check_refs.py
 
   latex-examples:
-    name: LaTeX 示例（16 个）
+    name: LaTeX 示例（15 个）
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

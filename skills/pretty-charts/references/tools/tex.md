@@ -90,7 +90,10 @@ TikZ 侧只有两种模式，**没有 business 模式**，资产也不按档位�
 3. 节点距离用 `positioning` 库的 `below=of` / `right=of` 做**相对定位**；确需坐标定位时（如 `diagrams.md` 的"节点用坐标对齐车道"、并列终点同行）才用 `at (x,y)`，且同类节点必须共用同一套 x/y 基线，避免只为躲线而把图撑宽。
 4. 箭头 `->` 与 `-{Stealth}` 混用会导致全场箭头不一致——统一在 tikzset 定义。
 5. pgfplots 混排时坐标系：示意图元素放 `axis description cs` 或画在 axis 外层 tikzpicture。
-6. 编译慢/循环深：`\usetikzlibrary{positioning, arrows.meta, calc, fit, backgrounds}` 按需加，别全量。
+6. **PDF → PNG 预览**：需要位图（网页橱窗、聊天展示）时用 TeX Live 自带的 rungs：
+   `rungs -dBATCH -dNOPAUSE -sDEVICE=png16m -r300 -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -sOutputFile=x.png x.pdf`。
+   TikZ 展品为三件套（tex + pdf + png）：pdf 是矢量原件，png 由本命令生成、仅供网页内嵌（GitHub 不渲染 PDF）；300dpi 起步。
+7. 编译慢/循环深：`\usetikzlibrary{positioning, arrows.meta, calc, fit, backgrounds}` 按需加，别全量。
 
 ---
 

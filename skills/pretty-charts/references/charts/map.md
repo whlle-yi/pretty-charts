@@ -40,4 +40,4 @@
 
 ### 示例
 
-`examples/data/geo/`：`make_geo_figures.py`（choropleth + 比例符号 + 小倍数三图）、`fig1–3.pdf` 与 `*_preview.png`、`paper_embedded_geo.tex`（论文内嵌）。底图用随仓库分发的 `naturalearth_lowres.geojson`（Natural Earth 1:110m，公有领域，离线可用），不依赖 `geopandas.datasets`（geopandas 1.0 已移除该模块）
+`examples/data/geo/`：`make_geo_figures.py`（choropleth + 比例符号 + 小倍数三图）、`fig1–3.pdf` 与 `fig1_preview.png`、`paper_embedded_geo.tex`（论文内嵌）。底图用随仓库分发的 `naturalearth_lowres.geojson`（Natural Earth 1:110m，公有领域，离线可用），不依赖 `geopandas.datasets`（geopandas 1.0 已移除该模块）

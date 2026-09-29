@@ -114,7 +114,7 @@ pretty-charts/
     │   ├── diagrams.md         # 非数据图 5 类 + 通用布局
     │   ├── tools/   ×3         # python / web / tex
     │   └── assets/             # 机器可读资产：palettes / matplotlib / echarts / tikz
-    └── examples/               # 16 个 Python 脚本 + 16 个 LaTeX 源 + 成图
+    └── examples/               # 16 个 Python 脚本 + 15 个 LaTeX 源 + 成图
 ```
 
 Agent 一次任务的标准读取量 **4–5 个文件**：SKILL.md + common.md + 一份图型方法论 + 一份工具文件。依赖分两层（区间 + 锁），见根目录两个 requirements 文件与 CI 配置。
